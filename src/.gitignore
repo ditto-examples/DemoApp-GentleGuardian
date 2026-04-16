@@ -1,0 +1,16 @@
+# Ditto credentials (use ditto.plist.example as template)
+**/ditto.plist
+
+# Xcode
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.moved-aside
+*.hmap
+
+# Swift Package Manager
+.build/
+Package.resolved
+
+# macOS
+.DS_Store

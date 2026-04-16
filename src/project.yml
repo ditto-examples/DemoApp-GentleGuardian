@@ -1,0 +1,86 @@
+name: GentleGuardian
+options:
+  bundleIdPrefix: com.ditto
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+
+packages:
+  DittoSwiftPackage:
+    url: https://github.com/getditto/DittoSwiftPackage
+    from: 5.0.0-rc.2
+
+targets:
+  GentleGuardian:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: GentleGuardian
+        excludes:
+          - "**/.gitkeep"
+    dependencies:
+      - package: DittoSwiftPackage
+        product: DittoSwift
+    info:
+      path: GentleGuardian/App/Info.plist
+      properties:
+        CFBundleDisplayName: Gentle Guardian
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        NSBluetoothAlwaysUsageDescription: "Gentle Guardian uses Bluetooth to sync baby care data with nearby family devices."
+        NSLocalNetworkUsageDescription: "Gentle Guardian uses your local network to sync baby care data with nearby family devices."
+        NSBonjourServices:
+          - _ditto._tcp
+          - _ditto._udp
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ditto.gentleguardian
+        SWIFT_VERSION: 5.0
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic
+
+  GentleGuardianTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: GentleGuardianTests
+        excludes:
+          - "**/.gitkeep"
+    dependencies:
+      - target: GentleGuardian
+        embed: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ditto.gentleguardian.tests
+        SWIFT_VERSION: 5.0
+        GENERATE_INFOPLIST_FILE: YES
+
+  GentleGuardianUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: GentleGuardianUITests
+        excludes:
+          - "**/.gitkeep"
+    dependencies:
+      - target: GentleGuardian
+        embed: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ditto.gentleguardian.uitests
+        SWIFT_VERSION: 5.0
+        GENERATE_INFOPLIST_FILE: YES
