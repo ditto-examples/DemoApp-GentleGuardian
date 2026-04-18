@@ -10,7 +10,7 @@ struct RegisterChildViewModelTests {
 
     private func makeSUT() -> (RegisterChildViewModel, MockChildRepository, ActiveChildState) {
         let mockRepo = MockChildRepository()
-        let activeChildState = ActiveChildState()
+        let activeChildState = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         let viewModel = RegisterChildViewModel(
             childRepository: mockRepo,
             activeChildState: activeChildState

@@ -45,7 +45,7 @@ struct DiaperRepositoryTests {
         #expect(doc?["type"] as? String == "poop")
         #expect(doc?["quantity"] as? String == "big")
         #expect(doc?["color"] as? String == "brown")
-        #expect(doc?["consistency"] as? String == "soft")
+        #expect(doc?["consistency"] as? String == "loose")
         #expect(doc?["date"] as? String == "2026-04-15")
     }
 

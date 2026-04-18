@@ -8,7 +8,7 @@ struct ActiveChildStateTests {
 
     @Test("Initial state has no children")
     func initialState() {
-        let state = ActiveChildState()
+        let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         #expect(state.children.isEmpty)
         #expect(state.activeChild == nil)
         #expect(state.hasChildren == false)
@@ -17,7 +17,7 @@ struct ActiveChildStateTests {
 
     @Test("updateChildren auto-selects first child")
     func autoSelect() {
-        let state = ActiveChildState()
+        let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         let child = Child(
             id: "child-1",
             firstName: "Emma",
@@ -35,7 +35,7 @@ struct ActiveChildStateTests {
 
     @Test("updateChildren preserves valid selection")
     func preserveSelection() {
-        let state = ActiveChildState()
+        let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         let child1 = Child(id: "c1", firstName: "Emma", birthday: Date(), sex: .female, syncCode: "A")
         let child2 = Child(id: "c2", firstName: "Liam", birthday: Date(), sex: .male, syncCode: "B")
 
@@ -50,7 +50,7 @@ struct ActiveChildStateTests {
 
     @Test("updateChildren resets invalid selection")
     func resetInvalidSelection() {
-        let state = ActiveChildState()
+        let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         let child1 = Child(id: "c1", firstName: "Emma", birthday: Date(), sex: .female, syncCode: "A")
 
         state.updateChildren([child1])
@@ -64,7 +64,7 @@ struct ActiveChildStateTests {
 
     @Test("selectChild only works for known children")
     func selectKnownChild() {
-        let state = ActiveChildState()
+        let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         let child = Child(id: "c1", firstName: "Emma", birthday: Date(), sex: .female, syncCode: "A")
 
         state.updateChildren([child])
@@ -76,7 +76,7 @@ struct ActiveChildStateTests {
 
     @Test("hasMultipleChildren")
     func multipleChildren() {
-        let state = ActiveChildState()
+        let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         let child1 = Child(id: "c1", firstName: "Emma", birthday: Date(), sex: .female, syncCode: "A")
         let child2 = Child(id: "c2", firstName: "Liam", birthday: Date(), sex: .male, syncCode: "B")
 

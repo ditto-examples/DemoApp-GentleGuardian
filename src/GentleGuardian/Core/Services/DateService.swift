@@ -139,6 +139,64 @@ enum DateService {
         }
     }
 
+    /// Returns a time-of-day-appropriate subtitle message, rotated daily so it feels fresh.
+    ///
+    /// Time slots:
+    /// - 6 AM – 10 AM: Morning messages
+    /// - 10 AM – 2 PM: Midday messages
+    /// - 2 PM – 6 PM: Afternoon messages
+    /// - 6 PM – 9 PM: Evening messages
+    /// - 9 PM – 6 AM: Night messages
+    static func subtitleMessageForTimeOfDay() -> String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        let messages: [String]
+        switch hour {
+        case 6..<10:
+            messages = [
+                "Ready to start the day!",
+                "A bright new morning begins!",
+                "Rise and shine — today is going to be great.",
+                "Morning light, tiny smiles. Let's go!",
+                "A new day, a new adventure."
+            ]
+        case 10..<14:
+            messages = [
+                "Hope the morning is going smoothly!",
+                "Midday check-in — you're doing amazing.",
+                "Keep up the wonderful work!",
+                "Halfway through the day — you've got this!",
+                "Fueling up for a great afternoon."
+            ]
+        case 14..<18:
+            messages = [
+                "The afternoon adventures continue!",
+                "Keeping up the great work this afternoon!",
+                "Almost through another wonderful day!",
+                "Afternoon is in full swing — you're a star.",
+                "The day is winding toward a beautiful evening."
+            ]
+        case 18..<21:
+            messages = [
+                "A beautiful evening with the family!",
+                "Winding down after a wonderful day.",
+                "Evening time — you did great today!",
+                "The golden hour — well done today.",
+                "Almost time to rest — you've earned it!"
+            ]
+        default:
+            messages = [
+                "Sweet dreams are almost here.",
+                "Rest up — you've earned it!",
+                "A peaceful night for the whole family.",
+                "Night watch: on. You've got this.",
+                "Quiet moments, cozy nights."
+            ]
+        }
+        // Rotate by day-of-year so the message is stable within a day but changes daily.
+        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
+        return messages[dayOfYear % messages.count]
+    }
+
     // MARK: - Tracking Day
 
     /// Determines whether a given date falls within the defined tracking day boundaries.
@@ -155,11 +213,14 @@ enum DateService {
         let calendar = Calendar.current
         let hour = calendar.component(.hour, from: date)
 
-        if startHour <= endHour {
+        if startHour == endHour {
+            // Equal hours = full 24-hour day
+            return true
+        } else if startHour < endHour {
             // Same-day range (e.g., 6 AM to 10 PM)
             return hour >= startHour && hour < endHour
         } else {
-            // Overnight range (e.g., 6 AM to 6 AM = full day, or 8 PM to 4 AM)
+            // Overnight range (e.g., 8 PM to 4 AM)
             return hour >= startHour || hour < endHour
         }
     }

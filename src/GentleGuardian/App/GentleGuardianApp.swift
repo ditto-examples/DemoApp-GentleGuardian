@@ -13,6 +13,9 @@ struct GentleGuardianApp: App {
     /// Observable state tracking the active child and all children.
     @State private var activeChildState = ActiveChildState()
 
+    /// Observable state tracking the current caregiver's identity.
+    @State private var userSettings = UserSettings()
+
     /// Repositories for event data, created once and shared across the app.
     @State private var feedingRepository: FeedingRepository
     @State private var diaperRepository: DiaperRepository
@@ -60,6 +63,7 @@ struct GentleGuardianApp: App {
                 }
             }
             .environment(activeChildState)
+            .environment(userSettings)
             .task {
                 await initializeDitto()
             }
@@ -72,6 +76,13 @@ struct GentleGuardianApp: App {
     private func initializeDitto() async {
         do {
             try await dittoManager.initialize()
+
+            // Restore peer metadata from saved caregiver name
+            let savedName = userSettings.displayName
+            if !savedName.isEmpty {
+                try? await dittoManager.setPeerMetadata(displayName: savedName)
+            }
+
             await loadChildren()
             isInitialized = true
         } catch {

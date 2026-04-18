@@ -19,6 +19,9 @@ final class JoinFamilyViewModel {
 
     // MARK: - Form State
 
+    /// The caregiver's full name (used for Ditto peer metadata).
+    var userFullName: String = ""
+
     /// The sync code entered by the user (auto-uppercased).
     var syncCode: String = "" {
         didSet {
@@ -74,16 +77,24 @@ final class JoinFamilyViewModel {
     private let childRepository: any JoinFamilyChildDataSource
     private let activeChildState: ActiveChildState
     private let dittoManager: (any DittoManaging)?
+    private let userSettings: UserSettings?
 
     /// Task tracking the search timeout.
     private var searchTask: Task<Void, Never>?
 
     // MARK: - Initialization
 
-    init(childRepository: any JoinFamilyChildDataSource, activeChildState: ActiveChildState, dittoManager: (any DittoManaging)? = nil) {
+    init(
+        childRepository: any JoinFamilyChildDataSource,
+        activeChildState: ActiveChildState,
+        dittoManager: (any DittoManaging)? = nil,
+        userSettings: UserSettings? = nil
+    ) {
         self.childRepository = childRepository
         self.activeChildState = activeChildState
         self.dittoManager = dittoManager
+        self.userSettings = userSettings
+        self.userFullName = userSettings?.displayName ?? ""
     }
 
     // MARK: - Actions
@@ -144,6 +155,13 @@ final class JoinFamilyViewModel {
 
     private func handleFoundChild(_ child: Child) async {
         foundChild = child
+
+        // Save the caregiver name and set peer metadata
+        let trimmedUserName = userFullName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedUserName.isEmpty, let userSettings {
+            userSettings.displayName = trimmedUserName
+            try? await dittoManager?.setPeerMetadata(displayName: trimmedUserName)
+        }
 
         // Subscribe to all child data
         if let dittoManager {

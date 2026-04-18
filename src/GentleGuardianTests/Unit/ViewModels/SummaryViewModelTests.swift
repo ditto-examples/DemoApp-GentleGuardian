@@ -10,7 +10,8 @@ struct SummaryViewModelTests {
     // MARK: - Helpers
 
     private func makeActiveChildState(with child: Child? = nil) -> ActiveChildState {
-        let state = ActiveChildState()
+        let isolated = UserDefaults(suiteName: UUID().uuidString)!
+        let state = ActiveChildState(userDefaults: isolated)
         if let child {
             state.updateChildren([child])
         }
@@ -447,7 +448,7 @@ struct SummaryViewModelTests {
             sex: .female,
             syncCode: "DEF456"
         )
-        let state = ActiveChildState()
+        let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         state.updateChildren([child1, child2])
 
         let (vm, _, _, _, _) = makeViewModel(

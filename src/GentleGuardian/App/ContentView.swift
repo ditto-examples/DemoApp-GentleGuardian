@@ -10,6 +10,7 @@ struct ContentView: View {
     // MARK: - Environment
 
     @Environment(ActiveChildState.self) private var activeChildState
+    @Environment(UserSettings.self) private var userSettings
 
     // MARK: - Dependencies
 
@@ -85,6 +86,16 @@ struct ContentView: View {
                 }
             }
             .accessibilityIdentifier("child-tab")
+
+            Tab("Info", systemImage: "info.circle.fill", value: .information) {
+                NavigationStack {
+                    InformationView(
+                        dittoManager: DittoManager.shared,
+                        userSettings: userSettings
+                    )
+                }
+            }
+            .accessibilityIdentifier("information-tab")
         }
     }
 
@@ -115,6 +126,11 @@ struct ContentView: View {
                 )
             case .child:
                 ChildProfileView()
+            case .information:
+                InformationView(
+                    dittoManager: DittoManager.shared,
+                    userSettings: userSettings
+                )
             }
         }
     }
@@ -131,6 +147,8 @@ struct ContentView: View {
                         .tag(AppTab.summary)
                     Label("Child", systemImage: "person.crop.circle.fill")
                         .tag(AppTab.child)
+                    Label("Info", systemImage: "info.circle.fill")
+                        .tag(AppTab.information)
                 }
             }
 
@@ -166,4 +184,5 @@ enum AppTab: String, Hashable {
     case home
     case summary
     case child
+    case information
 }

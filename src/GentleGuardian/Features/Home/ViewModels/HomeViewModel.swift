@@ -103,7 +103,7 @@ final class HomeViewModel {
     var greetingSubtitle: String {
         if let child = activeChildState.activeChild {
             let age = child.ageString
-            return "\(child.firstName) is \(age) old. Ready to start the day!"
+            return "\(child.firstName) is \(age) old. \(DateService.subtitleMessageForTimeOfDay())"
         }
         return "Welcome to Gentle Guardian"
     }

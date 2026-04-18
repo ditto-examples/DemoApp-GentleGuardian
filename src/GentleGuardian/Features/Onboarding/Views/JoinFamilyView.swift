@@ -9,6 +9,7 @@ struct JoinFamilyView: View {
     // MARK: - Environment
 
     @Environment(ActiveChildState.self) private var activeChildState
+    @Environment(UserSettings.self) private var userSettings
     @Environment(\.isNightMode) private var isNightMode
     @Environment(\.dismiss) private var dismiss
 
@@ -44,7 +45,8 @@ struct JoinFamilyView: View {
                 viewModel = JoinFamilyViewModel(
                     childRepository: ChildRepository(dittoManager: DittoManager.shared),
                     activeChildState: activeChildState,
-                    dittoManager: DittoManager.shared
+                    dittoManager: DittoManager.shared,
+                    userSettings: userSettings
                 )
             }
         }
@@ -61,6 +63,9 @@ struct JoinFamilyView: View {
     private func formContent(viewModel: JoinFamilyViewModel) -> some View {
         ScrollView {
             VStack(spacing: GGSpacing.lg) {
+                // Caregiver name
+                caregiverSection(viewModel: viewModel)
+
                 // Sync code input
                 syncCodeSection(viewModel: viewModel)
 
@@ -95,6 +100,31 @@ struct JoinFamilyView: View {
             }
             .padding(GGSpacing.pageInsets)
             .padding(.bottom, GGSpacing.xxl)
+        }
+    }
+
+    // MARK: - Caregiver Section
+
+    private func caregiverSection(viewModel: JoinFamilyViewModel) -> some View {
+        GGCard(style: .standard) {
+            VStack(alignment: .leading, spacing: GGSpacing.sm) {
+                Text("Your Name")
+                    .font(.ggLabelLarge)
+                    .foregroundStyle(colors.onSurface)
+
+                Text("Used so other caregivers can identify you in the app.")
+                    .font(.ggBodySmall)
+                    .foregroundStyle(colors.onSurface.opacity(0.6))
+
+                GGTextField(
+                    "Your first and last name",
+                    text: Binding(
+                        get: { viewModel.userFullName },
+                        set: { viewModel.userFullName = $0 }
+                    ),
+                    icon: "person.fill"
+                )
+            }
         }
     }
 
@@ -212,5 +242,6 @@ struct JoinFamilyView: View {
     NavigationStack {
         JoinFamilyView()
             .environment(ActiveChildState())
+            .environment(UserSettings())
     }
 }

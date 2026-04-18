@@ -10,7 +10,7 @@ struct JoinFamilyViewModelTests {
 
     private func makeSUT() -> (JoinFamilyViewModel, MockChildRepository, ActiveChildState) {
         let mockRepo = MockChildRepository()
-        let activeChildState = ActiveChildState()
+        let activeChildState = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         let viewModel = JoinFamilyViewModel(
             childRepository: mockRepo,
             activeChildState: activeChildState

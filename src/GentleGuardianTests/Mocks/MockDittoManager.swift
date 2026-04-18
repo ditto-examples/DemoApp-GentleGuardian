@@ -69,6 +69,12 @@ actor MockDittoManager: DittoManaging {
     /// Child IDs that have been unsubscribed from.
     var unsubscribedChildIds: [String] = []
 
+    /// The display name passed to `setPeerMetadata(displayName:)`, if called.
+    var setPeerMetadataDisplayName: String?
+
+    /// Whether `observePresence(handler:)` was called.
+    var observePresenceCalled = false
+
     // MARK: - Configuration
 
     /// Set to `true` to make `initialize()` throw an error.
@@ -134,6 +140,14 @@ actor MockDittoManager: DittoManaging {
         unsubscribedChildIds.append(childId)
     }
 
+    func setPeerMetadata(displayName: String) async throws {
+        setPeerMetadataDisplayName = displayName
+    }
+
+    func observePresence(handler: @escaping @Sendable ([PeerInfo]) -> Void) async {
+        observePresenceCalled = true
+    }
+
     // MARK: - Test Helpers
 
     /// Returns the last executed query, or nil if none.
@@ -160,5 +174,7 @@ actor MockDittoManager: DittoManaging {
         shouldFailInitialization = false
         shouldFailQueries = false
         mockDittoQueryResults.removeAll()
+        setPeerMetadataDisplayName = nil
+        observePresenceCalled = false
     }
 }

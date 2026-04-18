@@ -25,6 +25,9 @@ actor DittoManager: DittoManaging {
     /// Active sync subscriptions keyed by "purpose:childId".
     private var subscriptions: [String: DittoSyncSubscription] = [:]
 
+    /// Retained presence observer to prevent Ditto from garbage-collecting it.
+    private var presenceObserver: DittoObserver?
+
     /// Logger for Ditto operations.
     private let logger = Logger(subsystem: "com.gentleguardian.app", category: "DittoManager")
 
@@ -213,6 +216,53 @@ actor DittoManager: DittoManaging {
             subscriptions[key]?.cancel()
             subscriptions.removeValue(forKey: key)
             logger.debug("Unsubscribed: \(key)")
+        }
+    }
+
+    // MARK: - Presence
+
+    func setPeerMetadata(displayName: String) async throws {
+        guard let ditto else {
+            throw DittoManagerError.notInitialized
+        }
+        do {
+            try ditto.presence.setPeerMetadata(["displayName": displayName])
+            logger.info("Peer metadata set: displayName=\(displayName)")
+        } catch {
+            logger.error("setPeerMetadata failed: \(error.localizedDescription)")
+            throw DittoManagerError.queryFailed(error.localizedDescription)
+        }
+    }
+
+    func observePresence(handler: @escaping @Sendable ([PeerInfo]) -> Void) async {
+        guard let ditto else {
+            logger.warning("observePresence called before Ditto initialized.")
+            return
+        }
+
+        presenceObserver = ditto.presence.observe { graph in
+            var peers: [PeerInfo] = []
+
+            let local = graph.localPeer
+            let localName = (local.peerMetadata["displayName"] as? String)
+                ?? local.deviceName
+            peers.append(PeerInfo(
+                id: local.peerKey,
+                displayName: localName.isEmpty ? "This Device" : localName,
+                isLocal: true
+            ))
+
+            for remote in graph.remotePeers {
+                let name = (remote.peerMetadata["displayName"] as? String)
+                    ?? remote.deviceName
+                peers.append(PeerInfo(
+                    id: remote.peerKey,
+                    displayName: name.isEmpty ? "Unknown Device" : name,
+                    isLocal: false
+                ))
+            }
+
+            handler(peers)
         }
     }
 

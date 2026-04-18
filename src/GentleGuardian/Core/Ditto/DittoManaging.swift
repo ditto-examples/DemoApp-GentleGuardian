@@ -22,6 +22,16 @@ enum DittoManagerError: Error, LocalizedError, Sendable {
     }
 }
 
+/// Lightweight, Sendable representation of a Ditto peer for crossing actor boundaries.
+struct PeerInfo: Sendable, Identifiable {
+    /// The Ditto peerKey — unique identifier for this peer's session.
+    let id: String
+    /// Display name from peer metadata, falling back to device name.
+    let displayName: String
+    /// True for the local device's own peer entry.
+    let isLocal: Bool
+}
+
 /// Protocol defining the interface for Ditto database operations.
 ///
 /// Enables mock injection for testing by abstracting the Ditto SDK behind
@@ -85,6 +95,24 @@ protocol DittoManaging: Sendable {
     ///
     /// - Parameter childId: The child's unique identifier.
     func unsubscribeFromChild(childId: String) async
+
+    /// Sets peer metadata on the local Ditto peer.
+    ///
+    /// Other devices in the mesh network will see this metadata via their
+    /// presence observers. Typically called after initialization and whenever
+    /// the caregiver's display name changes.
+    ///
+    /// - Parameter displayName: The caregiver's name to broadcast.
+    func setPeerMetadata(displayName: String) async throws
+
+    /// Registers a continuous presence observer that fires on every peer graph change.
+    ///
+    /// `DittoManager` retains the observer internally to prevent garbage collection.
+    /// The handler is dispatched on Ditto's internal thread; callers must hop to
+    /// `@MainActor` if they need to update SwiftUI state.
+    ///
+    /// - Parameter handler: Called with a complete snapshot of all peers (local + remote).
+    func observePresence(handler: @escaping @Sendable ([PeerInfo]) -> Void) async
 }
 
 /// Convenience overload allowing calls without arguments.

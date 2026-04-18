@@ -10,6 +10,7 @@ struct RegisterChildView: View {
     // MARK: - Environment
 
     @Environment(ActiveChildState.self) private var activeChildState
+    @Environment(UserSettings.self) private var userSettings
     @Environment(\.isNightMode) private var isNightMode
     @Environment(\.dismiss) private var dismiss
 
@@ -42,7 +43,8 @@ struct RegisterChildView: View {
                 viewModel = RegisterChildViewModel(
                     childRepository: ChildRepository(dittoManager: DittoManager.shared),
                     activeChildState: activeChildState,
-                    dittoManager: DittoManager.shared
+                    dittoManager: DittoManager.shared,
+                    userSettings: userSettings
                 )
             }
         }
@@ -59,7 +61,10 @@ struct RegisterChildView: View {
     private func formContent(viewModel: RegisterChildViewModel) -> some View {
         ScrollView {
             VStack(spacing: GGSpacing.lg) {
-                // Name field
+                // Caregiver name
+                caregiverSection(viewModel: viewModel)
+
+                // Baby name field
                 nameSection(viewModel: viewModel)
 
                 // Birthday picker
@@ -92,6 +97,31 @@ struct RegisterChildView: View {
             }
             .padding(GGSpacing.pageInsets)
             .padding(.bottom, GGSpacing.xxl)
+        }
+    }
+
+    // MARK: - Caregiver Section
+
+    private func caregiverSection(viewModel: RegisterChildViewModel) -> some View {
+        GGCard(style: .standard) {
+            VStack(alignment: .leading, spacing: GGSpacing.sm) {
+                Text("Your Name")
+                    .font(.ggLabelLarge)
+                    .foregroundStyle(colors.onSurface)
+
+                Text("Used so other caregivers can identify you in the app.")
+                    .font(.ggBodySmall)
+                    .foregroundStyle(colors.onSurface.opacity(0.6))
+
+                GGTextField(
+                    "Your first and last name",
+                    text: Binding(
+                        get: { viewModel.userFullName },
+                        set: { viewModel.userFullName = $0 }
+                    ),
+                    icon: "person.fill"
+                )
+            }
         }
     }
 
@@ -255,5 +285,6 @@ struct RegisterChildView: View {
     NavigationStack {
         RegisterChildView()
             .environment(ActiveChildState())
+            .environment(UserSettings())
     }
 }

@@ -70,7 +70,7 @@ struct HomeView: View {
 
     private var greetingHeader: some View {
         VStack(alignment: .leading, spacing: GGSpacing.xs) {
-            Text("\(viewModel.greeting), \(viewModel.childFirstName ?? "there")!")
+            Text("\(viewModel.greeting)")
                 .font(.ggHeadlineLarge)
                 .foregroundStyle(GGColors.onSurface)
 

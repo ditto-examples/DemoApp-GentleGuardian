@@ -21,6 +21,9 @@ final class RegisterChildViewModel {
 
     // MARK: - Form State
 
+    /// The caregiver's full name (used for Ditto peer metadata).
+    var userFullName: String = ""
+
     /// The child's first name.
     var firstName: String = ""
 
@@ -53,6 +56,7 @@ final class RegisterChildViewModel {
     var isFormValid: Bool {
         !firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && birthday < Date()
+            && (userSettings == nil || !userFullName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
     }
 
     /// Validation message for the name field.
@@ -76,13 +80,21 @@ final class RegisterChildViewModel {
     private let childRepository: any RegisterChildDataSource
     private let activeChildState: ActiveChildState
     private let dittoManager: (any DittoManaging)?
+    private let userSettings: UserSettings?
 
     // MARK: - Initialization
 
-    init(childRepository: any RegisterChildDataSource, activeChildState: ActiveChildState, dittoManager: (any DittoManaging)? = nil) {
+    init(
+        childRepository: any RegisterChildDataSource,
+        activeChildState: ActiveChildState,
+        dittoManager: (any DittoManaging)? = nil,
+        userSettings: UserSettings? = nil
+    ) {
         self.childRepository = childRepository
         self.activeChildState = activeChildState
         self.dittoManager = dittoManager
+        self.userSettings = userSettings
+        self.userFullName = userSettings?.displayName ?? ""
     }
 
     // MARK: - Computed Properties
@@ -125,6 +137,13 @@ final class RegisterChildViewModel {
             // Subscribe to sync data for this child
             if let dittoManager {
                 await dittoManager.subscribeToChildData(childId: child.id)
+            }
+
+            // Save the caregiver name and set peer metadata
+            let trimmedUserName = userFullName.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmedUserName.isEmpty, let userSettings {
+                userSettings.displayName = trimmedUserName
+                try? await dittoManager?.setPeerMetadata(displayName: trimmedUserName)
             }
 
             // Update the active child state

@@ -15,9 +15,9 @@ final class ActiveChildState: @unchecked Sendable {
         didSet {
             // Persist the selection for next launch
             if let activeChildId {
-                UserDefaults.standard.set(activeChildId, forKey: Self.activeChildIdKey)
+                userDefaults.set(activeChildId, forKey: Self.activeChildIdKey)
             } else {
-                UserDefaults.standard.removeObject(forKey: Self.activeChildIdKey)
+                userDefaults.removeObject(forKey: Self.activeChildIdKey)
             }
         }
     }
@@ -45,12 +45,14 @@ final class ActiveChildState: @unchecked Sendable {
     // MARK: - Constants
 
     private static let activeChildIdKey = "activeChildId"
+    private let userDefaults: UserDefaults
 
     // MARK: - Initialization
 
-    init() {
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
         // Restore persisted selection
-        self.activeChildId = UserDefaults.standard.string(forKey: Self.activeChildIdKey)
+        self.activeChildId = userDefaults.string(forKey: Self.activeChildIdKey)
     }
 
     // MARK: - Methods

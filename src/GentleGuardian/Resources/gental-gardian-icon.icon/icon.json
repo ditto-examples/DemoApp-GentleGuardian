@@ -1,0 +1,50 @@
+{
+  "fill" : {
+    "automatic-gradient" : "display-p3:0.67041,0.84082,0.81885,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "ditto_mark-white.svg",
+          "name" : "ditto_mark-white",
+          "position" : {
+            "scale" : 0.4,
+            "translation-in-points" : [
+              -350.3523350396081,
+              -365.10173768229697
+            ]
+          }
+        },
+        {
+          "blend-mode" : "normal",
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "Image Layer.png",
+          "name" : "Image Layer",
+          "position" : {
+            "scale" : 2,
+            "translation-in-points" : [
+              22.09553158705694,
+              35.11248073959928
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

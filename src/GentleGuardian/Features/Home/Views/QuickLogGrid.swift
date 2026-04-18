@@ -26,7 +26,7 @@ struct QuickLogGrid: View {
                 // Sleep is a placeholder - no tracked category yet.
                 // Could map to activity in the future.
             },
-            .init("Reading Time", icon: "book.fill", tintColor: GGColors.primary) {
+            .init("Reading", icon: "book.fill", tintColor: GGColors.primary) {
                 onCategoryTapped(.activity)
             },
         ])
