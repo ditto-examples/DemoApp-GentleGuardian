@@ -97,6 +97,10 @@ struct ActivityFeedList: View {
             return GGColors.error
         case .activity:
             return isNightMode ? GGColors.secondaryDim : GGColors.secondary
+        case .sleep:
+            return isNightMode ? GGColors.secondaryDim : GGColors.secondary
+        case .other:
+            return isNightMode ? GGColors.tertiaryDim : GGColors.tertiary
         }
     }
 }

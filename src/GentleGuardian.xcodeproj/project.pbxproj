@@ -22,6 +22,7 @@
 		135E602AE305E606061BF959 /* View+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09E792AE2861D3AC375D997 /* View+Platform.swift */; };
 		141BB847768331DB0F5B9028 /* DiaperColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557B9B39242212F3DEF160D7 /* DiaperColor.swift */; };
 		155A6D9553F1A9F9EE221905 /* JoinFamilyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3DDE3274C7D2F36F17F242 /* JoinFamilyViewModel.swift */; };
+		155C33A41ECE2D868BB345BC /* LogSleepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA37D7B6811AC8DFE4773ABB /* LogSleepViewModel.swift */; };
 		16348B1595D50E24A48D53B6 /* HeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D16B97BE437AEAC58A26DA9 /* HeightUnit.swift */; };
 		1C96D68C352C4AA780DAEF9D /* GGElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C0BAC8416E62CC052D21AD /* GGElevation.swift */; };
 		2006B01720381FD1955297C6 /* ActivityRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4328C7CDEB58D9212E13BE17 /* ActivityRepositoryTests.swift */; };
@@ -35,6 +36,7 @@
 		27E2240D8DD6BE0785048070 /* gental-gardian-icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 67643C618B2BFF518B8E17F1 /* gental-gardian-icon.icon */; };
 		2D5C01A10B9ED0745E27C0A7 /* GGSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1823001F43C3524D5D623B /* GGSpacing.swift */; };
 		2D8B927D7B6C309A9964A7B3 /* ChildRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C65E96607C0A0803D62EE6B /* ChildRepositoryTests.swift */; };
+		30B4FC888DD9B21A52DB31DC /* OtherEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16748059E633C16A54E3ACB1 /* OtherEventTests.swift */; };
 		36273E3A524982E1431DC5F9 /* GGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B39D97E6CE9BC166FD258A /* GGTextField.swift */; };
 		366B1283BF89D914EA6F5FCF /* ActivityFeedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1208B8A23A088D9A9FFC6A4 /* ActivityFeedList.swift */; };
 		36BF22B8AED8E0103549F97B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F960690639A1DB0F26F42F0 /* HomeView.swift */; };
@@ -56,6 +58,8 @@
 		56A609B1282904AC3D8D6604 /* QuantityUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A013F61775E8737B7D7B83 /* QuantityUnit.swift */; };
 		59C6FC2C4D9CB57FF3E2D179 /* HealthEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBEF51FDB673D0A12E6DA69 /* HealthEvent.swift */; };
 		5E391CAF484CD8F67E4AC6A3 /* EventCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DCE8F6FF28F90C10706F2B /* EventCategory.swift */; };
+		603B5A74EB2E043D9F51583B /* LogOtherViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75B466AFF479C771F213BBB /* LogOtherViewModelTests.swift */; };
+		61661F392EB64863B0250F77 /* SleepEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201DDA9D367D9EBDFEF692A3 /* SleepEvent.swift */; };
 		65573B2A1B7D6C4AB74A1D22 /* LogBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A55378B980A7AA8A03F10C /* LogBottleView.swift */; };
 		673179268B1325A2FF3E7763 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFEB5C54C21E6C46D7B73C5 /* DateService.swift */; };
 		68C0924087FC3FF243598431 /* GGGradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A0EA932BC3780969A77E06 /* GGGradientBackground.swift */; };
@@ -67,6 +71,8 @@
 		70151EA00288615D6154CA28 /* FeedingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F9763F0C931E6428778EC2 /* FeedingType.swift */; };
 		76153D12BB5FE676AE404FFD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F795CEFD1CA1EF5CD192B26 /* ContentView.swift */; };
 		76A0F86B18904D5F1A80CAB4 /* QueryHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0477343D504830AD65B74E20 /* QueryHelpers.swift */; };
+		7A062336D1E628E365162762 /* LogOtherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08EA1CC10D8B56B808B3282 /* LogOtherView.swift */; };
+		7A5BCB6E7E2A525A2891DEDB /* LogSleepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B36AAAADAE4352D42C5048E /* LogSleepView.swift */; };
 		7B43B881E19E7C2821F92147 /* CustomItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94AE6E2281D35D794060507 /* CustomItemRepository.swift */; };
 		7BCB73ABEC4F67564EEE9F0D /* HealthEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F811C8E510C441D86720188 /* HealthEventTests.swift */; };
 		7E9F0D96F13E846FF496D55C /* DiaperQuantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1250A0DEC2BA90424CB4C54F /* DiaperQuantity.swift */; };
@@ -84,6 +90,7 @@
 		904AB1BDA061CAA83E07389F /* GGNightModeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */; };
 		94375443142386AD85437B01 /* LogSolidsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653748BE566556698334222A /* LogSolidsView.swift */; };
 		95B0B6E141098175D214C045 /* SummaryStatsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1274D6556A0DC0ACE8633C /* SummaryStatsRow.swift */; };
+		9684C7D068E5EF6537E4D974 /* LogOtherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A154A9E55E31749C76A30C15 /* LogOtherViewModel.swift */; };
 		99E592C25F68EB4730369201 /* DittoManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F97A9A3B961038E4DCEF1E0 /* DittoManaging.swift */; };
 		9C263B503069A0E54B3691BA /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BDF5360D7E33914ED320 /* AppConstants.swift */; };
 		9C47C02A3DCD2205152FF4F6 /* DiaperEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B283D0A4C4B5A214A98AD49 /* DiaperEventTests.swift */; };
@@ -98,6 +105,7 @@
 		A66DE2F1867E709B71A03B57 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C346119499BFF551EB1FDC0 /* TestHelpers.swift */; };
 		A9990C7FFAD37D52CA2B7253 /* TemperatureUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF58F7A011989F6DA5DE2B4A /* TemperatureUnit.swift */; };
 		AD24B0E0C36FB03D125DBAB8 /* RegisterChildViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A4A1E049D618F2ED2FAE9 /* RegisterChildViewModelTests.swift */; };
+		ADD79A53D10063653A2FCB7B /* OtherEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */; };
 		B3060173CAA01BD499EEE14C /* DittoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 73A7E89A43B84AC9A16A8F1E /* DittoSwift */; };
 		B4FB70FAB2B3EC05E74913B1 /* ditto.plist in Resources */ = {isa = PBXBuildFile; fileRef = 039E67C40BAA4694780B569B /* ditto.plist */; };
 		B542BFE8943A60B3781B442D /* InformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C49B34FD9911902848BE88 /* InformationViewModel.swift */; };
@@ -111,6 +119,7 @@
 		BF92E9378AE7A9D146162A94 /* ActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7CF6ADBA0009D715F53134 /* ActivityRepository.swift */; };
 		C35E623EAC004F60E72026FE /* OnboardingE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0E3BD7C126CE512106878F /* OnboardingE2ETests.swift */; };
 		C40345587F8ACA7FDBC7F43B /* PrematurityStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D77C1C64A792C5268560F58 /* PrematurityStatus.swift */; };
+		C443CE391C48C8048CF06752 /* SleepRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3325BBC5A2F687DC8C2676 /* SleepRepository.swift */; };
 		C4F50EB3CB6F0E4A11A366B3 /* SyncCodeDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0317DD016220B3F77740ED2F /* SyncCodeDisplay.swift */; };
 		C50A629284CE9CB8E2FB00C1 /* HomeE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF22941BA285285A27DC3DA /* HomeE2ETests.swift */; };
 		C723B7D65D2190927871CF7A /* GhostBorderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8810FD26EC886B8EAFC85BC /* GhostBorderModifier.swift */; };
@@ -123,6 +132,7 @@
 		D29C22AC8028DBF6A7505F07 /* SyncCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6037803F597ACD5051495765 /* SyncCodeGenerator.swift */; };
 		D3EE8632452C0EB7FD1D3E92 /* ActivityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FAD34793F022662A0B9FC /* ActivityType.swift */; };
 		D44EE07BA9A2F9D3FBD5521D /* HealthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2594678EDD0CBB700033D16 /* HealthRepositoryTests.swift */; };
+		D5063B4D369741905F4C8E33 /* OtherEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A423A5431B0F1C08C963563 /* OtherEvent.swift */; };
 		D70703481FA4CED855BB037D /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F58D16D5EB39356894140 /* WeightUnit.swift */; };
 		D711D925C9D88E64B621D1BC /* NightModeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B2D714D4ACE9FEFD24B029 /* NightModeModifier.swift */; };
 		D9D2FDE60A13C1DA73B0200A /* QuickLogGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211E029AA050E14FA92A78D /* QuickLogGrid.swift */; };
@@ -169,16 +179,19 @@
 		100FB7B39E9957D1B2B7E2CE /* CustomItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemCategory.swift; sourceTree = "<group>"; };
 		1250A0DEC2BA90424CB4C54F /* DiaperQuantity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperQuantity.swift; sourceTree = "<group>"; };
 		12691DCBD2E1F0D0FDA1F2D4 /* DiaperType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperType.swift; sourceTree = "<group>"; };
+		16748059E633C16A54E3ACB1 /* OtherEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEventTests.swift; sourceTree = "<group>"; };
 		17474078A9AD0CC94570D6A1 /* LogEventSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEventSheet.swift; sourceTree = "<group>"; };
 		17A829924D472C53FF04741C /* GGTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGTypography.swift; sourceTree = "<group>"; };
 		190D16715876825A0F6DFC61 /* MockDittoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDittoManager.swift; sourceTree = "<group>"; };
 		1DD646519AB4572B12EF0E9C /* StatusRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusRow.swift; sourceTree = "<group>"; };
 		1E3DDE3274C7D2F36F17F242 /* JoinFamilyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinFamilyViewModel.swift; sourceTree = "<group>"; };
 		1F3B04C67901A7F9603E3BFF /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		201DDA9D367D9EBDFEF692A3 /* SleepEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepEvent.swift; sourceTree = "<group>"; };
 		207629DE75BF761B9F6890AA /* MockRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepositories.swift; sourceTree = "<group>"; };
 		2442A09C0F894410D7637AA7 /* ActiveChildState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveChildState.swift; sourceTree = "<group>"; };
 		24D04D634AB2D4384A7BCABE /* DittoManagerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DittoManagerIntegrationTests.swift; sourceTree = "<group>"; };
 		289D469414AEC3C8646B1344 /* FeedingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedingRepository.swift; sourceTree = "<group>"; };
+		2A423A5431B0F1C08C963563 /* OtherEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEvent.swift; sourceTree = "<group>"; };
 		353E79310F11334D1E4D4B41 /* HealthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRepository.swift; sourceTree = "<group>"; };
 		36B87AC2EF5AB0B929E4238C /* ChildTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildTests.swift; sourceTree = "<group>"; };
 		3AEB4F90933C48D537A7A652 /* LastFeedingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastFeedingCard.swift; sourceTree = "<group>"; };
@@ -213,10 +226,12 @@
 		66AC5D990319BCF6106B80DC /* SurfaceModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceModifier.swift; sourceTree = "<group>"; };
 		67643C618B2BFF518B8E17F1 /* gental-gardian-icon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "gental-gardian-icon.icon"; sourceTree = "<group>"; };
 		686B22DD5F08CE8F279E091D /* LogDiaperViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDiaperViewModelTests.swift; sourceTree = "<group>"; };
+		6A3325BBC5A2F687DC8C2676 /* SleepRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRepository.swift; sourceTree = "<group>"; };
 		6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGNightModeToggle.swift; sourceTree = "<group>"; };
 		745B2B15CB20F0D7ABF65F19 /* CustomItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemTests.swift; sourceTree = "<group>"; };
 		76C49B34FD9911902848BE88 /* InformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewModel.swift; sourceTree = "<group>"; };
 		7B283D0A4C4B5A214A98AD49 /* DiaperEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperEventTests.swift; sourceTree = "<group>"; };
+		7B36AAAADAE4352D42C5048E /* LogSleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSleepView.swift; sourceTree = "<group>"; };
 		7CEA971BEE2976B6C3675E10 /* LogTemperatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTemperatureView.swift; sourceTree = "<group>"; };
 		8041EF2C923D2F42D36DAA82 /* GentleGuardianTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GentleGuardianTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C22D2E04C6950E738CC90A0 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
@@ -240,12 +255,15 @@
 		9D852E123EFA045C29422F96 /* MedicineUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineUnit.swift; sourceTree = "<group>"; };
 		9F33D44BCFAFFFB2F8AE89CB /* ChildRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildRepository.swift; sourceTree = "<group>"; };
 		9F97A9A3B961038E4DCEF1E0 /* DittoManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DittoManaging.swift; sourceTree = "<group>"; };
+		A154A9E55E31749C76A30C15 /* LogOtherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOtherViewModel.swift; sourceTree = "<group>"; };
 		A7E09C4E149D491BDB36CBD8 /* ActivityEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEvent.swift; sourceTree = "<group>"; };
 		A8810FD26EC886B8EAFC85BC /* GhostBorderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostBorderModifier.swift; sourceTree = "<group>"; };
+		A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEventRepository.swift; sourceTree = "<group>"; };
 		A94AE6E2281D35D794060507 /* CustomItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemRepository.swift; sourceTree = "<group>"; };
 		AC072A25D1C16DFA642AFE75 /* LogActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogActivityViewModel.swift; sourceTree = "<group>"; };
 		ADC0858305CAC49EE4DA7090 /* LogFeedingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFeedingViewModelTests.swift; sourceTree = "<group>"; };
 		AF6506275A111EB328EFF54F /* LogActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogActivityView.swift; sourceTree = "<group>"; };
+		B08EA1CC10D8B56B808B3282 /* LogOtherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOtherView.swift; sourceTree = "<group>"; };
 		B09E792AE2861D3AC375D997 /* View+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Platform.swift"; sourceTree = "<group>"; };
 		B2A0EA932BC3780969A77E06 /* GGGradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGGradientBackground.swift; sourceTree = "<group>"; };
 		B64B686C18FFAC945FA449B3 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
@@ -273,6 +291,7 @@
 		D3DD42C2F54DD685F712A7DC /* SyncCodeGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeGeneratorTests.swift; sourceTree = "<group>"; };
 		D4A55378B980A7AA8A03F10C /* LogBottleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBottleView.swift; sourceTree = "<group>"; };
 		D53B28824CBDB02636EB1FDC /* RepositoryDittoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDittoTests.swift; sourceTree = "<group>"; };
+		D75B466AFF479C771F213BBB /* LogOtherViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOtherViewModelTests.swift; sourceTree = "<group>"; };
 		DAFEF1838F33FC67ECBE4441 /* RegisterChildViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterChildViewModel.swift; sourceTree = "<group>"; };
 		DD2596932B761DB78C91177A /* SummaryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelTests.swift; sourceTree = "<group>"; };
 		DE1274D6556A0DC0ACE8633C /* SummaryStatsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryStatsRow.swift; sourceTree = "<group>"; };
@@ -287,6 +306,7 @@
 		F43F973D291F0DA164299CA7 /* HealthEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventType.swift; sourceTree = "<group>"; };
 		F5124E575C3959454E2B6582 /* JoinFamilyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinFamilyViewModelTests.swift; sourceTree = "<group>"; };
 		F7DCE8F6FF28F90C10706F2B /* EventCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCategory.swift; sourceTree = "<group>"; };
+		FA37D7B6811AC8DFE4773ABB /* LogSleepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSleepViewModel.swift; sourceTree = "<group>"; };
 		FA98DC013E9BBB18587CF964 /* BreastSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreastSide.swift; sourceTree = "<group>"; };
 		FAEB187DFAA91A3614649174 /* EventLoggingE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLoggingE2ETests.swift; sourceTree = "<group>"; };
 		FB222AC79431A40B608004E4 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
@@ -322,6 +342,7 @@
 				7B283D0A4C4B5A214A98AD49 /* DiaperEventTests.swift */,
 				4281E582FDE13BA85F01CACC /* FeedingEventTests.swift */,
 				0F811C8E510C441D86720188 /* HealthEventTests.swift */,
+				16748059E633C16A54E3ACB1 /* OtherEventTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -356,6 +377,8 @@
 				9055B58D31D7D4278F0C7822 /* DiaperEvent.swift */,
 				5BB03AA50F7A8B8064F4302E /* FeedingEvent.swift */,
 				8FBEF51FDB673D0A12E6DA69 /* HealthEvent.swift */,
+				2A423A5431B0F1C08C963563 /* OtherEvent.swift */,
+				201DDA9D367D9EBDFEF692A3 /* SleepEvent.swift */,
 				45458DA70A3D015E295CA762 /* Enums */,
 			);
 			path = Models;
@@ -404,6 +427,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		225BFA115A750A15D274AEF7 /* Sleep */ = {
+			isa = PBXGroup;
+			children = (
+				7B36AAAADAE4352D42C5048E /* LogSleepView.swift */,
+			);
+			path = Sleep;
+			sourceTree = "<group>";
+		};
 		227432C7721FD153540119D6 /* Integration */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +467,7 @@
 				F5124E575C3959454E2B6582 /* JoinFamilyViewModelTests.swift */,
 				686B22DD5F08CE8F279E091D /* LogDiaperViewModelTests.swift */,
 				ADC0858305CAC49EE4DA7090 /* LogFeedingViewModelTests.swift */,
+				D75B466AFF479C771F213BBB /* LogOtherViewModelTests.swift */,
 				C05A4A1E049D618F2ED2FAE9 /* RegisterChildViewModelTests.swift */,
 				DD2596932B761DB78C91177A /* SummaryViewModelTests.swift */,
 			);
@@ -469,6 +501,8 @@
 				044F61E232FDED28D8CCE5CB /* Diaper */,
 				5D70ED19AD2C830666ACDF5B /* Feeding */,
 				7BF5380DB82EF6EDA415578C /* Health */,
+				A079A2BD3A3E3E1567B7D595 /* Other */,
+				225BFA115A750A15D274AEF7 /* Sleep */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -524,6 +558,8 @@
 				553183B0AAECF02CA27293EA /* LogDiaperViewModel.swift */,
 				3ECE51C1D398D7B0D4DC23D1 /* LogFeedingViewModel.swift */,
 				080D386C0AE1443026D9A969 /* LogHealthViewModel.swift */,
+				A154A9E55E31749C76A30C15 /* LogOtherViewModel.swift */,
+				FA37D7B6811AC8DFE4773ABB /* LogSleepViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -690,6 +726,14 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		A079A2BD3A3E3E1567B7D595 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				B08EA1CC10D8B56B808B3282 /* LogOtherView.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		AA1A604F41AF9CD75DC93F4C = {
 			isa = PBXGroup;
 			children = (
@@ -821,6 +865,8 @@
 				CCEC608CCA4A422B17E2EC37 /* DiaperRepository.swift */,
 				289D469414AEC3C8646B1344 /* FeedingRepository.swift */,
 				353E79310F11334D1E4D4B41 /* HealthRepository.swift */,
+				A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */,
+				6A3325BBC5A2F687DC8C2676 /* SleepRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -976,8 +1022,10 @@
 				453ACF2781BA1FA7250FDFA4 /* JoinFamilyViewModelTests.swift in Sources */,
 				E51DC355FC4320C9ED90E581 /* LogDiaperViewModelTests.swift in Sources */,
 				2796B1081C4F3D097D85F8B8 /* LogFeedingViewModelTests.swift in Sources */,
+				603B5A74EB2E043D9F51583B /* LogOtherViewModelTests.swift in Sources */,
 				3ACF4855F1A743008D137946 /* MockDittoManager.swift in Sources */,
 				E60B0214BA5007897DCB80D4 /* MockRepositories.swift in Sources */,
+				30B4FC888DD9B21A52DB31DC /* OtherEventTests.swift in Sources */,
 				6CA4FF01E059C110EA5AE92E /* QueryHelpersTests.swift in Sources */,
 				AD24B0E0C36FB03D125DBAB8 /* RegisterChildViewModelTests.swift in Sources */,
 				2170EDC046BB2926F7FD1283 /* RepositoryDittoTests.swift in Sources */,
@@ -1057,10 +1105,16 @@
 				C992CC18D611CF58EB4A799C /* LogGrowthView.swift in Sources */,
 				CD664717FF5BAFC902AFD993 /* LogHealthViewModel.swift in Sources */,
 				3972378F77272B8205465034 /* LogMedicineView.swift in Sources */,
+				7A062336D1E628E365162762 /* LogOtherView.swift in Sources */,
+				9684C7D068E5EF6537E4D974 /* LogOtherViewModel.swift in Sources */,
+				7A5BCB6E7E2A525A2891DEDB /* LogSleepView.swift in Sources */,
+				155C33A41ECE2D868BB345BC /* LogSleepViewModel.swift in Sources */,
 				94375443142386AD85437B01 /* LogSolidsView.swift in Sources */,
 				8260B37C2BD98A5C4BF539FE /* LogTemperatureView.swift in Sources */,
 				39A9E9D16E159EB5097FBC62 /* MedicineUnit.swift in Sources */,
 				D711D925C9D88E64B621D1BC /* NightModeModifier.swift in Sources */,
+				D5063B4D369741905F4C8E33 /* OtherEvent.swift in Sources */,
+				ADD79A53D10063653A2FCB7B /* OtherEventRepository.swift in Sources */,
 				C40345587F8ACA7FDBC7F43B /* PrematurityStatus.swift in Sources */,
 				EC35CA7D7C950F011850BAEE /* PreviewData.swift in Sources */,
 				56A609B1282904AC3D8D6604 /* QuantityUnit.swift in Sources */,
@@ -1069,6 +1123,8 @@
 				6ADA01D84596AB3E0A1FE0B5 /* RegisterChildView.swift in Sources */,
 				42B98C3EAD215D2ECE17065A /* RegisterChildViewModel.swift in Sources */,
 				80DA839A341067E7DF09406F /* Sex.swift in Sources */,
+				61661F392EB64863B0250F77 /* SleepEvent.swift in Sources */,
+				C443CE391C48C8048CF06752 /* SleepRepository.swift in Sources */,
 				8E8ACE0AE7E014FF774825A0 /* StatusRow.swift in Sources */,
 				8B98682C5A307D081A5BA591 /* String+Extensions.swift in Sources */,
 				95B0B6E141098175D214C045 /* SummaryStatsRow.swift in Sources */,

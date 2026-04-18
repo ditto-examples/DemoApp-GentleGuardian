@@ -75,7 +75,7 @@ struct SyncSubscriptionTests {
         #expect(childIds.contains("child-multi"))
 
         // Verify the expected collection count through AppConstants
-        #expect(AppConstants.Collections.all.count == 6)
+        #expect(AppConstants.Collections.all.count == 8)
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.children))
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.feeding))
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.diaper))

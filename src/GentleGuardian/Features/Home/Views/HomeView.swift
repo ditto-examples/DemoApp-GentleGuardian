@@ -24,6 +24,8 @@ struct HomeView: View {
         diaperRepository: DiaperRepository,
         activityRepository: ActivityRepository,
         healthRepository: HealthRepository,
+        sleepRepository: SleepRepository,
+        otherEventRepository: OtherEventRepository,
         activeChildState: ActiveChildState
     ) {
         _viewModel = State(initialValue: HomeViewModel(
@@ -31,6 +33,8 @@ struct HomeView: View {
             diaperRepository: diaperRepository,
             activityRepository: activityRepository,
             healthRepository: healthRepository,
+            sleepRepository: sleepRepository,
+            otherEventRepository: otherEventRepository,
             activeChildState: activeChildState
         ))
     }

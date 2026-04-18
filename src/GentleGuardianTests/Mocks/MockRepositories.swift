@@ -449,6 +449,134 @@ final class MockCustomItemRepository {
     }
 }
 
+// MARK: - MockSleepRepository
+
+/// Mock SleepRepository for ViewModel tests.
+@Observable
+@MainActor
+final class MockSleepRepository {
+
+    // MARK: - Published State
+
+    var events: [SleepEvent] = []
+
+    // MARK: - Call Tracking
+
+    var observeEventsArgs: (childId: String, date: String)?
+    var insertedEvents: [SleepEvent] = []
+    var updatedEvents: [SleepEvent] = []
+    var softDeletedEventIds: [String] = []
+
+    // MARK: - Configuration
+
+    var shouldThrow = false
+    var mockError: Error = DittoManagerError.queryFailed("Mock repository error")
+
+    // MARK: - Methods
+
+    func observeEvents(childId: String, date: String) {
+        observeEventsArgs = (childId: childId, date: date)
+    }
+
+    func insert(event: SleepEvent) async throws {
+        if shouldThrow { throw mockError }
+        insertedEvents.append(event)
+        events.append(event)
+    }
+
+    func update(event: SleepEvent) async throws {
+        if shouldThrow { throw mockError }
+        updatedEvents.append(event)
+        if let index = events.firstIndex(where: { $0.id == event.id }) {
+            events[index] = event
+        }
+    }
+
+    func softDelete(eventId: String) async throws {
+        if shouldThrow { throw mockError }
+        softDeletedEventIds.append(eventId)
+        events.removeAll { $0.id == eventId }
+    }
+
+    func reset() {
+        events.removeAll()
+        observeEventsArgs = nil
+        insertedEvents.removeAll()
+        updatedEvents.removeAll()
+        softDeletedEventIds.removeAll()
+        shouldThrow = false
+    }
+}
+
+// MARK: - MockOtherEventRepository
+
+/// Mock OtherEventRepository for ViewModel tests.
+@Observable
+@MainActor
+final class MockOtherEventRepository {
+
+    // MARK: - Published State
+
+    var events: [OtherEvent] = []
+
+    // MARK: - Call Tracking
+
+    var observeEventsArgs: (childId: String, date: String)?
+    var insertedEvents: [OtherEvent] = []
+    var updatedEvents: [OtherEvent] = []
+    var softDeletedEventIds: [String] = []
+    var distinctNamesCalled: String?
+
+    // MARK: - Configuration
+
+    var shouldThrow = false
+    var mockError: Error = DittoManagerError.queryFailed("Mock repository error")
+    var mockDistinctNames: [String] = []
+
+    // MARK: - Methods
+
+    func observeEvents(childId: String, date: String) {
+        observeEventsArgs = (childId: childId, date: date)
+    }
+
+    func insert(event: OtherEvent) async throws {
+        if shouldThrow { throw mockError }
+        insertedEvents.append(event)
+        events.append(event)
+    }
+
+    func update(event: OtherEvent) async throws {
+        if shouldThrow { throw mockError }
+        updatedEvents.append(event)
+        if let index = events.firstIndex(where: { $0.id == event.id }) {
+            events[index] = event
+        }
+    }
+
+    func softDelete(eventId: String) async throws {
+        if shouldThrow { throw mockError }
+        softDeletedEventIds.append(eventId)
+        events.removeAll { $0.id == eventId }
+    }
+
+    func distinctNames(childId: String) async throws -> [String] {
+        distinctNamesCalled = childId
+        if shouldThrow { throw mockError }
+        return mockDistinctNames
+    }
+
+    func reset() {
+        events.removeAll()
+        observeEventsArgs = nil
+        insertedEvents.removeAll()
+        updatedEvents.removeAll()
+        softDeletedEventIds.removeAll()
+        distinctNamesCalled = nil
+        shouldThrow = false
+        mockDistinctNames.removeAll()
+    }
+}
+
 // MARK: - ViewModel Protocol Conformances
 
 // These conformances allow mock repositories to be injected into ViewModels
@@ -467,6 +595,13 @@ extension MockActivityRepository: SummaryViewActivityDataSource {}
 
 extension MockHealthRepository: HomeViewHealthDataSource {}
 extension MockHealthRepository: SummaryViewHealthDataSource {}
+
+extension MockSleepRepository: HomeViewSleepDataSource {}
+extension MockSleepRepository: SummaryViewSleepDataSource {}
+
+extension MockOtherEventRepository: HomeViewOtherDataSource {}
+extension MockOtherEventRepository: SummaryViewOtherDataSource {}
+extension MockOtherEventRepository: LogOtherDataSource {}
 
 extension MockChildRepository: JoinFamilyChildDataSource {}
 extension MockChildRepository: RegisterChildDataSource {}

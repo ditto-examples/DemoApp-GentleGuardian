@@ -75,13 +75,13 @@ final class HomeE2ETests: XCTestCase {
         }
 
         // The Quick Log grid should have 6 bubbles:
-        // Feeding, Diaper, Health, Activity, Sleep, Reading Time
+        // Feeding, Diaper, Health, Activity, Sleep, Other
         let feedingBubble = app.staticTexts["Feeding"]
         let diaperBubble = app.staticTexts["Diaper"]
         let healthBubble = app.staticTexts["Health"]
         let activityBubble = app.staticTexts["Activity"]
         let sleepBubble = app.staticTexts["Sleep"]
-        let readingBubble = app.staticTexts["Reading Time"]
+        let otherBubble = app.staticTexts["Other"]
 
         // At least the main categories should be visible
         XCTAssertTrue(feedingBubble.exists, "Quick Log should show Feeding bubble")
@@ -89,7 +89,7 @@ final class HomeE2ETests: XCTestCase {
         XCTAssertTrue(healthBubble.exists, "Quick Log should show Health bubble")
         XCTAssertTrue(activityBubble.exists, "Quick Log should show Activity bubble")
         XCTAssertTrue(sleepBubble.exists, "Quick Log should show Sleep bubble")
-        XCTAssertTrue(readingBubble.exists, "Quick Log should show Reading Time bubble")
+        XCTAssertTrue(otherBubble.exists, "Quick Log should show Other bubble")
     }
 
     func testTappingQuickLogBubbleOpensEventLoggingSheet() {

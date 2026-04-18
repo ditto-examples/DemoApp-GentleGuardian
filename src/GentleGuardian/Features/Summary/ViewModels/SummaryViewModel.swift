@@ -76,6 +76,30 @@ struct TimelineEvent: Identifiable, Sendable {
             detail: event.summary
         )
     }
+
+    /// Creates a TimelineEvent from a SleepEvent.
+    static func from(_ event: SleepEvent) -> TimelineEvent {
+        TimelineEvent(
+            id: event.id,
+            timestamp: event.timestamp,
+            category: .sleep,
+            iconName: "moon.fill",
+            title: "Sleep",
+            detail: event.summary
+        )
+    }
+
+    /// Creates a TimelineEvent from an OtherEvent.
+    static func from(_ event: OtherEvent) -> TimelineEvent {
+        TimelineEvent(
+            id: event.id,
+            timestamp: event.timestamp,
+            category: .other,
+            iconName: "pencil.and.outline",
+            title: event.name,
+            detail: event.summary
+        )
+    }
 }
 
 // MARK: - Repository Protocols for Dependency Injection
@@ -108,12 +132,28 @@ protocol SummaryViewActivityDataSource: AnyObject {
     func observeEvents(childId: String, date: String)
 }
 
+/// Protocol defining the read interface for sleep data needed by SummaryViewModel.
+@MainActor
+protocol SummaryViewSleepDataSource: AnyObject {
+    var events: [SleepEvent] { get }
+    func observeEvents(childId: String, date: String)
+}
+
+/// Protocol defining the read interface for other event data needed by SummaryViewModel.
+@MainActor
+protocol SummaryViewOtherDataSource: AnyObject {
+    var events: [OtherEvent] { get }
+    func observeEvents(childId: String, date: String)
+}
+
 // MARK: - Real Repository Conformances
 
 extension FeedingRepository: SummaryViewFeedingDataSource {}
 extension DiaperRepository: SummaryViewDiaperDataSource {}
 extension HealthRepository: SummaryViewHealthDataSource {}
 extension ActivityRepository: SummaryViewActivityDataSource {}
+extension SleepRepository: SummaryViewSleepDataSource {}
+extension OtherEventRepository: SummaryViewOtherDataSource {}
 
 // MARK: - SummaryViewModel
 
@@ -132,6 +172,8 @@ final class SummaryViewModel {
     private let diaperDataSource: any SummaryViewDiaperDataSource
     private let healthDataSource: any SummaryViewHealthDataSource
     private let activityDataSource: any SummaryViewActivityDataSource
+    private let sleepDataSource: any SummaryViewSleepDataSource
+    private let otherDataSource: any SummaryViewOtherDataSource
     private let activeChildState: ActiveChildState
 
     // MARK: - State
@@ -153,12 +195,16 @@ final class SummaryViewModel {
         diaperRepository: any SummaryViewDiaperDataSource,
         healthRepository: any SummaryViewHealthDataSource,
         activityRepository: any SummaryViewActivityDataSource,
+        sleepRepository: any SummaryViewSleepDataSource,
+        otherEventRepository: any SummaryViewOtherDataSource,
         activeChildState: ActiveChildState
     ) {
         self.feedingDataSource = feedingRepository
         self.diaperDataSource = diaperRepository
         self.healthDataSource = healthRepository
         self.activityDataSource = activityRepository
+        self.sleepDataSource = sleepRepository
+        self.otherDataSource = otherEventRepository
         self.activeChildState = activeChildState
     }
 
@@ -207,13 +253,25 @@ final class SummaryViewModel {
         events.append(contentsOf: diaperDataSource.events.map { TimelineEvent.from($0) })
         events.append(contentsOf: healthDataSource.events.map { TimelineEvent.from($0) })
         events.append(contentsOf: activityDataSource.events.map { TimelineEvent.from($0) })
+        events.append(contentsOf: sleepDataSource.events.map { TimelineEvent.from($0) })
+        events.append(contentsOf: otherDataSource.events.map { TimelineEvent.from($0) })
 
         return events.sorted { $0.timestamp > $1.timestamp }
     }
 
+    /// Total sleep events for the selected day.
+    var totalSleep: Int {
+        sleepDataSource.events.count
+    }
+
+    /// Total other events for the selected day.
+    var totalOther: Int {
+        otherDataSource.events.count
+    }
+
     /// Total number of all events for the selected day.
     var totalEventCount: Int {
-        totalFeedings + totalDiapers + totalActivities + totalHealthEvents
+        totalFeedings + totalDiapers + totalActivities + totalHealthEvents + totalSleep + totalOther
     }
 
     /// A hero stat string for the summary (e.g., total tracked time or event count).
@@ -282,6 +340,8 @@ final class SummaryViewModel {
         diaperDataSource.observeEvents(childId: childId, date: dateString)
         healthDataSource.observeEvents(childId: childId, date: dateString)
         activityDataSource.observeEvents(childId: childId, date: dateString)
+        sleepDataSource.observeEvents(childId: childId, date: dateString)
+        otherDataSource.observeEvents(childId: childId, date: dateString)
     }
 
     private func reloadForSelectedDate() {
@@ -292,5 +352,7 @@ final class SummaryViewModel {
         diaperDataSource.observeEvents(childId: childId, date: dateString)
         healthDataSource.observeEvents(childId: childId, date: dateString)
         activityDataSource.observeEvents(childId: childId, date: dateString)
+        sleepDataSource.observeEvents(childId: childId, date: dateString)
+        otherDataSource.observeEvents(childId: childId, date: dateString)
     }
 }

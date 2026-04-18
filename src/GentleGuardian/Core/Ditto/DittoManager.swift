@@ -158,6 +158,7 @@ actor DittoManager: DittoManaging {
             AppConstants.Collections.diaper,
             AppConstants.Collections.health,
             AppConstants.Collections.activity,
+            AppConstants.Collections.sleep,
             AppConstants.Collections.customItems
         ]
 

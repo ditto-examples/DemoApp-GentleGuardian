@@ -18,6 +18,8 @@ struct ContentView: View {
     let diaperRepository: DiaperRepository
     let healthRepository: HealthRepository
     let activityRepository: ActivityRepository
+    let sleepRepository: SleepRepository
+    let otherEventRepository: OtherEventRepository
 
     // MARK: - State
 
@@ -61,6 +63,8 @@ struct ContentView: View {
                         diaperRepository: diaperRepository,
                         activityRepository: activityRepository,
                         healthRepository: healthRepository,
+                        sleepRepository: sleepRepository,
+                        otherEventRepository: otherEventRepository,
                         activeChildState: activeChildState
                     )
                 }
@@ -74,6 +78,8 @@ struct ContentView: View {
                         diaperRepository: diaperRepository,
                         healthRepository: healthRepository,
                         activityRepository: activityRepository,
+                        sleepRepository: sleepRepository,
+                        otherEventRepository: otherEventRepository,
                         activeChildState: activeChildState
                     )
                 }
@@ -114,6 +120,8 @@ struct ContentView: View {
                     diaperRepository: diaperRepository,
                     activityRepository: activityRepository,
                     healthRepository: healthRepository,
+                    sleepRepository: sleepRepository,
+                    otherEventRepository: otherEventRepository,
                     activeChildState: activeChildState
                 )
             case .summary:
@@ -122,6 +130,8 @@ struct ContentView: View {
                     diaperRepository: diaperRepository,
                     healthRepository: healthRepository,
                     activityRepository: activityRepository,
+                    sleepRepository: sleepRepository,
+                    otherEventRepository: otherEventRepository,
                     activeChildState: activeChildState
                 )
             case .child:

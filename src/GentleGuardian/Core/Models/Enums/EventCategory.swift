@@ -6,6 +6,8 @@ enum EventCategory: String, Codable, CaseIterable, Sendable {
     case diaper
     case health
     case activity
+    case sleep
+    case other
 
     /// Human-readable display name.
     var displayName: String {
@@ -14,16 +16,20 @@ enum EventCategory: String, Codable, CaseIterable, Sendable {
         case .diaper: "Diaper"
         case .health: "Health"
         case .activity: "Activity"
+        case .sleep: "Sleep"
+        case .other: "Other"
         }
     }
 
     /// SF Symbol name for this event category.
     var iconName: String {
         switch self {
-        case .feeding: "baby.bottle.fill"
+        case .feeding: "spoon.serving"
         case .diaper: "humidity.fill"
         case .health: "heart.text.clipboard.fill"
         case .activity: "figure.play"
+        case .sleep: "moon.fill"
+        case .other: "pencil.and.outline"
         }
     }
 
@@ -34,6 +40,8 @@ enum EventCategory: String, Codable, CaseIterable, Sendable {
         case .diaper: AppConstants.Collections.diaper
         case .health: AppConstants.Collections.health
         case .activity: AppConstants.Collections.activity
+        case .sleep: AppConstants.Collections.sleep
+        case .other: AppConstants.Collections.otherEvents
         }
     }
 }

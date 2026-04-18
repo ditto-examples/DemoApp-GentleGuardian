@@ -103,6 +103,10 @@ struct LogEventSheet: View {
             LogMedicineView(childId: childId)
         case .activity:
             LogActivityView(childId: childId)
+        case .sleep:
+            LogSleepView(childId: childId)
+        case .other:
+            LogOtherView(childId: childId)
         }
     }
 
@@ -114,6 +118,8 @@ struct LogEventSheet: View {
         case .diaper: "Poop or pee changes"
         case .health: "Medicine, temperature, or growth"
         case .activity: "Bath, tummy time, and more"
+        case .sleep: "Naps and overnight sleep"
+        case .other: "Track any custom activity"
         }
     }
 

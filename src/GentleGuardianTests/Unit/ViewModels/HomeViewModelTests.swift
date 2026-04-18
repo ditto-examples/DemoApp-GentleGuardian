@@ -67,29 +67,35 @@ struct HomeViewModelTests {
         diaperRepo: MockDiaperRepository? = nil,
         activityRepo: MockActivityRepository? = nil,
         healthRepo: MockHealthRepository? = nil,
+        sleepRepo: MockSleepRepository? = nil,
+        otherRepo: MockOtherEventRepository? = nil,
         activeChildState: ActiveChildState? = nil,
         child: Child? = nil
-    ) -> (HomeViewModel, MockFeedingRepository, MockDiaperRepository, MockActivityRepository, MockHealthRepository) {
+    ) -> (HomeViewModel, MockFeedingRepository, MockDiaperRepository, MockActivityRepository, MockHealthRepository, MockSleepRepository, MockOtherEventRepository) {
         let feedingRepo = feedingRepo ?? MockFeedingRepository()
         let diaperRepo = diaperRepo ?? MockDiaperRepository()
         let activityRepo = activityRepo ?? MockActivityRepository()
         let healthRepo = healthRepo ?? MockHealthRepository()
+        let sleepRepo = sleepRepo ?? MockSleepRepository()
+        let otherRepo = otherRepo ?? MockOtherEventRepository()
         let state = activeChildState ?? makeActiveChildState(with: child)
         let vm = HomeViewModel(
             feedingRepository: feedingRepo,
             diaperRepository: diaperRepo,
             activityRepository: activityRepo,
             healthRepository: healthRepo,
+            sleepRepository: sleepRepo,
+            otherEventRepository: otherRepo,
             activeChildState: state
         )
-        return (vm, feedingRepo, diaperRepo, activityRepo, healthRepo)
+        return (vm, feedingRepo, diaperRepo, activityRepo, healthRepo, sleepRepo, otherRepo)
     }
 
     // MARK: - Greeting Tests
 
     @Test("Greeting returns a non-empty string containing 'Good'")
     func greetingIsNonEmpty() {
-        let (vm, _, _, _, _) = makeViewModel()
+        let (vm, _, _, _, _, _, _) = makeViewModel()
 
         #expect(!vm.greeting.isEmpty)
         #expect(vm.greeting.contains("Good"))
@@ -97,7 +103,7 @@ struct HomeViewModelTests {
 
     @Test("Child first name is nil when no child is selected")
     func childFirstNameNilWhenNoChild() {
-        let (vm, _, _, _, _) = makeViewModel()
+        let (vm, _, _, _, _, _, _) = makeViewModel()
 
         #expect(vm.childFirstName == nil)
     }
@@ -105,7 +111,7 @@ struct HomeViewModelTests {
     @Test("Child first name is populated when child is active")
     func childFirstNamePopulated() {
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
 
         #expect(vm.childFirstName == "Liam")
     }
@@ -113,7 +119,7 @@ struct HomeViewModelTests {
     @Test("Greeting subtitle includes child name when child is active")
     func greetingSubtitleWithChild() {
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
 
         #expect(vm.greetingSubtitle.contains("Liam"))
         #expect(vm.greetingSubtitle.contains("old"))
@@ -121,7 +127,7 @@ struct HomeViewModelTests {
 
     @Test("Greeting subtitle shows welcome when no child")
     func greetingSubtitleNoChild() {
-        let (vm, _, _, _, _) = makeViewModel()
+        let (vm, _, _, _, _, _, _) = makeViewModel()
 
         #expect(vm.greetingSubtitle == "Welcome to Gentle Guardian")
     }
@@ -131,7 +137,7 @@ struct HomeViewModelTests {
     @Test("Last feeding shows 'No feedings yet' when no data")
     func lastFeedingEmptyState() {
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
 
         #expect(vm.lastFeeding == nil)
         #expect(vm.lastFeedingTypeLabel == "No feedings yet")
@@ -145,7 +151,7 @@ struct HomeViewModelTests {
         let feedingRepo = MockFeedingRepository()
         feedingRepo.latestEvent = makeSampleFeeding(formulaType: "Similac")
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(vm.lastFeedingTypeLabel == "Similac Bottle")
         #expect(vm.lastFeedingTimeString != "--")
@@ -157,7 +163,7 @@ struct HomeViewModelTests {
         let feedingRepo = MockFeedingRepository()
         feedingRepo.latestEvent = makeSampleFeeding(formulaType: nil)
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(vm.lastFeedingTypeLabel == "Bottle")
     }
@@ -167,7 +173,7 @@ struct HomeViewModelTests {
         let feedingRepo = MockFeedingRepository()
         feedingRepo.latestEvent = makeSampleFeeding(formulaType: "")
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(vm.lastFeedingTypeLabel == "Bottle")
     }
@@ -183,7 +189,7 @@ struct HomeViewModelTests {
             breastSide: .left
         )
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(vm.lastFeedingTypeLabel == "Breast (Left)")
     }
@@ -199,7 +205,7 @@ struct HomeViewModelTests {
             breastSide: nil
         )
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(vm.lastFeedingTypeLabel == "Breast")
     }
@@ -214,7 +220,7 @@ struct HomeViewModelTests {
             solidType: "Banana"
         )
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(vm.lastFeedingTypeLabel == "Banana")
     }
@@ -229,7 +235,7 @@ struct HomeViewModelTests {
             solidType: nil
         )
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(vm.lastFeedingTypeLabel == "Solid Food")
     }
@@ -243,7 +249,7 @@ struct HomeViewModelTests {
             formulaType: "Formula"
         )
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         #expect(!vm.lastFeedingDetail.isEmpty)
         #expect(vm.lastFeedingDetail.contains("oz"))
@@ -254,7 +260,7 @@ struct HomeViewModelTests {
     @Test("Diaper status shows 'No data' when no events")
     func diaperEmptyState() {
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
 
         #expect(vm.diaperStatusLabel == "No data")
         #expect(vm.diaperRelativeTime == "")
@@ -265,7 +271,7 @@ struct HomeViewModelTests {
         let diaperRepo = MockDiaperRepository()
         diaperRepo.latestEvent = makeSampleDiaper()
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(diaperRepo: diaperRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(diaperRepo: diaperRepo, child: child)
 
         #expect(vm.diaperStatusLabel == "Clean")
         #expect(!vm.diaperRelativeTime.isEmpty)
@@ -293,7 +299,7 @@ struct HomeViewModelTests {
         let healthRepo = MockHealthRepository()
 
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(
+        let (vm, _, _, _, _, _, _) = makeViewModel(
             feedingRepo: feedingRepo,
             diaperRepo: diaperRepo,
             activityRepo: activityRepo,
@@ -310,7 +316,7 @@ struct HomeViewModelTests {
     @Test("Today counts are zero when no events")
     func todayCountsEmpty() {
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
 
         #expect(vm.todayFeedingCount == 0)
         #expect(vm.todayDiaperCount == 0)
@@ -326,12 +332,16 @@ struct HomeViewModelTests {
         let diaperRepo = MockDiaperRepository()
         let activityRepo = MockActivityRepository()
         let healthRepo = MockHealthRepository()
+        let sleepRepo = MockSleepRepository()
+        let otherRepo = MockOtherEventRepository()
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(
+        let (vm, _, _, _, _, _, _) = makeViewModel(
             feedingRepo: feedingRepo,
             diaperRepo: diaperRepo,
             activityRepo: activityRepo,
             healthRepo: healthRepo,
+            sleepRepo: sleepRepo,
+            otherRepo: otherRepo,
             child: child
         )
 
@@ -344,12 +354,14 @@ struct HomeViewModelTests {
         #expect(diaperRepo.observeLatestArgs == "child-1")
         #expect(activityRepo.observeEventsArgs?.childId == "child-1")
         #expect(healthRepo.observeEventsArgs?.childId == "child-1")
+        #expect(sleepRepo.observeEventsArgs?.childId == "child-1")
+        #expect(otherRepo.observeEventsArgs?.childId == "child-1")
     }
 
     @Test("onAppear does nothing when no active child")
     func onAppearNoChild() {
         let feedingRepo = MockFeedingRepository()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo)
 
         vm.onAppear()
 
@@ -360,7 +372,7 @@ struct HomeViewModelTests {
     @Test("onAppear sets todayString")
     func onAppearSetsTodayString() {
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
 
         vm.onAppear()
 
@@ -381,7 +393,7 @@ struct HomeViewModelTests {
         let state = ActiveChildState(userDefaults: UserDefaults(suiteName: UUID().uuidString)!)
         state.updateChildren([child1, child2])
 
-        let (vm, _, _, _, _) = makeViewModel(
+        let (vm, _, _, _, _, _, _) = makeViewModel(
             feedingRepo: feedingRepo,
             activeChildState: state
         )
@@ -400,7 +412,7 @@ struct HomeViewModelTests {
     func onChildChangedSameChild() {
         let feedingRepo = MockFeedingRepository()
         let child = makeSampleChild()
-        let (vm, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
 
         vm.onAppear()
         feedingRepo.observeEventsArgs = nil // Reset tracking
@@ -413,7 +425,7 @@ struct HomeViewModelTests {
 
     @Test("Quick log tapped sets selectedEventCategory")
     func quickLogSetsCategory() {
-        let (vm, _, _, _, _) = makeViewModel()
+        let (vm, _, _, _, _, _, _) = makeViewModel()
 
         #expect(vm.selectedEventCategory == nil)
 
@@ -432,10 +444,73 @@ struct HomeViewModelTests {
 
     // MARK: - Sleep Duration Tests
 
-    @Test("Sleep duration label returns placeholder")
-    func sleepDurationIsPlaceholder() {
-        let (vm, _, _, _, _) = makeViewModel()
+    @Test("Sleep duration shows 'No data' when no sleep events")
+    func sleepDurationNoData() {
+        let (vm, _, _, _, _, _, _) = makeViewModel()
 
-        #expect(vm.sleepDurationLabel == "9h 12m")
+        #expect(vm.sleepDurationLabel == "No data")
+    }
+
+    @Test("Sleep duration shows minutes when under 60")
+    func sleepDurationMinutesOnly() {
+        let sleepRepo = MockSleepRepository()
+        let now = Date()
+        sleepRepo.events = [
+            SleepEvent(childId: "child-1", startTime: now.addingTimeInterval(-2700), endTime: now)
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(sleepRepo: sleepRepo, child: child)
+
+        #expect(vm.sleepDurationLabel == "45m")
+    }
+
+    @Test("Sleep duration shows hours and minutes when over 60")
+    func sleepDurationHoursAndMinutes() {
+        let sleepRepo = MockSleepRepository()
+        let now = Date()
+        sleepRepo.events = [
+            SleepEvent(childId: "child-1", startTime: now.addingTimeInterval(-5400), endTime: now.addingTimeInterval(-3600)),
+            SleepEvent(childId: "child-1", startTime: now.addingTimeInterval(-3600), endTime: now)
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(sleepRepo: sleepRepo, child: child)
+
+        #expect(vm.sleepDurationLabel == "1h 30m")
+    }
+
+    @Test("Sleep duration shows hours only when exactly divisible")
+    func sleepDurationExactHours() {
+        let sleepRepo = MockSleepRepository()
+        let now = Date()
+        sleepRepo.events = [
+            SleepEvent(childId: "child-1", startTime: now.addingTimeInterval(-7200), endTime: now)
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(sleepRepo: sleepRepo, child: child)
+
+        #expect(vm.sleepDurationLabel == "2h")
+    }
+
+    // MARK: - Other Event Count Tests
+
+    @Test("Today other count reflects repository event array")
+    func todayOtherCount() {
+        let otherRepo = MockOtherEventRepository()
+        otherRepo.events = [
+            OtherEvent(id: "o1", childId: "child-1", name: "Massage"),
+            OtherEvent(id: "o2", childId: "child-1", name: "Music class"),
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(otherRepo: otherRepo, child: child)
+
+        #expect(vm.todayOtherCount == 2)
+    }
+
+    @Test("Today other count is zero when no events")
+    func todayOtherCountEmpty() {
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
+
+        #expect(vm.todayOtherCount == 0)
     }
 }

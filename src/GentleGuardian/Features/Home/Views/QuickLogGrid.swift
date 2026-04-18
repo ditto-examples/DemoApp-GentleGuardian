@@ -10,7 +10,7 @@ struct QuickLogGrid: View {
 
     var body: some View {
         GGQuickLogGrid(bubbles: [
-            .init("Feeding", icon: "baby.bottle.fill", tintColor: GGColors.primary) {
+            .init("Feeding", icon: "spoon.serving", tintColor: GGColors.primary) {
                 onCategoryTapped(.feeding)
             },
             .init("Diaper", icon: "humidity.fill", tintColor: GGColors.tertiary) {
@@ -23,11 +23,10 @@ struct QuickLogGrid: View {
                 onCategoryTapped(.activity)
             },
             .init("Sleep", icon: "moon.fill", tintColor: GGColors.onSurfaceVariant) {
-                // Sleep is a placeholder - no tracked category yet.
-                // Could map to activity in the future.
+                onCategoryTapped(.sleep)
             },
-            .init("Reading", icon: "book.fill", tintColor: GGColors.primary) {
-                onCategoryTapped(.activity)
+            .init("Other", icon: "pencil.and.outline", tintColor: GGColors.tertiary) {
+                onCategoryTapped(.other)
             },
         ])
         .accessibilityIdentifier("quick-log-grid")

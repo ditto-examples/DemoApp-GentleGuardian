@@ -35,12 +35,28 @@ protocol HomeViewHealthDataSource: AnyObject {
     func observeEvents(childId: String, date: String)
 }
 
+/// Protocol defining the read interface for sleep data needed by HomeViewModel.
+@MainActor
+protocol HomeViewSleepDataSource: AnyObject {
+    var events: [SleepEvent] { get }
+    func observeEvents(childId: String, date: String)
+}
+
+/// Protocol defining the read interface for other event data needed by HomeViewModel.
+@MainActor
+protocol HomeViewOtherDataSource: AnyObject {
+    var events: [OtherEvent] { get }
+    func observeEvents(childId: String, date: String)
+}
+
 // MARK: - Real Repository Conformances
 
 extension FeedingRepository: HomeViewFeedingDataSource {}
 extension DiaperRepository: HomeViewDiaperDataSource {}
 extension ActivityRepository: HomeViewActivityDataSource {}
 extension HealthRepository: HomeViewHealthDataSource {}
+extension SleepRepository: HomeViewSleepDataSource {}
+extension OtherEventRepository: HomeViewOtherDataSource {}
 
 // MARK: - HomeViewModel
 
@@ -58,6 +74,8 @@ final class HomeViewModel {
     private let diaperDataSource: any HomeViewDiaperDataSource
     private let activityDataSource: any HomeViewActivityDataSource
     private let healthDataSource: any HomeViewHealthDataSource
+    private let sleepDataSource: any HomeViewSleepDataSource
+    private let otherDataSource: any HomeViewOtherDataSource
     private let activeChildState: ActiveChildState
 
     // MARK: - State
@@ -78,12 +96,16 @@ final class HomeViewModel {
         diaperRepository: any HomeViewDiaperDataSource,
         activityRepository: any HomeViewActivityDataSource,
         healthRepository: any HomeViewHealthDataSource,
+        sleepRepository: any HomeViewSleepDataSource,
+        otherEventRepository: any HomeViewOtherDataSource,
         activeChildState: ActiveChildState
     ) {
         self.feedingDataSource = feedingRepository
         self.diaperDataSource = diaperRepository
         self.activityDataSource = activityRepository
         self.healthDataSource = healthRepository
+        self.sleepDataSource = sleepRepository
+        self.otherDataSource = otherEventRepository
         self.activeChildState = activeChildState
     }
 
@@ -180,9 +202,21 @@ final class HomeViewModel {
         diaperDataSource.events.count
     }
 
-    /// Placeholder sleep duration string.
+    /// Total sleep duration for today, formatted as hours and minutes.
     var sleepDurationLabel: String {
-        "9h 12m"
+        let totalMinutes = sleepDataSource.events.reduce(0) { $0 + $1.durationMinutes }
+        if totalMinutes == 0 {
+            return "No data"
+        }
+        if totalMinutes >= 60 {
+            let hours = totalMinutes / 60
+            let minutes = totalMinutes % 60
+            if minutes > 0 {
+                return "\(hours)h \(minutes)m"
+            }
+            return "\(hours)h"
+        }
+        return "\(totalMinutes)m"
     }
 
     /// Total activities for today.
@@ -193,6 +227,11 @@ final class HomeViewModel {
     /// Total health events for today.
     var todayHealthCount: Int {
         healthDataSource.events.count
+    }
+
+    /// Total other events for today.
+    var todayOtherCount: Int {
+        otherDataSource.events.count
     }
 
     // MARK: - Actions
@@ -227,6 +266,8 @@ final class HomeViewModel {
         diaperDataSource.observeEvents(childId: childId, date: todayString)
         activityDataSource.observeEvents(childId: childId, date: todayString)
         healthDataSource.observeEvents(childId: childId, date: todayString)
+        sleepDataSource.observeEvents(childId: childId, date: todayString)
+        otherDataSource.observeEvents(childId: childId, date: todayString)
 
         // Observe latest events (across all dates) for hero card
         feedingDataSource.observeLatestFeeding(childId: childId)

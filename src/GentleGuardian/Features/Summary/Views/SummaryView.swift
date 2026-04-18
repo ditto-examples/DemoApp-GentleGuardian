@@ -26,6 +26,8 @@ struct SummaryView: View {
         diaperRepository: DiaperRepository,
         healthRepository: HealthRepository,
         activityRepository: ActivityRepository,
+        sleepRepository: SleepRepository,
+        otherEventRepository: OtherEventRepository,
         activeChildState: ActiveChildState
     ) {
         _viewModel = State(initialValue: SummaryViewModel(
@@ -33,6 +35,8 @@ struct SummaryView: View {
             diaperRepository: diaperRepository,
             healthRepository: healthRepository,
             activityRepository: activityRepository,
+            sleepRepository: sleepRepository,
+            otherEventRepository: otherEventRepository,
             activeChildState: activeChildState
         ))
     }
