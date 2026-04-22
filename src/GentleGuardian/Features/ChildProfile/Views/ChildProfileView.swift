@@ -78,6 +78,22 @@ struct ChildProfileView: View {
                     )
                 }
 
+                // Vaccination settings
+                VaccinationSettingsCard(
+                    isTrackingEnabled: Binding(
+                        get: { viewModel.editIsVaccinationTrackingEnabled },
+                        set: { viewModel.editIsVaccinationTrackingEnabled = $0 }
+                    ),
+                    selectedRegion: Binding(
+                        get: { viewModel.editVaccinationRegion },
+                        set: { viewModel.editVaccinationRegion = $0 }
+                    ),
+                    selectedCountryCode: Binding(
+                        get: { viewModel.editVaccinationCountryCode },
+                        set: { viewModel.editVaccinationCountryCode = $0 }
+                    )
+                )
+
                 // Error message
                 if let error = viewModel.errorMessage {
                     errorBanner(message: error)

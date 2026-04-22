@@ -40,6 +40,15 @@ final class ChildProfileViewModel {
     /// Editable tracking day end hour.
     var editDayEndHour: Int = AppConstants.defaultDayEndHour
 
+    /// Editable vaccination tracking toggle.
+    var editIsVaccinationTrackingEnabled: Bool = false
+
+    /// Editable vaccination region.
+    var editVaccinationRegion: VaccinationRegion = .usa
+
+    /// Editable vaccination country code.
+    var editVaccinationCountryCode: String = "US"
+
     // MARK: - UI State
 
     /// Whether a save operation is in progress.
@@ -66,6 +75,9 @@ final class ChildProfileViewModel {
             || (editIsPremature && editPrematurityWeeks != (child.prematurityWeeks ?? 37))
             || editDayStartHour != child.dayStartHour
             || editDayEndHour != child.dayEndHour
+            || editIsVaccinationTrackingEnabled != child.isVaccinationTrackingEnabled
+            || editVaccinationRegion.rawValue != (child.vaccinationRegion ?? VaccinationRegion.usa.rawValue)
+            || editVaccinationCountryCode != (child.vaccinationCountry ?? "US")
     }
 
     /// Whether the form is valid for saving.
@@ -129,6 +141,9 @@ final class ChildProfileViewModel {
         editPrematurityWeeks = child.prematurityWeeks ?? 37
         editDayStartHour = child.dayStartHour
         editDayEndHour = child.dayEndHour
+        editIsVaccinationTrackingEnabled = child.isVaccinationTrackingEnabled
+        editVaccinationRegion = VaccinationRegion(rawValue: child.vaccinationRegion ?? "") ?? .usa
+        editVaccinationCountryCode = child.vaccinationCountry ?? "US"
     }
 
     /// Saves the edited profile back to the repository.
@@ -146,6 +161,9 @@ final class ChildProfileViewModel {
         updatedChild.prematurityStatus = computedPrematurityStatus
         updatedChild.dayStartHour = editDayStartHour
         updatedChild.dayEndHour = editDayEndHour
+        updatedChild.isVaccinationTrackingEnabled = editIsVaccinationTrackingEnabled
+        updatedChild.vaccinationRegion = editIsVaccinationTrackingEnabled ? editVaccinationRegion.rawValue : nil
+        updatedChild.vaccinationCountry = editIsVaccinationTrackingEnabled ? (editVaccinationRegion == .usa ? "US" : editVaccinationCountryCode) : nil
 
         do {
             try await childRepository.update(child: updatedChild)

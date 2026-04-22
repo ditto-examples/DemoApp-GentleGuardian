@@ -23,6 +23,7 @@ struct GentleGuardianApp: App {
     @State private var activityRepository: ActivityRepository
     @State private var sleepRepository: SleepRepository
     @State private var otherEventRepository: OtherEventRepository
+    @State private var vaccinationRepository: VaccinationRepository
 
     /// Tracks whether Ditto initialization has completed.
     @State private var isInitialized = false
@@ -40,6 +41,7 @@ struct GentleGuardianApp: App {
         _activityRepository = State(initialValue: ActivityRepository(dittoManager: manager))
         _sleepRepository = State(initialValue: SleepRepository(dittoManager: manager))
         _otherEventRepository = State(initialValue: OtherEventRepository(dittoManager: manager))
+        _vaccinationRepository = State(initialValue: VaccinationRepository(dittoManager: manager))
     }
 
     // MARK: - Body
@@ -64,7 +66,8 @@ struct GentleGuardianApp: App {
                         healthRepository: healthRepository,
                         activityRepository: activityRepository,
                         sleepRepository: sleepRepository,
-                        otherEventRepository: otherEventRepository
+                        otherEventRepository: otherEventRepository,
+                        vaccinationRepository: vaccinationRepository
                     )
                 }
             }

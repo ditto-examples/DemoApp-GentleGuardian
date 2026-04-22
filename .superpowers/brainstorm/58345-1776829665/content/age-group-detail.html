@@ -1,0 +1,174 @@
+<h2>Age Group Detail — When User Taps an Age Milestone</h2>
+<p class="subtitle">After tapping "2 Months" from the collapsed list, this is what they see. How should the log interaction work?</p>
+
+<div class="cards">
+  <!-- Option A: Detail page with sheet -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);">
+      <div style="background: #0f1923; border-radius: 16px; padding: 16px; max-width: 320px; margin: 0 auto; font-family: -apple-system, sans-serif; color: #e0e0e0;">
+        <!-- Nav bar -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <div style="color: #2dd4a8; font-size: 14px;">&larr; Back</div>
+          <div style="font-size: 16px; font-weight: 600; color: #fff;">2 Months</div>
+          <div style="width: 40px;"></div>
+        </div>
+
+        <!-- Age context -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 14px; text-align: center;">
+          <div style="font-size: 12px; color: #8fa8b8;">Recommended at</div>
+          <div style="font-size: 18px; font-weight: 700; color: #fff;">2 months old</div>
+          <div style="font-size: 12px; color: #8fa8b8; margin-top: 2px;">Sandra was 2m on May 15, 2026</div>
+        </div>
+
+        <!-- Completed vaccine -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2dd4a8; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #0d1b2a; flex-shrink: 0;">&#10003;</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">DTaP <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 12px; color: #8fa8b8;">Diphtheria, Tetanus, Pertussis</div>
+              <div style="font-size: 11px; color: #2dd4a8; margin-top: 3px;">&#10003; May 18, 2026 &middot; at 2m 3d old</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2dd4a8; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #0d1b2a; flex-shrink: 0;">&#10003;</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">IPV <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 12px; color: #8fa8b8;">Inactivated Poliovirus</div>
+              <div style="font-size: 11px; color: #2dd4a8; margin-top: 3px;">&#10003; May 18, 2026 &middot; at 2m 3d old</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending vaccine -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px; border-left: 3px solid #ff6b6b;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2a3a4a; border: 2px solid #ff6b6b; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #ff6b6b; flex-shrink: 0;">!</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">Rotavirus <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 12px; color: #8fa8b8;">RV1 or RV5</div>
+              <div style="font-size: 11px; color: #ff6b6b; margin-top: 3px;">Not recorded &middot; overdue</div>
+            </div>
+            <div style="background: #2dd4a8; color: #0d1b2a; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 8px; flex-shrink: 0;">Log</div>
+          </div>
+        </div>
+
+        <!-- Another pending -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px; border-left: 3px solid #ff6b6b;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2a3a4a; border: 2px solid #ff6b6b; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #ff6b6b; flex-shrink: 0;">!</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">PCV15 <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 12px; color: #8fa8b8;">Pneumococcal Conjugate</div>
+              <div style="font-size: 11px; color: #ff6b6b; margin-top: 3px;">Not recorded &middot; overdue</div>
+            </div>
+            <div style="background: #2dd4a8; color: #0d1b2a; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 8px; flex-shrink: 0;">Log</div>
+          </div>
+        </div>
+
+        <!-- Log all button -->
+        <div style="background: linear-gradient(135deg, #2dd4a8 0%, #40bfa0 100%); border-radius: 12px; padding: 14px; text-align: center; margin-top: 14px;">
+          <div style="font-size: 15px; font-weight: 700; color: #0d1b2a;">Log All Remaining (2)</div>
+          <div style="font-size: 11px; color: rgba(0,0,0,0.5); margin-top: 2px;">Record multiple vaccines from one visit</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Individual + Batch Logging</h3>
+      <p>Each pending vaccine has its own "Log" button for one-at-a-time entry. Plus a "Log All Remaining" button at the bottom for doctor visits where multiple vaccines were given at once — opens a sheet with checkboxes, single date picker, and optional notes.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Batch-first -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);">
+      <div style="background: #0f1923; border-radius: 16px; padding: 16px; max-width: 320px; margin: 0 auto; font-family: -apple-system, sans-serif; color: #e0e0e0;">
+        <!-- Nav bar -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <div style="color: #2dd4a8; font-size: 14px;">&larr; Back</div>
+          <div style="font-size: 16px; font-weight: 600; color: #fff;">2 Months</div>
+          <div style="width: 40px;"></div>
+        </div>
+
+        <!-- Context + Log button together -->
+        <div style="background: linear-gradient(135deg, #2dd4a8 0%, #40bfa0 50%, #60c5d4 100%); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 12px; color: rgba(0,0,0,0.5);">Sandra was 2m on May 15</div>
+              <div style="font-size: 16px; font-weight: 700; color: #0d1b2a;">4 of 6 completed</div>
+            </div>
+            <div style="background: #0d1b2a; color: #2dd4a8; font-size: 13px; font-weight: 700; padding: 10px 18px; border-radius: 10px;">+ Log Visit</div>
+          </div>
+        </div>
+
+        <!-- All vaccines listed with checkmark states -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2dd4a8; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #0d1b2a; flex-shrink: 0;">&#10003;</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">DTaP <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 11px; color: #2dd4a8;">May 18, 2026 &middot; at 2m 3d</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2dd4a8; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #0d1b2a; flex-shrink: 0;">&#10003;</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">IPV <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 11px; color: #2dd4a8;">May 18, 2026 &middot; at 2m 3d</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2dd4a8; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #0d1b2a; flex-shrink: 0;">&#10003;</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">Hib <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 11px; color: #2dd4a8;">May 18, 2026 &middot; at 2m 3d</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2dd4a8; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #0d1b2a; flex-shrink: 0;">&#10003;</div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">HepB <span style="color: #8fa8b8; font-weight: 400;">(Dose 2)</span></div>
+              <div style="font-size: 11px; color: #2dd4a8;">May 18, 2026 &middot; at 2m 3d</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px; border-left: 3px solid #ff6b6b;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2a3a4a; border: 2px solid #ff6b6b; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">Rotavirus <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 11px; color: #ff6b6b;">Not recorded &middot; overdue</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 6px; border-left: 3px solid #ff6b6b;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: #2a3a4a; border: 2px solid #ff6b6b; flex-shrink: 0;"></div>
+            <div style="flex: 1;">
+              <div style="font-size: 14px; font-weight: 600; color: #fff;">PCV15 <span style="color: #8fa8b8; font-weight: 400;">(Dose 1)</span></div>
+              <div style="font-size: 11px; color: #ff6b6b;">Not recorded &middot; overdue</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Batch-First with "Log Visit"</h3>
+      <p>Single prominent "Log Visit" button at top. Tapping it opens a sheet with all remaining vaccines as checkboxes — check the ones given, pick the date, add notes, save. No per-vaccine log buttons cluttering the list. Simulates the real experience: a doctor visit gives multiple vaccines at once.</p>
+    </div>
+  </div>
+</div>
