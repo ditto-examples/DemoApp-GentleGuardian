@@ -88,7 +88,6 @@
 		8C1908852C21C6634BC33231 /* GGActivityBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977D860721B7F549F8A72F1F /* GGActivityBubble.swift */; };
 		8E8ACE0AE7E014FF774825A0 /* StatusRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646519AB4572B12EF0E9C /* StatusRow.swift */; };
 		8EBED9B31DFDC7E75BA8CC90 /* DiaperConsistency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA61BE1813022B03E2F81B2 /* DiaperConsistency.swift */; };
-		904AB1BDA061CAA83E07389F /* GGNightModeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */; };
 		94375443142386AD85437B01 /* LogSolidsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653748BE566556698334222A /* LogSolidsView.swift */; };
 		95B0B6E141098175D214C045 /* SummaryStatsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1274D6556A0DC0ACE8633C /* SummaryStatsRow.swift */; };
 		9684C7D068E5EF6537E4D974 /* LogOtherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A154A9E55E31749C76A30C15 /* LogOtherViewModel.swift */; };
@@ -227,7 +226,6 @@
 		67643C618B2BFF518B8E17F1 /* gental-gardian-icon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "gental-gardian-icon.icon"; sourceTree = "<group>"; };
 		686B22DD5F08CE8F279E091D /* LogDiaperViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDiaperViewModelTests.swift; sourceTree = "<group>"; };
 		6A3325BBC5A2F687DC8C2676 /* SleepRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRepository.swift; sourceTree = "<group>"; };
-		6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGNightModeToggle.swift; sourceTree = "<group>"; };
 		745B2B15CB20F0D7ABF65F19 /* CustomItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemTests.swift; sourceTree = "<group>"; };
 		76C49B34FD9911902848BE88 /* InformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewModel.swift; sourceTree = "<group>"; };
 		7B283D0A4C4B5A214A98AD49 /* DiaperEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperEventTests.swift; sourceTree = "<group>"; };
@@ -454,7 +452,6 @@
 				980974D37A3E40391D40B453 /* GGCard.swift */,
 				63B4410B2666BDAF0B2EDED3 /* GGGlassBar.swift */,
 				B2A0EA932BC3780969A77E06 /* GGGradientBackground.swift */,
-				6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */,
 				C1B39D97E6CE9BC166FD258A /* GGTextField.swift */,
 			);
 			path = Components;
@@ -1076,7 +1073,6 @@
 				1C96D68C352C4AA780DAEF9D /* GGElevation.swift in Sources */,
 				25B8C523BFE7849770C7C1A2 /* GGGlassBar.swift in Sources */,
 				68C0924087FC3FF243598431 /* GGGradientBackground.swift in Sources */,
-				904AB1BDA061CAA83E07389F /* GGNightModeToggle.swift in Sources */,
 				2D5C01A10B9ED0745E27C0A7 /* GGSpacing.swift in Sources */,
 				36273E3A524982E1431DC5F9 /* GGTextField.swift in Sources */,
 				0678B883244B0C2265ADE63D /* GGTypography.swift in Sources */,
