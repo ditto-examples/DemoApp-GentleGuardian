@@ -20,6 +20,7 @@ struct ContentView: View {
     let activityRepository: ActivityRepository
     let sleepRepository: SleepRepository
     let otherEventRepository: OtherEventRepository
+    let vaccinationRepository: VaccinationRepository
 
     // MARK: - State
 
@@ -93,6 +94,15 @@ struct ContentView: View {
             }
             .accessibilityIdentifier("child-tab")
 
+            if activeChildState.activeChild?.isVaccinationTrackingEnabled == true {
+                Tab("Vaccines", systemImage: "syringe", value: .vaccination) {
+                    NavigationStack {
+                        Text("Vaccination View — Coming Soon")
+                    }
+                }
+                .accessibilityIdentifier("vaccination-tab")
+            }
+
             Tab("Info", systemImage: "info.circle.fill", value: .information) {
                 NavigationStack {
                     InformationView(
@@ -141,6 +151,8 @@ struct ContentView: View {
                     dittoManager: DittoManager.shared,
                     userSettings: userSettings
                 )
+            case .vaccination:
+                Text("Vaccination View — Coming Soon")
             }
         }
     }
@@ -159,6 +171,10 @@ struct ContentView: View {
                         .tag(AppTab.child)
                     Label("Info", systemImage: "info.circle.fill")
                         .tag(AppTab.information)
+                    if activeChildState.activeChild?.isVaccinationTrackingEnabled == true {
+                        Label("Vaccines", systemImage: "syringe")
+                            .tag(AppTab.vaccination)
+                    }
                 }
             }
 
@@ -195,4 +211,5 @@ enum AppTab: String, Hashable {
     case summary
     case child
     case information
+    case vaccination
 }
