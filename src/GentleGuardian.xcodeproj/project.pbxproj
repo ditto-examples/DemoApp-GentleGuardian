@@ -129,6 +129,7 @@
 		C4F50EB3CB6F0E4A11A366B3 /* SyncCodeDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0317DD016220B3F77740ED2F /* SyncCodeDisplay.swift */; };
 		C50A629284CE9CB8E2FB00C1 /* HomeE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF22941BA285285A27DC3DA /* HomeE2ETests.swift */; };
 		C723B7D65D2190927871CF7A /* GhostBorderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8810FD26EC886B8EAFC85BC /* GhostBorderModifier.swift */; };
+		C87A21D046430BC84320822E /* VaccinationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C553EB2CEDEC59CB815ABC4A /* VaccinationRepository.swift */; };
 		C93FDD2D075DF55D17ED6D6F /* HealthEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43F973D291F0DA164299CA7 /* HealthEventType.swift */; };
 		C992CC18D611CF58EB4A799C /* LogGrowthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFB113361FCF6DCA8817464 /* LogGrowthView.swift */; };
 		CA50FE59FB8022F9966E2311 /* VaccinationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9053B9344849C7753502E34E /* VaccinationRecord.swift */; };
@@ -295,6 +296,7 @@
 		C05A4A1E049D618F2ED2FAE9 /* RegisterChildViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterChildViewModelTests.swift; sourceTree = "<group>"; };
 		C1B39D97E6CE9BC166FD258A /* GGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGTextField.swift; sourceTree = "<group>"; };
 		C47D1CF6D7E49CAE5E219AB6 /* ChildProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfileView.swift; sourceTree = "<group>"; };
+		C553EB2CEDEC59CB815ABC4A /* VaccinationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccinationRepository.swift; sourceTree = "<group>"; };
 		C74931F17A20A223289AC0D4 /* GentleGuardianUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GentleGuardianUITests.swift; sourceTree = "<group>"; };
 		C7A9CA3D02EFAE1725AC77A0 /* SummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModel.swift; sourceTree = "<group>"; };
 		C81AB5FFAEEC44563EF4E225 /* DiaperRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperRepositoryTests.swift; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				353E79310F11334D1E4D4B41 /* HealthRepository.swift */,
 				A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */,
 				6A3325BBC5A2F687DC8C2676 /* SleepRepository.swift */,
+				C553EB2CEDEC59CB815ABC4A /* VaccinationRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1165,6 +1168,7 @@
 				0BF5F4113D77BC78C508AD4E /* UserSettings.swift in Sources */,
 				CA50FE59FB8022F9966E2311 /* VaccinationRecord.swift in Sources */,
 				AC1D28D5F57E17403BE8FCB2 /* VaccinationRegion.swift in Sources */,
+				C87A21D046430BC84320822E /* VaccinationRepository.swift in Sources */,
 				82107E11A5AB228F7A6AB210 /* VaccinationSchedule.swift in Sources */,
 				7B84C2E1F0E5304DAEB6FDCE /* VaccinationScheduleService.swift in Sources */,
 				B6BC864A10D20476E2029486 /* VaccineType.swift in Sources */,
