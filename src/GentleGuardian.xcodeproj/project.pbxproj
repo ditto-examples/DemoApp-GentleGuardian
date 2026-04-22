@@ -64,6 +64,7 @@
 		673179268B1325A2FF3E7763 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFEB5C54C21E6C46D7B73C5 /* DateService.swift */; };
 		68C0924087FC3FF243598431 /* GGGradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A0EA932BC3780969A77E06 /* GGGradientBackground.swift */; };
 		6ADA01D84596AB3E0A1FE0B5 /* RegisterChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B670786709B0F11FA6C8640D /* RegisterChildView.swift */; };
+		6B02F1AD6CEAE784FA919B94 /* VaccinationRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26509754D6CAB9278AA7742 /* VaccinationRecordTests.swift */; };
 		6C137E7AD0BD7304ECA3D056 /* LogActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6506275A111EB328EFF54F /* LogActivityView.swift */; };
 		6CA4FF01E059C110EA5AE92E /* QueryHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CA89E0D917B3CB01A3698F /* QueryHelpersTests.swift */; };
 		6D4B2660F56C9B2B222A9A22 /* FeedingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB03AA50F7A8B8064F4302E /* FeedingEvent.swift */; };
@@ -127,6 +128,7 @@
 		C723B7D65D2190927871CF7A /* GhostBorderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8810FD26EC886B8EAFC85BC /* GhostBorderModifier.swift */; };
 		C93FDD2D075DF55D17ED6D6F /* HealthEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43F973D291F0DA164299CA7 /* HealthEventType.swift */; };
 		C992CC18D611CF58EB4A799C /* LogGrowthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFB113361FCF6DCA8817464 /* LogGrowthView.swift */; };
+		CA50FE59FB8022F9966E2311 /* VaccinationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9053B9344849C7753502E34E /* VaccinationRecord.swift */; };
 		CBF8647F50B730A045FE99BB /* LogEventSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17474078A9AD0CC94570D6A1 /* LogEventSheet.swift */; };
 		CCA644BF04D9694403907FCE /* DittoManagerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D04D634AB2D4384A7BCABE /* DittoManagerIntegrationTests.swift */; };
 		CD664717FF5BAFC902AFD993 /* LogHealthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080D386C0AE1443026D9A969 /* LogHealthViewModel.swift */; };
@@ -242,6 +244,7 @@
 		8D16B97BE437AEAC58A26DA9 /* HeightUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightUnit.swift; sourceTree = "<group>"; };
 		8F9B948618B7BD5F282D4C95 /* Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Child.swift; sourceTree = "<group>"; };
 		8FBEF51FDB673D0A12E6DA69 /* HealthEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEvent.swift; sourceTree = "<group>"; };
+		9053B9344849C7753502E34E /* VaccinationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccinationRecord.swift; sourceTree = "<group>"; };
 		90540BE3BD93256F74AF0456 /* DateServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateServiceTests.swift; sourceTree = "<group>"; };
 		9055B58D31D7D4278F0C7822 /* DiaperEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperEvent.swift; sourceTree = "<group>"; };
 		93487CBE85F5B1C22DE8A452 /* VolumeUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeUnit.swift; sourceTree = "<group>"; };
@@ -303,6 +306,7 @@
 		DFFEB5C54C21E6C46D7B73C5 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		E02B16D148A53AA2F62849D8 /* GentleGuardian.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GentleGuardian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E8CE79642B8BAA42EB67E9 /* ActivityEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEventTests.swift; sourceTree = "<group>"; };
+		E26509754D6CAB9278AA7742 /* VaccinationRecordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccinationRecordTests.swift; sourceTree = "<group>"; };
 		E73F6E0E1ECE7694F612F222 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		EF2FD2CFBA563DCF294A0565 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		F032AEC840CEE519A9F1326E /* SummaryE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryE2ETests.swift; sourceTree = "<group>"; };
@@ -383,6 +387,7 @@
 				8FBEF51FDB673D0A12E6DA69 /* HealthEvent.swift */,
 				2A423A5431B0F1C08C963563 /* OtherEvent.swift */,
 				201DDA9D367D9EBDFEF692A3 /* SleepEvent.swift */,
+				9053B9344849C7753502E34E /* VaccinationRecord.swift */,
 				45458DA70A3D015E295CA762 /* Enums */,
 			);
 			path = Models;
@@ -790,6 +795,7 @@
 		CC622AEF3C8F8C1C0F11E578 /* GentleGuardianTests */ = {
 			isa = PBXGroup;
 			children = (
+				E26509754D6CAB9278AA7742 /* VaccinationRecordTests.swift */,
 				227432C7721FD153540119D6 /* Integration */,
 				2D2D8289B8EEE51A84231AEE /* Mocks */,
 				0C8A6D9F408F782E37F6349E /* Unit */,
@@ -1039,6 +1045,7 @@
 				A0506F2907B88BBC61B08E5F /* SyncCodeGeneratorTests.swift in Sources */,
 				088B242DC1C41FB8B5E893D3 /* SyncSubscriptionTests.swift in Sources */,
 				A66DE2F1867E709B71A03B57 /* TestHelpers.swift in Sources */,
+				6B02F1AD6CEAE784FA919B94 /* VaccinationRecordTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1142,6 +1149,7 @@
 				A9990C7FFAD37D52CA2B7253 /* TemperatureUnit.swift in Sources */,
 				00A640782BB871C44F379E15 /* TrackingDaySettings.swift in Sources */,
 				0BF5F4113D77BC78C508AD4E /* UserSettings.swift in Sources */,
+				CA50FE59FB8022F9966E2311 /* VaccinationRecord.swift in Sources */,
 				AC1D28D5F57E17403BE8FCB2 /* VaccinationRegion.swift in Sources */,
 				B6BC864A10D20476E2029486 /* VaccineType.swift in Sources */,
 				135E602AE305E606061BF959 /* View+Platform.swift in Sources */,
