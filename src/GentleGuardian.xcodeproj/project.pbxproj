@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00A640782BB871C44F379E15 /* TrackingDaySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4990B57ACCAEAA787E7B037C /* TrackingDaySettings.swift */; };
 		01278C787EB0EC345CE77E3E /* VolumeUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93487CBE85F5B1C22DE8A452 /* VolumeUnit.swift */; };
+		012C2B2C07BDDB54FF0EFB23 /* LogOtherVaccineSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28DDCEAF489DE941347FEF1 /* LogOtherVaccineSheet.swift */; };
 		065105364FD3C6FFC6BFBDF4 /* JoinFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9F1DCDFEFBE08EA954DE54 /* JoinFamilyView.swift */; };
 		0678B883244B0C2265ADE63D /* GGTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A829924D472C53FF04741C /* GGTypography.swift */; };
 		072A383D1D728D119DC5234B /* DittoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDB55225B7C31CD91923485 /* DittoManager.swift */; };
@@ -19,6 +20,7 @@
 		0B39D097EF855936EA9FC9B2 /* CustomItemRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4E76E15E99957D94E93A4 /* CustomItemRepositoryTests.swift */; };
 		0BF5F4113D77BC78C508AD4E /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C54E29A7DB9C032B94DA2 /* UserSettings.swift */; };
 		0D55F9569941B65A3D3C7B08 /* LogDiaperViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553183B0AAECF02CA27293EA /* LogDiaperViewModel.swift */; };
+		0FC9B4D9EDE602AAF358F0E1 /* AgeGroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99823C6A60C4629923D68BC9 /* AgeGroupDetailView.swift */; };
 		11BB99EBB1B50B3759D8B0AD /* ActivityEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E8CE79642B8BAA42EB67E9 /* ActivityEventTests.swift */; };
 		12CA4A838EFE0BE255B02622 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B732B6441F59D5C495F3E0C3 /* HomeViewModel.swift */; };
 		135E602AE305E606061BF959 /* View+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09E792AE2861D3AC375D997 /* View+Platform.swift */; };
@@ -141,6 +143,7 @@
 		CCA644BF04D9694403907FCE /* DittoManagerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D04D634AB2D4384A7BCABE /* DittoManagerIntegrationTests.swift */; };
 		CD664717FF5BAFC902AFD993 /* LogHealthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080D386C0AE1443026D9A969 /* LogHealthViewModel.swift */; };
 		D0259FAE113887AB8093CC79 /* LogActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC072A25D1C16DFA642AFE75 /* LogActivityViewModel.swift */; };
+		D0A548A98AE5C7C966C5A42C /* VaccinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306C50AE5DBD06E2A032BF49 /* VaccinationView.swift */; };
 		D29C22AC8028DBF6A7505F07 /* SyncCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6037803F597ACD5051495765 /* SyncCodeGenerator.swift */; };
 		D3EE8632452C0EB7FD1D3E92 /* ActivityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FAD34793F022662A0B9FC /* ActivityType.swift */; };
 		D44EE07BA9A2F9D3FBD5521D /* HealthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2594678EDD0CBB700033D16 /* HealthRepositoryTests.swift */; };
@@ -208,6 +211,7 @@
 		24D04D634AB2D4384A7BCABE /* DittoManagerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DittoManagerIntegrationTests.swift; sourceTree = "<group>"; };
 		289D469414AEC3C8646B1344 /* FeedingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedingRepository.swift; sourceTree = "<group>"; };
 		2A423A5431B0F1C08C963563 /* OtherEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEvent.swift; sourceTree = "<group>"; };
+		306C50AE5DBD06E2A032BF49 /* VaccinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccinationView.swift; sourceTree = "<group>"; };
 		31F7C8B0CFBA8643BEC4F11C /* VaccineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineType.swift; sourceTree = "<group>"; };
 		353E79310F11334D1E4D4B41 /* HealthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRepository.swift; sourceTree = "<group>"; };
 		36B87AC2EF5AB0B929E4238C /* ChildTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildTests.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 		97B74EA31952AB2CC14B02AC /* SyncSubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncSubscriptionTests.swift; sourceTree = "<group>"; };
 		980974D37A3E40391D40B453 /* GGCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGCard.swift; sourceTree = "<group>"; };
 		98A013F61775E8737B7D7B83 /* QuantityUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityUnit.swift; sourceTree = "<group>"; };
+		99823C6A60C4629923D68BC9 /* AgeGroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeGroupDetailView.swift; sourceTree = "<group>"; };
 		9A0E3BD7C126CE512106878F /* OnboardingE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingE2ETests.swift; sourceTree = "<group>"; };
 		9B593E19B9163006391E3D27 /* LogMedicineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogMedicineView.swift; sourceTree = "<group>"; };
 		9CD483F034590FA032B6DC74 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -301,6 +306,7 @@
 		BF58F7A011989F6DA5DE2B4A /* TemperatureUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureUnit.swift; sourceTree = "<group>"; };
 		C05A4A1E049D618F2ED2FAE9 /* RegisterChildViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterChildViewModelTests.swift; sourceTree = "<group>"; };
 		C1B39D97E6CE9BC166FD258A /* GGTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGTextField.swift; sourceTree = "<group>"; };
+		C28DDCEAF489DE941347FEF1 /* LogOtherVaccineSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOtherVaccineSheet.swift; sourceTree = "<group>"; };
 		C47D1CF6D7E49CAE5E219AB6 /* ChildProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfileView.swift; sourceTree = "<group>"; };
 		C513CCE5DC554FB17F67C9B4 /* VaccinationSettingsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccinationSettingsCard.swift; sourceTree = "<group>"; };
 		C553EB2CEDEC59CB815ABC4A /* VaccinationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccinationRepository.swift; sourceTree = "<group>"; };
@@ -777,7 +783,10 @@
 		A2CAA0C8721DBEDF3A2D8AD7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				99823C6A60C4629923D68BC9 /* AgeGroupDetailView.swift */,
+				C28DDCEAF489DE941347FEF1 /* LogOtherVaccineSheet.swift */,
 				C513CCE5DC554FB17F67C9B4 /* VaccinationSettingsCard.swift */,
+				306C50AE5DBD06E2A032BF49 /* VaccinationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1112,6 +1121,7 @@
 				366B1283BF89D914EA6F5FCF /* ActivityFeedList.swift in Sources */,
 				BF92E9378AE7A9D146162A94 /* ActivityRepository.swift in Sources */,
 				D3EE8632452C0EB7FD1D3E92 /* ActivityType.swift in Sources */,
+				0FC9B4D9EDE602AAF358F0E1 /* AgeGroupDetailView.swift in Sources */,
 				9C263B503069A0E54B3691BA /* AppConstants.swift in Sources */,
 				3729348B6CF39BA0C384CBB5 /* BreastSide.swift in Sources */,
 				BF0D0A9356B424FB5D050338 /* Child.swift in Sources */,
@@ -1172,6 +1182,7 @@
 				C992CC18D611CF58EB4A799C /* LogGrowthView.swift in Sources */,
 				CD664717FF5BAFC902AFD993 /* LogHealthViewModel.swift in Sources */,
 				3972378F77272B8205465034 /* LogMedicineView.swift in Sources */,
+				012C2B2C07BDDB54FF0EFB23 /* LogOtherVaccineSheet.swift in Sources */,
 				7A062336D1E628E365162762 /* LogOtherView.swift in Sources */,
 				9684C7D068E5EF6537E4D974 /* LogOtherViewModel.swift in Sources */,
 				7A5BCB6E7E2A525A2891DEDB /* LogSleepView.swift in Sources */,
@@ -1210,6 +1221,7 @@
 				82107E11A5AB228F7A6AB210 /* VaccinationSchedule.swift in Sources */,
 				7B84C2E1F0E5304DAEB6FDCE /* VaccinationScheduleService.swift in Sources */,
 				455C7E204385279433F8BE0D /* VaccinationSettingsCard.swift in Sources */,
+				D0A548A98AE5C7C966C5A42C /* VaccinationView.swift in Sources */,
 				090933DB6C514642181914ED /* VaccinationViewModel.swift in Sources */,
 				B6BC864A10D20476E2029486 /* VaccineType.swift in Sources */,
 				135E602AE305E606061BF959 /* View+Platform.swift in Sources */,

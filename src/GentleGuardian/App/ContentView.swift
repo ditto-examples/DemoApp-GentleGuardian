@@ -97,7 +97,7 @@ struct ContentView: View {
             if activeChildState.activeChild?.isVaccinationTrackingEnabled == true {
                 Tab("Vaccines", systemImage: "syringe", value: .vaccination) {
                     NavigationStack {
-                        Text("Vaccination View — Coming Soon")
+                        VaccinationView(vaccinationRepository: vaccinationRepository)
                     }
                 }
                 .accessibilityIdentifier("vaccination-tab")
@@ -152,7 +152,7 @@ struct ContentView: View {
                     userSettings: userSettings
                 )
             case .vaccination:
-                Text("Vaccination View — Coming Soon")
+                VaccinationView(vaccinationRepository: vaccinationRepository)
             }
         }
     }
