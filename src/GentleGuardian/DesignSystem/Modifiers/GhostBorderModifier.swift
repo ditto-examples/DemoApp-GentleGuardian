@@ -14,7 +14,7 @@ struct GhostBorderModifier: ViewModifier {
     let lineWidth: CGFloat
     let opacity: Double
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.colorSchemeContrast) private var contrast
 
     init(
@@ -36,7 +36,7 @@ struct GhostBorderModifier: ViewModifier {
     }
 
     private var borderColor: Color {
-        let baseColor = isNightMode ? GGColors.outlineVariantDim : GGColors.outlineVariant
+        let baseColor = colorScheme == .dark ? GGColors.outlineVariantDark : GGColors.outlineVariant
 
         // Increase opacity for accessibility when system requests increased contrast
         let effectiveOpacity: Double
@@ -99,5 +99,5 @@ extension View {
             .clipShape(RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius, style: .continuous))
     }
     .padding(GGSpacing.lg)
-    .background(GGColors.surfaceDim)
+    .background(GGColors.surfaceDark)
 }

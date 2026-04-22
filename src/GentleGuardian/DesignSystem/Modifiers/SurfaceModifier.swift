@@ -13,7 +13,7 @@ struct SurfaceLevelModifier: ViewModifier {
     let level: SurfaceLevel
     let cornerRadius: CGFloat?
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     init(level: SurfaceLevel, cornerRadius: CGFloat? = nil) {
         self.level = level
@@ -21,7 +21,7 @@ struct SurfaceLevelModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        let bgColor = GGElevation.backgroundColor(for: level, isNightMode: isNightMode)
+        let bgColor = GGElevation.backgroundColor(for: level, colorScheme: colorScheme)
 
         if let cornerRadius {
             content

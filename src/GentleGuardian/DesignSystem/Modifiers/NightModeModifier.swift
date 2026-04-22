@@ -1,62 +1,40 @@
 // NightModeModifier.swift
-// GentleGuardian Design System - Night Mode Environment Modifier
+// GentleGuardian Design System - Color Scheme Environment Modifier
 //
-// Reads night mode state from environment and shifts all GGColors to dim variants.
-// Protects circadian rhythm during nighttime feedings.
-// .nightModeAware() modifier propagates night mode colors to the subtree.
+// Reads the system color scheme and propagates adaptive colors to the subtree.
+// .colorSchemeAware() modifier propagates the correct GGAdaptiveColors.
 
 import SwiftUI
 
-// MARK: - Night Mode Modifier
+// MARK: - Color Scheme Aware Modifier
 
-struct NightModeModifier: ViewModifier {
-    let isNightMode: Bool
-
-    func body(content: Content) -> some View {
-        content
-            .environment(\.isNightMode, isNightMode)
-            .environment(\.ggColors, GGAdaptiveColors(isNightMode: isNightMode))
-            .preferredColorScheme(isNightMode ? .dark : nil)
-    }
-}
-
-// MARK: - Night Mode Aware Modifier (Reads from Environment)
-
-struct NightModeAwareModifier: ViewModifier {
-    @Environment(\.isNightMode) private var isNightMode
+struct ColorSchemeAwareModifier: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
 
     func body(content: Content) -> some View {
         content
-            .environment(\.ggColors, GGAdaptiveColors(isNightMode: isNightMode))
+            .environment(\.ggColors, GGAdaptiveColors(colorScheme: colorScheme))
     }
 }
 
 // MARK: - View Extensions
 
 extension View {
-    /// Sets the night mode state for this view and all descendants.
-    /// Shifts the entire palette to dim tokens for circadian-safe nighttime use.
-    ///
-    /// - Parameter isNightMode: Whether night mode is active.
-    func nightMode(_ isNightMode: Bool) -> some View {
-        self.modifier(NightModeModifier(isNightMode: isNightMode))
-    }
-
-    /// Makes this view respond to the current night mode environment.
-    /// Updates the adaptive color provider based on the current isNightMode state.
+    /// Makes this view respond to the current system color scheme.
+    /// Updates the adaptive color provider based on light/dark mode.
     /// Apply this near the root of your view hierarchy.
-    func nightModeAware() -> some View {
-        self.modifier(NightModeAwareModifier())
+    func colorSchemeAware() -> some View {
+        self.modifier(ColorSchemeAwareModifier())
     }
 }
 
 // MARK: - Previews
 
-#Preview("Night Mode Comparison") {
+#Preview("Color Scheme Comparison") {
     HStack(spacing: 0) {
         // Light mode
         VStack(spacing: GGSpacing.md) {
-            Text("Day Mode")
+            Text("Light Mode")
                 .font(.ggHeadlineMedium)
                 .foregroundStyle(GGColors.onSurface)
 
@@ -75,29 +53,29 @@ extension View {
         .padding(GGSpacing.md)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(GGColors.surface)
-        .nightMode(false)
+        .environment(\.colorScheme, .light)
 
-        // Night mode
+        // Dark mode
         VStack(spacing: GGSpacing.md) {
-            Text("Night Mode")
+            Text("Dark Mode")
                 .font(.ggHeadlineMedium)
-                .foregroundStyle(GGColors.onSurfaceDim)
+                .foregroundStyle(GGColors.onSurfaceDark)
 
             GGCard(style: .hero) {
                 Text("Last Feeding")
                     .font(.ggTitleLarge)
-                    .foregroundStyle(GGColors.onPrimaryDim)
+                    .foregroundStyle(GGColors.onPrimaryDark)
             }
 
             GGCard(style: .standard) {
                 Text("Sleep Log")
                     .font(.ggBodyLarge)
-                    .foregroundStyle(GGColors.onSurfaceDim)
+                    .foregroundStyle(GGColors.onSurfaceDark)
             }
         }
         .padding(GGSpacing.md)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(GGColors.surfaceDim)
-        .nightMode(true)
+        .background(GGColors.surfaceDark)
+        .environment(\.colorScheme, .dark)
     }
 }
