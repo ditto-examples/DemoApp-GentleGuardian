@@ -6,7 +6,7 @@ struct InformationView: View {
 
     // MARK: - Environment
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -212,7 +212,7 @@ struct InformationView: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 
@@ -220,7 +220,7 @@ struct InformationView: View {
 
 private struct PrivacyNoticeSheet: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
@@ -260,7 +260,7 @@ private struct PrivacyNoticeSheet: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 
@@ -268,7 +268,7 @@ private struct PrivacyNoticeSheet: View {
 
 private struct LegalInfoSheet: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
@@ -307,7 +307,7 @@ private struct LegalInfoSheet: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

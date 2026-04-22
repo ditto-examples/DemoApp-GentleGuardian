@@ -10,6 +10,8 @@
 import SwiftUI
 #if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
 // MARK: - Font Registration
@@ -114,8 +116,15 @@ enum GGTypography: Sendable {
 
     /// Attempts to load Plus Jakarta Sans, falls back to system rounded.
     private static func displayFont(size: CGFloat, weight: Font.Weight) -> Font {
+        let isAvailable: Bool
         #if canImport(UIKit)
-        if let _ = UIFont(name: "PlusJakartaSans-Bold", size: size) {
+        isAvailable = UIFont(name: "PlusJakartaSans-Bold", size: size) != nil
+        #elseif canImport(AppKit)
+        isAvailable = NSFont(name: "PlusJakartaSans-Bold", size: size) != nil
+        #else
+        isAvailable = false
+        #endif
+        if isAvailable {
             let fontName: String
             switch weight {
             case .bold: fontName = "PlusJakartaSans-Bold"
@@ -125,15 +134,21 @@ enum GGTypography: Sendable {
             }
             return .custom(fontName, size: size)
         }
-        #endif
         // Fallback: system rounded for friendly, spacious feel
         return .system(size: size, weight: weight, design: .rounded)
     }
 
     /// Attempts to load Be Vietnam Pro, falls back to system default.
     private static func bodyFont(size: CGFloat, weight: Font.Weight) -> Font {
+        let isAvailable: Bool
         #if canImport(UIKit)
-        if let _ = UIFont(name: "BeVietnamPro-Regular", size: size) {
+        isAvailable = UIFont(name: "BeVietnamPro-Regular", size: size) != nil
+        #elseif canImport(AppKit)
+        isAvailable = NSFont(name: "BeVietnamPro-Regular", size: size) != nil
+        #else
+        isAvailable = false
+        #endif
+        if isAvailable {
             let fontName: String
             switch weight {
             case .bold: fontName = "BeVietnamPro-Bold"
@@ -144,7 +159,6 @@ enum GGTypography: Sendable {
             }
             return .custom(fontName, size: size)
         }
-        #endif
         // Fallback: system default for high x-height readability
         return .system(size: size, weight: weight, design: .default)
     }

@@ -12,7 +12,7 @@ import SwiftUI
 struct GGGradientBackground: View {
     let style: GradientStyle
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     init(style: GradientStyle = .hero) {
         self.style = style
@@ -42,8 +42,8 @@ struct GGGradientBackground: View {
     /// Primary-to-primary-container at 15 degrees for hero cards
     private var heroGradient: some View {
         LinearGradient(
-            colors: isNightMode
-                ? [GGColors.primaryContainerDim, GGColors.primaryDim.opacity(0.6)]
+            colors: colorScheme == .dark
+                ? [GGColors.primaryContainerDark, GGColors.primaryDark.opacity(0.6)]
                 : [GGColors.primary, GGColors.primaryContainer],
             startPoint: UnitPoint(x: 0, y: 0.13),
             endPoint: UnitPoint(x: 1, y: 0.87)
@@ -53,8 +53,8 @@ struct GGGradientBackground: View {
     /// A softer version for subtle background areas
     private var subtleGradient: some View {
         LinearGradient(
-            colors: isNightMode
-                ? [GGColors.surfaceContainerDim, GGColors.surfaceDim]
+            colors: colorScheme == .dark
+                ? [GGColors.surfaceContainerDark, GGColors.surfaceDark]
                 : [GGColors.surfaceContainerLow, GGColors.surface],
             startPoint: .top,
             endPoint: .bottom
@@ -64,8 +64,8 @@ struct GGGradientBackground: View {
     /// Tertiary warm accent for celebrations/milestones
     private var warmAccentGradient: some View {
         LinearGradient(
-            colors: isNightMode
-                ? [GGColors.tertiaryContainerDim, GGColors.tertiaryDim.opacity(0.4)]
+            colors: colorScheme == .dark
+                ? [GGColors.tertiaryContainerDark, GGColors.tertiaryDark.opacity(0.4)]
                 : [GGColors.tertiary.opacity(0.15), GGColors.tertiaryContainer.opacity(0.6)],
             startPoint: UnitPoint(x: 0.2, y: 0),
             endPoint: UnitPoint(x: 0.8, y: 1)
@@ -75,8 +75,8 @@ struct GGGradientBackground: View {
     /// Full-screen ambient gradient for onboarding or splash screens
     private var fullScreenGradient: some View {
         LinearGradient(
-            colors: isNightMode
-                ? [GGColors.surfaceDim, GGColors.primaryContainerDim.opacity(0.3), GGColors.surfaceDim]
+            colors: colorScheme == .dark
+                ? [GGColors.surfaceDark, GGColors.primaryContainerDark.opacity(0.3), GGColors.surfaceDark]
                 : [GGColors.surface, GGColors.primaryContainer.opacity(0.2), GGColors.surface],
             startPoint: .topLeading,
             endPoint: .bottomTrailing

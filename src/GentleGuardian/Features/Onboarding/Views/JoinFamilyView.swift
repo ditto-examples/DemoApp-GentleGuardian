@@ -10,7 +10,7 @@ struct JoinFamilyView: View {
 
     @Environment(ActiveChildState.self) private var activeChildState
     @Environment(UserSettings.self) private var userSettings
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     // MARK: - State
@@ -199,15 +199,15 @@ struct JoinFamilyView: View {
             VStack(spacing: GGSpacing.md) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 48))
-                    .foregroundStyle(GGColors.onPrimary)
+                    .foregroundStyle(colors.onPrimary)
 
                 Text("Found \(child.firstName)!")
                     .font(.ggTitleLarge)
-                    .foregroundStyle(GGColors.onPrimary)
+                    .foregroundStyle(colors.onPrimary)
 
                 Text("Joining family circle...")
                     .font(.ggBodyMedium)
-                    .foregroundStyle(GGColors.onPrimary.opacity(0.8))
+                    .foregroundStyle(colors.onPrimary.opacity(0.8))
             }
             .frame(maxWidth: .infinity)
         }
@@ -218,7 +218,7 @@ struct JoinFamilyView: View {
     private func errorBanner(message: String) -> some View {
         HStack(spacing: GGSpacing.sm) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(GGColors.error)
+                .foregroundStyle(colors.error)
 
             Text(message)
                 .font(.ggBodyMedium)
@@ -232,7 +232,7 @@ struct JoinFamilyView: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

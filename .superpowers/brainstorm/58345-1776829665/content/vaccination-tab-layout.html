@@ -1,0 +1,218 @@
+<h2>Vaccination Tab — Layout Options</h2>
+<p class="subtitle">How should the progress summary + checklist be arranged? Both options show the same data — the question is visual structure.</p>
+
+<div class="cards">
+  <!-- Option A: Compact Header -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);">
+      <!-- Phone mockup -->
+      <div style="background: #0f1923; border-radius: 16px; padding: 16px; max-width: 320px; margin: 0 auto; font-family: -apple-system, sans-serif; color: #e0e0e0;">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 12px;">
+          <div style="font-size: 22px; font-weight: 700; color: #fff;">Vaccinations</div>
+          <div style="font-size: 13px; color: #8fa8b8; margin-top: 2px;">Sandra LaBeau &middot; USA (AAP)</div>
+        </div>
+
+        <!-- Progress Card -->
+        <div style="background: linear-gradient(135deg, #2dd4a8 0%, #40bfa0 50%, #60c5d4 100%); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,0,0,0.5);">Progress</div>
+              <div style="font-size: 28px; font-weight: 800; color: #0d1b2a;">12 / 28</div>
+              <div style="font-size: 12px; color: rgba(0,0,0,0.6);">doses completed</div>
+            </div>
+            <div style="width: 60px; height: 60px; border-radius: 50%; border: 4px solid rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; position: relative;">
+              <svg width="60" height="60" style="position: absolute; transform: rotate(-90deg);">
+                <circle cx="30" cy="30" r="26" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="4"/>
+                <circle cx="30" cy="30" r="26" fill="none" stroke="#0d1b2a" stroke-width="4" stroke-dasharray="163" stroke-dashoffset="93" stroke-linecap="round"/>
+              </svg>
+              <span style="font-size: 14px; font-weight: 700; color: #0d1b2a;">43%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <div style="flex: 1; background: #1a2a3a; border-radius: 10px; padding: 10px; text-align: center;">
+            <div style="font-size: 11px; color: #8fa8b8;">Next Due</div>
+            <div style="font-size: 14px; font-weight: 600; color: #2dd4a8;">4 months</div>
+          </div>
+          <div style="flex: 1; background: #1a2a3a; border-radius: 10px; padding: 10px; text-align: center;">
+            <div style="font-size: 11px; color: #8fa8b8;">Overdue</div>
+            <div style="font-size: 14px; font-weight: 600; color: #ff6b6b;">2</div>
+          </div>
+          <div style="flex: 1; background: #1a2a3a; border-radius: 10px; padding: 10px; text-align: center;">
+            <div style="font-size: 11px; color: #8fa8b8;">Up to date</div>
+            <div style="font-size: 14px; font-weight: 600; color: #2dd4a8;">10</div>
+          </div>
+        </div>
+
+        <!-- Age Groups -->
+        <div style="font-size: 13px; color: #8fa8b8; margin-bottom: 8px; font-weight: 600;">Schedule by Age</div>
+
+        <!-- Birth group - completed -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #2dd4a8; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #0d1b2a;">&#10003;</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #fff;">Birth</div>
+                <div style="font-size: 11px; color: #8fa8b8;">2 of 2 doses</div>
+              </div>
+            </div>
+            <div style="font-size: 18px; color: #8fa8b8;">&#8250;</div>
+          </div>
+        </div>
+
+        <!-- 2 months group - partial -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #f0a830; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #0d1b2a;">&#8230;</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #fff;">2 Months</div>
+                <div style="font-size: 11px; color: #f0a830;">4 of 6 doses &middot; 2 remaining</div>
+              </div>
+            </div>
+            <div style="font-size: 18px; color: #8fa8b8;">&#8250;</div>
+          </div>
+        </div>
+
+        <!-- 4 months group - overdue -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #ff6b6b;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #ff6b6b; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff;">!</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #fff;">4 Months</div>
+                <div style="font-size: 11px; color: #ff6b6b;">0 of 6 doses &middot; overdue</div>
+              </div>
+            </div>
+            <div style="font-size: 18px; color: #8fa8b8;">&#8250;</div>
+          </div>
+        </div>
+
+        <!-- 6 months - future -->
+        <div style="background: #1a2a3a; border-radius: 10px; padding: 12px; margin-bottom: 8px; opacity: 0.6;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #2a3a4a; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #8fa8b8;">&#9675;</div>
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: #fff;">6 Months</div>
+                <div style="font-size: 11px; color: #8fa8b8;">0 of 5 doses &middot; upcoming</div>
+              </div>
+            </div>
+            <div style="font-size: 18px; color: #8fa8b8;">&#8250;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Collapsed Age Groups</h3>
+      <p>Each age milestone is a collapsible row showing completion status. Tap to expand and see individual vaccines. Compact — more milestones visible at once. Overdue groups get a red accent.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Expanded Inline -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);">
+      <div style="background: #0f1923; border-radius: 16px; padding: 16px; max-width: 320px; margin: 0 auto; font-family: -apple-system, sans-serif; color: #e0e0e0;">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 12px;">
+          <div style="font-size: 22px; font-weight: 700; color: #fff;">Vaccinations</div>
+          <div style="font-size: 13px; color: #8fa8b8; margin-top: 2px;">Sandra LaBeau &middot; USA (AAP)</div>
+        </div>
+
+        <!-- Progress Card - same -->
+        <div style="background: linear-gradient(135deg, #2dd4a8 0%, #40bfa0 50%, #60c5d4 100%); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,0,0,0.5);">Progress</div>
+              <div style="font-size: 28px; font-weight: 800; color: #0d1b2a;">12 / 28</div>
+              <div style="font-size: 12px; color: rgba(0,0,0,0.6);">doses completed</div>
+            </div>
+            <div style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+              <svg width="60" height="60" style="position: absolute; transform: rotate(-90deg);">
+                <circle cx="30" cy="30" r="26" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="4"/>
+                <circle cx="30" cy="30" r="26" fill="none" stroke="#0d1b2a" stroke-width="4" stroke-dasharray="163" stroke-dashoffset="93" stroke-linecap="round"/>
+              </svg>
+              <span style="font-size: 14px; font-weight: 700; color: #0d1b2a;">43%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Birth Section - Expanded -->
+        <div style="margin-bottom: 14px;">
+          <div style="font-size: 13px; color: #2dd4a8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2dd4a8;"></span>
+            Birth &middot; All Complete
+          </div>
+
+          <div style="background: #1a2a3a; border-radius: 10px; padding: 10px 12px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="color: #2dd4a8; font-size: 14px;">&#10003;</div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: #fff;">Hepatitis B (Dose 1)</div>
+                <div style="font-size: 11px; color: #8fa8b8;">Mar 15, 2026 &middot; at birth</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: #1a2a3a; border-radius: 10px; padding: 10px 12px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="color: #2dd4a8; font-size: 14px;">&#10003;</div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: #fff;">RSV (Nirsevimab)</div>
+                <div style="font-size: 11px; color: #8fa8b8;">Mar 15, 2026 &middot; at birth</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Months - Expanded with mix -->
+        <div style="margin-bottom: 14px;">
+          <div style="font-size: 13px; color: #f0a830; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #f0a830;"></span>
+            2 Months &middot; 4 of 6
+          </div>
+
+          <div style="background: #1a2a3a; border-radius: 10px; padding: 10px 12px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="color: #2dd4a8; font-size: 14px;">&#10003;</div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: #fff;">DTaP (Dose 1)</div>
+                <div style="font-size: 11px; color: #8fa8b8;">May 18, 2026 &middot; at 2m 3d</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: #1a2a3a; border-radius: 10px; padding: 10px 12px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #ff6b6b;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="color: #ff6b6b; font-size: 14px;">&#9675;</div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: #fff;">Rotavirus (Dose 1)</div>
+                <div style="font-size: 11px; color: #ff6b6b;">Not yet recorded &middot; overdue</div>
+              </div>
+            </div>
+            <div style="background: #2dd4a8; color: #0d1b2a; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px;">Log</div>
+          </div>
+
+          <div style="background: #1a2a3a; border-radius: 10px; padding: 10px 12px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #ff6b6b;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="color: #ff6b6b; font-size: 14px;">&#9675;</div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600; color: #fff;">PCV15 (Dose 1)</div>
+                <div style="font-size: 11px; color: #ff6b6b;">Not yet recorded &middot; overdue</div>
+              </div>
+            </div>
+            <div style="background: #2dd4a8; color: #0d1b2a; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px;">Log</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Expanded Inline List</h3>
+      <p>Every vaccine is always visible under its age group header. Completed vaccines show the date and age; pending ones have a "Log" button. More scrolling but no tap-to-expand needed — everything visible at once.</p>
+    </div>
+  </div>
+</div>

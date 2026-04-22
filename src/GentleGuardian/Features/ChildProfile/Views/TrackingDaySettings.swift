@@ -11,7 +11,7 @@ struct TrackingDaySettings: View {
     @Binding var startHour: Int
     @Binding var endHour: Int
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - Body
 
@@ -77,7 +77,7 @@ struct TrackingDaySettings: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

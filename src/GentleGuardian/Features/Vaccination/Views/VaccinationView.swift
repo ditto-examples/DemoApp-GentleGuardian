@@ -4,7 +4,7 @@ import SwiftUI
 struct VaccinationView: View {
 
     @Environment(ActiveChildState.self) private var activeChildState
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     let vaccinationRepository: VaccinationRepository
     @State private var viewModel: VaccinationViewModel
@@ -156,8 +156,8 @@ struct VaccinationView: View {
     private var statsRow: some View {
         let progress = viewModel.progress
         return HStack(spacing: GGSpacing.sm) {
-            statPill(title: "Overdue", value: "\(progress.overdueCount)", valueColor: GGColors.error)
-            statPill(title: "Pending", value: "\(progress.pendingCount)", valueColor: GGColors.tertiary)
+            statPill(title: "Overdue", value: "\(progress.overdueCount)", valueColor: colors.error)
+            statPill(title: "Pending", value: "\(progress.pendingCount)", valueColor: colors.tertiary)
             statPill(title: "Up to date", value: "\(progress.completed)", valueColor: colors.primary)
         }
     }
@@ -211,10 +211,10 @@ struct VaccinationView: View {
             isOverdue
                 ? RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.6)
                     .inset(by: 0.5)
-                    .stroke(GGColors.error.opacity(0.4), lineWidth: 1)
+                    .stroke(colors.error.opacity(0.4), lineWidth: 1)
                     .overlay(
                         Rectangle()
-                            .fill(GGColors.error)
+                            .fill(colors.error)
                             .frame(width: 3)
                             .clipShape(.rect(topLeadingRadius: GGSpacing.cardCornerRadius * 0.6, bottomLeadingRadius: GGSpacing.cardCornerRadius * 0.6)),
                         alignment: .leading
@@ -233,11 +233,11 @@ struct VaccinationView: View {
                 .overlay(Image(systemName: "checkmark").font(.caption2).foregroundStyle(.white))
         case .overdue:
             Circle()
-                .fill(GGColors.error)
+                .fill(colors.error)
                 .overlay(Image(systemName: "exclamationmark").font(.caption2).foregroundStyle(.white))
         case .pending:
             Circle()
-                .fill(GGColors.tertiary)
+                .fill(colors.tertiary)
                 .overlay(Image(systemName: "ellipsis").font(.caption2).foregroundStyle(.white))
         case .upcoming:
             Circle()
@@ -257,8 +257,8 @@ struct VaccinationView: View {
     private func subtitleColor(for status: DoseStatus) -> Color {
         switch status {
         case .completed: colors.primary
-        case .overdue: GGColors.error
-        case .pending: GGColors.tertiary
+        case .overdue: colors.error
+        case .pending: colors.tertiary
         case .upcoming: colors.onSurface.opacity(0.5)
         }
     }
@@ -299,6 +299,6 @@ struct VaccinationView: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }

@@ -27,7 +27,7 @@ struct GGCard<Content: View>: View {
     let style: GGCardStyle
     let content: Content
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     init(
         style: GGCardStyle = .standard,
@@ -60,7 +60,7 @@ struct GGCard<Content: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius, style: .continuous)
-                    .fill(GGElevation.backgroundColor(for: .floating, isNightMode: isNightMode))
+                    .fill(GGElevation.backgroundColor(for: .floating, colorScheme: colorScheme))
             )
             .ambientShadow()
     }
@@ -79,7 +79,7 @@ struct GGCard<Content: View>: View {
             .background(
                 RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius, style: .continuous)
                     .fill(
-                        isNightMode ? GGColors.heroGradientDim : GGColors.heroGradient
+                        colorScheme == .dark ? GGColors.heroGradientDark : GGColors.heroGradient
                     )
             )
             .ambientShadow()
@@ -93,7 +93,7 @@ struct GGCard<Content: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius, style: .continuous)
-                    .fill(GGElevation.backgroundColor(for: .container, isNightMode: isNightMode))
+                    .fill(GGElevation.backgroundColor(for: .container, colorScheme: colorScheme))
             )
     }
 
@@ -105,7 +105,7 @@ struct GGCard<Content: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.75, style: .continuous)
-                    .fill(GGElevation.backgroundColor(for: .floating, isNightMode: isNightMode))
+                    .fill(GGElevation.backgroundColor(for: .floating, colorScheme: colorScheme))
             )
     }
 }

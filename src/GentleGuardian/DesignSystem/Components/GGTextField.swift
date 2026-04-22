@@ -37,7 +37,7 @@ struct GGTextField: View {
     #endif
 
     @FocusState private var isFocused: Bool
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     init(
         _ placeholder: String,
@@ -78,7 +78,7 @@ struct GGTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.ggBodyMedium)
-                        .foregroundStyle(GGColors.onSurfaceVariant.opacity(0.6))
+                        .foregroundStyle(GGAdaptiveColors(colorScheme: colorScheme).onSurfaceVariant.opacity(0.6))
                 }
                 .buttonStyle(.plain)
             }
@@ -97,27 +97,27 @@ struct GGTextField: View {
     // MARK: - Colors
 
     private var backgroundColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         return isFocused ? colors.surfaceContainerLowest : colors.surfaceContainerHigh
     }
 
     private var borderColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         return isFocused ? colors.primary : .clear
     }
 
     private var textColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         return colors.onSurface
     }
 
     private var iconColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         return isFocused ? colors.primary : colors.onSurface.opacity(0.5)
     }
 
     private var accentColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         return colors.primary
     }
 
@@ -139,7 +139,7 @@ struct GGTextEditor: View {
     let minHeight: CGFloat
 
     @FocusState private var isFocused: Bool
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     init(
         _ placeholder: String,
@@ -156,14 +156,14 @@ struct GGTextEditor: View {
             if text.isEmpty {
                 Text(placeholder)
                     .font(.ggBodyLarge)
-                    .foregroundStyle(GGAdaptiveColors(isNightMode: isNightMode).onSurface.opacity(0.5))
+                    .foregroundStyle(GGAdaptiveColors(colorScheme: colorScheme).onSurface.opacity(0.5))
                     .padding(.horizontal, GGSpacing.md)
                     .padding(.top, GGSpacing.sm + 4)
             }
 
             TextEditor(text: $text)
                 .font(.ggBodyLarge)
-                .foregroundStyle(GGAdaptiveColors(isNightMode: isNightMode).onSurface)
+                .foregroundStyle(GGAdaptiveColors(colorScheme: colorScheme).onSurface)
                 .focused($isFocused)
                 .scrollContentBackground(.hidden)
                 .padding(.horizontal, GGSpacing.sm)
@@ -171,15 +171,15 @@ struct GGTextEditor: View {
         }
         .background(
             isFocused
-                ? GGAdaptiveColors(isNightMode: isNightMode).surfaceContainerLowest
-                : GGAdaptiveColors(isNightMode: isNightMode).surfaceContainerHigh
+                ? GGAdaptiveColors(colorScheme: colorScheme).surfaceContainerLowest
+                : GGAdaptiveColors(colorScheme: colorScheme).surfaceContainerHigh
         )
         .clipShape(RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.5, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.5, style: .continuous)
                 .strokeBorder(
                     isFocused
-                        ? GGAdaptiveColors(isNightMode: isNightMode).primary
+                        ? GGAdaptiveColors(colorScheme: colorScheme).primary
                         : .clear,
                     lineWidth: isFocused ? 2 : 0
                 )

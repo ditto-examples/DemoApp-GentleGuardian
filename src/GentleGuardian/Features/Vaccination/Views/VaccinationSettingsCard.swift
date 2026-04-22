@@ -8,7 +8,7 @@ struct VaccinationSettingsCard: View {
     @Binding var selectedRegion: VaccinationRegion
     @Binding var selectedCountryCode: String
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         GGCard(style: .subtle) {
@@ -78,6 +78,6 @@ struct VaccinationSettingsCard: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }

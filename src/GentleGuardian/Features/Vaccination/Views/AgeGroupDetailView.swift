@@ -7,7 +7,7 @@ struct AgeGroupDetailView: View {
     let vaccinationRepository: VaccinationRepository
     let vaccinationViewModel: VaccinationViewModel
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     @State private var showLogSheet: ScheduledDose?
     @State private var showBatchSheet = false
@@ -131,11 +131,11 @@ struct AgeGroupDetailView: View {
                 } else if status == .overdue {
                     Text("Not recorded \u{00B7} overdue")
                         .font(.ggBodySmall)
-                        .foregroundStyle(GGColors.error)
+                        .foregroundStyle(colors.error)
                 } else if status == .pending {
                     Text("Not recorded \u{00B7} due now")
                         .font(.ggBodySmall)
-                        .foregroundStyle(GGColors.tertiary)
+                        .foregroundStyle(colors.tertiary)
                 } else {
                     Text("Upcoming")
                         .font(.ggBodySmall)
@@ -172,7 +172,7 @@ struct AgeGroupDetailView: View {
         .overlay(
             isOverdue && status != .completed
                 ? Rectangle()
-                    .fill(GGColors.error)
+                    .fill(colors.error)
                     .frame(width: 3)
                     .clipShape(.rect(topLeadingRadius: GGSpacing.cardCornerRadius * 0.6, bottomLeadingRadius: GGSpacing.cardCornerRadius * 0.6))
                 : nil,
@@ -189,12 +189,12 @@ struct AgeGroupDetailView: View {
                 .overlay(Image(systemName: "checkmark").font(.caption).foregroundStyle(.white))
         case .overdue:
             Circle()
-                .strokeBorder(GGColors.error, lineWidth: 2)
-                .overlay(Image(systemName: "exclamationmark").font(.caption2).foregroundStyle(GGColors.error))
+                .strokeBorder(colors.error, lineWidth: 2)
+                .overlay(Image(systemName: "exclamationmark").font(.caption2).foregroundStyle(colors.error))
         case .pending:
             Circle()
-                .strokeBorder(GGColors.tertiary, lineWidth: 2)
-                .overlay(Image(systemName: "ellipsis").font(.caption2).foregroundStyle(GGColors.tertiary))
+                .strokeBorder(colors.tertiary, lineWidth: 2)
+                .overlay(Image(systemName: "ellipsis").font(.caption2).foregroundStyle(colors.tertiary))
         case .upcoming:
             Circle()
                 .strokeBorder(colors.onSurface.opacity(0.3), lineWidth: 1.5)
@@ -202,6 +202,6 @@ struct AgeGroupDetailView: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }

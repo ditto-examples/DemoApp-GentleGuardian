@@ -10,7 +10,7 @@ struct ChildProfileView: View {
     // MARK: - Environment
 
     @Environment(ActiveChildState.self) private var activeChildState
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -223,7 +223,7 @@ struct ChildProfileView: View {
     private func errorBanner(message: String) -> some View {
         HStack(spacing: GGSpacing.sm) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(GGColors.error)
+                .foregroundStyle(colors.error)
 
             Text(message)
                 .font(.ggBodyMedium)
@@ -277,7 +277,7 @@ struct ChildProfileView: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

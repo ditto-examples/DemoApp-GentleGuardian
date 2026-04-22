@@ -7,7 +7,7 @@ struct LogVaccinationSheet: View {
     let vaccinationRepository: VaccinationRepository
     let child: Child?
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel: LogVaccinationViewModel
@@ -88,7 +88,7 @@ struct LogVaccinationSheet: View {
                         if let error = viewModel.errorMessage {
                             Text(error)
                                 .font(.ggBodySmall)
-                                .foregroundStyle(GGColors.error)
+                                .foregroundStyle(colors.error)
                         }
 
                         // Save button
@@ -125,6 +125,6 @@ struct LogVaccinationSheet: View {
     }
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
