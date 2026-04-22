@@ -2,6 +2,8 @@ import Foundation
 import Observation
 #if os(iOS)
 import UIKit
+#elseif os(macOS)
+import AppKit
 #endif
 
 /// ViewModel managing the child profile view with editing, sync code display,
@@ -162,6 +164,9 @@ final class ChildProfileViewModel {
         guard let child else { return }
         #if os(iOS)
         UIPasteboard.general.string = child.syncCode
+        #elseif os(macOS)
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(child.syncCode, forType: .string)
         #endif
         didCopySyncCode = true
 

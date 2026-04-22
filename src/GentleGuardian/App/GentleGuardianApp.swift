@@ -68,6 +68,7 @@ struct GentleGuardianApp: App {
                     )
                 }
             }
+            .colorSchemeAware()
             .environment(activeChildState)
             .environment(userSettings)
             .task {

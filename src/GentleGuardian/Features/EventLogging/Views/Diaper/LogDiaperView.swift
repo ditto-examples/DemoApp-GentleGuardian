@@ -9,7 +9,7 @@ struct LogDiaperView: View {
     let childId: String
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -264,7 +264,7 @@ struct LogDiaperView: View {
     private func errorBanner(message: String) -> some View {
         HStack(spacing: GGSpacing.sm) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(GGColors.error)
+                .foregroundStyle(colors.error)
             Text(message)
                 .font(.ggBodyMedium)
                 .foregroundStyle(colors.onSurface)
@@ -277,7 +277,7 @@ struct LogDiaperView: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

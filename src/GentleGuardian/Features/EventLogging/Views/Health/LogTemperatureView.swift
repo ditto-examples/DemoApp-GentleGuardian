@@ -10,7 +10,7 @@ struct LogTemperatureView: View {
     let childId: String
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -125,7 +125,7 @@ struct LogTemperatureView: View {
                 if let error = viewModel.errorMessage {
                     HStack(spacing: GGSpacing.sm) {
                         Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundStyle(GGColors.error)
+                            .foregroundStyle(colors.error)
                         Text(error).font(.ggBodyMedium).foregroundStyle(colors.onSurface)
                     }
                     .padding(GGSpacing.md)
@@ -152,7 +152,7 @@ struct LogTemperatureView: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

@@ -15,7 +15,7 @@ struct GGActivityBubble: View {
     let tintColor: Color?
     let action: @MainActor () -> Void
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
     @State private var isPressed = false
 
     init(
@@ -63,8 +63,8 @@ struct GGActivityBubble: View {
     // MARK: - Colors
 
     private var bubbleBackground: Color {
-        if isNightMode {
-            return GGColors.secondaryContainerDim.opacity(0.5)
+        if colorScheme == .dark {
+            return GGColors.secondaryContainerDark.opacity(0.5)
         }
         return GGColors.secondaryFixed
     }
@@ -73,11 +73,11 @@ struct GGActivityBubble: View {
         if let tintColor {
             return tintColor
         }
-        return isNightMode ? GGColors.secondaryDim : GGColors.onSecondaryContainer
+        return colorScheme == .dark ? GGColors.secondaryDark : GGColors.onSecondaryContainer
     }
 
     private var labelColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         return colors.onSurface
     }
 

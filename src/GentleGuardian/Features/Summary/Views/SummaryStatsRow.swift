@@ -10,7 +10,7 @@ struct SummaryStatsRow: View {
     let totalDiapers: Int
     let totalActivitiesAndHealth: Int
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         HStack(spacing: GGSpacing.sm) {
@@ -18,21 +18,21 @@ struct SummaryStatsRow: View {
                 icon: "baby.bottle.fill",
                 count: totalFeedings,
                 label: "Total Feedings",
-                tintColor: isNightMode ? GGColors.primaryDim : GGColors.primary
+                tintColor: colors.primary
             )
 
             statCard(
                 icon: "humidity.fill",
                 count: totalDiapers,
                 label: "Total Diapers",
-                tintColor: isNightMode ? GGColors.tertiaryDim : GGColors.tertiary
+                tintColor: colors.tertiary
             )
 
             statCard(
                 icon: "figure.play",
                 count: totalActivitiesAndHealth,
                 label: "Activities",
-                tintColor: isNightMode ? GGColors.secondaryDim : GGColors.secondary
+                tintColor: colors.secondary
             )
         }
     }
@@ -48,14 +48,20 @@ struct SummaryStatsRow: View {
 
                 Text("\(count)")
                     .font(.ggTitleLarge)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colors.onSurface)
 
                 Text(label)
                     .font(.ggLabelSmall)
-                    .foregroundStyle(GGColors.onSurfaceVariant)
+                    .foregroundStyle(colors.onSurfaceVariant)
                     .lineLimit(1)
             }
         }
+    }
+
+    // MARK: - Colors
+
+    private var colors: GGAdaptiveColors {
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

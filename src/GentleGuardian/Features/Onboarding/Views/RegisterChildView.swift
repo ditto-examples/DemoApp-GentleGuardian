@@ -11,7 +11,7 @@ struct RegisterChildView: View {
 
     @Environment(ActiveChildState.self) private var activeChildState
     @Environment(UserSettings.self) private var userSettings
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     // MARK: - State
@@ -146,7 +146,7 @@ struct RegisterChildView: View {
                 if let message = viewModel.nameValidationMessage {
                     Text(message)
                         .font(.ggBodySmall)
-                        .foregroundStyle(GGColors.error)
+                        .foregroundStyle(colors.error)
                 }
             }
         }
@@ -176,7 +176,7 @@ struct RegisterChildView: View {
                 if let message = viewModel.birthdayValidationMessage {
                     Text(message)
                         .font(.ggBodySmall)
-                        .foregroundStyle(GGColors.error)
+                        .foregroundStyle(colors.error)
                 }
             }
         }
@@ -261,7 +261,7 @@ struct RegisterChildView: View {
     private func errorBanner(message: String) -> some View {
         HStack(spacing: GGSpacing.sm) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(GGColors.error)
+                .foregroundStyle(colors.error)
 
             Text(message)
                 .font(.ggBodyMedium)
@@ -275,7 +275,7 @@ struct RegisterChildView: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

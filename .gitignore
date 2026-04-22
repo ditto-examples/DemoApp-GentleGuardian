@@ -65,3 +65,4 @@ prompts
 .DS_Store
 src/GentleGuardian.xcodeproj/project.xcworkspace/xcuserdata
 src/build
+ditto.plist
