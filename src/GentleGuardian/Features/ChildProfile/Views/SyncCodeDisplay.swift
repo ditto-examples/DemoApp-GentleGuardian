@@ -13,7 +13,7 @@ struct SyncCodeDisplay: View {
     let didCopy: Bool
     let onCopy: () -> Void
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - Body
 
@@ -86,7 +86,7 @@ struct SyncCodeDisplay: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

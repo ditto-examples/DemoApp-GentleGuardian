@@ -11,7 +11,7 @@ struct RegisterChildView: View {
 
     @Environment(ActiveChildState.self) private var activeChildState
     @Environment(UserSettings.self) private var userSettings
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
 
     // MARK: - State
@@ -275,7 +275,7 @@ struct RegisterChildView: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

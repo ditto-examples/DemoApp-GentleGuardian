@@ -7,7 +7,7 @@ import SwiftUI
 struct ChildSelectorMenu: View {
 
     @Environment(ActiveChildState.self) private var activeChildState
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     /// Callback when "Add Child" is tapped.
     var onAddChild: (() -> Void)?
@@ -37,7 +37,7 @@ struct ChildSelectorMenu: View {
         } label: {
             Image(systemName: "person.crop.circle")
                 .font(.title3)
-                .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurfaceVariant)
+                .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurfaceVariant)
         }
         .accessibilityLabel("Switch child")
         .accessibilityIdentifier("child-selector-menu")

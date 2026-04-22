@@ -9,7 +9,7 @@ struct LogSleepView: View {
     let childId: String
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -201,7 +201,7 @@ struct LogSleepView: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

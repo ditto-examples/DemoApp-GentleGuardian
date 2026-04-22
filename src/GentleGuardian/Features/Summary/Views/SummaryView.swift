@@ -13,7 +13,7 @@ struct SummaryView: View {
     // MARK: - Environment
 
     @Environment(ActiveChildState.self) private var activeChildState
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -111,7 +111,7 @@ struct SummaryView: View {
         HStack {
             Text("Activity Feed")
                 .font(.ggTitleLarge)
-                .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
 
             Spacer()
 
@@ -121,13 +121,13 @@ struct SummaryView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.ggLabelLarge)
-                        .foregroundStyle(isNightMode ? GGColors.primaryDim : GGColors.primary)
+                        .foregroundStyle(colorScheme == .dark ? GGColors.primaryDark : GGColors.primary)
                         .frame(minWidth: GGSpacing.minimumTouchTarget, minHeight: GGSpacing.minimumTouchTarget)
                 }
 
                 Text(viewModel.isToday ? "Today" : viewModel.selectedDateDisplay)
                     .font(.ggLabelLarge)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
 
                 Button {
                     viewModel.goToNextDay()
@@ -136,7 +136,7 @@ struct SummaryView: View {
                         .font(.ggLabelLarge)
                         .foregroundStyle(
                             viewModel.canGoForward
-                                ? (isNightMode ? GGColors.primaryDim : GGColors.primary)
+                                ? (colorScheme == .dark ? GGColors.primaryDark : GGColors.primary)
                                 : GGColors.onSurfaceVariant.opacity(0.3)
                         )
                         .frame(minWidth: GGSpacing.minimumTouchTarget, minHeight: GGSpacing.minimumTouchTarget)
@@ -157,6 +157,6 @@ struct SummaryView: View {
     // MARK: - Helpers
 
     private var heroTextColor: Color {
-        isNightMode ? GGColors.onPrimaryDim : GGColors.onPrimary
+        colorScheme == .dark ? GGColors.onPrimaryDark : GGColors.onPrimary
     }
 }

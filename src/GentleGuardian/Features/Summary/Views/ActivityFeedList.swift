@@ -8,7 +8,7 @@ struct ActivityFeedList: View {
 
     let events: [TimelineEvent]
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         if events.isEmpty {
@@ -31,7 +31,7 @@ struct ActivityFeedList: View {
                 // Time
                 Text(event.timeString)
                     .font(.ggTitleSmall)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
                     .frame(width: 70, alignment: .leading)
 
                 // Category color indicator
@@ -48,7 +48,7 @@ struct ActivityFeedList: View {
 
                         Text(event.title)
                             .font(GGTypography.bodyLarge(weight: .medium))
-                            .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                            .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
                     }
 
                     if !event.detail.isEmpty {
@@ -90,17 +90,17 @@ struct ActivityFeedList: View {
     private func categoryColor(for category: EventCategory) -> Color {
         switch category {
         case .feeding:
-            return isNightMode ? GGColors.primaryDim : GGColors.primary
+            return colorScheme == .dark ? GGColors.primaryDark : GGColors.primary
         case .diaper:
-            return isNightMode ? GGColors.tertiaryDim : GGColors.tertiary
+            return colorScheme == .dark ? GGColors.tertiaryDark : GGColors.tertiary
         case .health:
             return GGColors.error
         case .activity:
-            return isNightMode ? GGColors.secondaryDim : GGColors.secondary
+            return colorScheme == .dark ? GGColors.secondaryDark : GGColors.secondary
         case .sleep:
-            return isNightMode ? GGColors.secondaryDim : GGColors.secondary
+            return colorScheme == .dark ? GGColors.secondaryDark : GGColors.secondary
         case .other:
-            return isNightMode ? GGColors.tertiaryDim : GGColors.tertiary
+            return colorScheme == .dark ? GGColors.tertiaryDark : GGColors.tertiary
         }
     }
 }

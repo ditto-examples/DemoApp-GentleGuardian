@@ -12,7 +12,7 @@ struct LastFeedingCard: View {
     let detail: String
     let hasData: Bool
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         GGCard(style: .hero) {
@@ -80,7 +80,7 @@ struct LastFeedingCard: View {
     // MARK: - Colors
 
     private var textColor: Color {
-        isNightMode ? GGColors.onPrimaryDim : GGColors.onPrimary
+        colorScheme == .dark ? GGColors.onPrimaryDark : GGColors.onPrimary
     }
 }
 

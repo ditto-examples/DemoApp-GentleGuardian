@@ -11,7 +11,7 @@ struct StatusRow: View {
     let diaperRelativeTime: String
     let feedingCount: Int
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         HStack(spacing: GGSpacing.sm) {
@@ -28,7 +28,7 @@ struct StatusRow: View {
             VStack(alignment: .leading, spacing: GGSpacing.xs) {
                 Image(systemName: "moon.fill")
                     .font(.system(size: 18))
-                    .foregroundStyle(isNightMode ? GGColors.secondaryDim : GGColors.secondary)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.secondaryDark : GGColors.secondary)
 
                 Text("SLEEP")
                     .font(.ggLabelSmall)
@@ -37,7 +37,7 @@ struct StatusRow: View {
 
                 Text(sleepLabel)
                     .font(.ggTitleMedium)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
                     .lineLimit(1)
             }
         }
@@ -48,7 +48,7 @@ struct StatusRow: View {
             VStack(alignment: .leading, spacing: GGSpacing.xs) {
                 Image(systemName: "humidity.fill")
                     .font(.system(size: 18))
-                    .foregroundStyle(isNightMode ? GGColors.tertiaryDim : GGColors.tertiary)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.tertiaryDark : GGColors.tertiary)
 
                 Text("DIAPER")
                     .font(.ggLabelSmall)
@@ -57,7 +57,7 @@ struct StatusRow: View {
 
                 Text(diaperLabel)
                     .font(.ggTitleMedium)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
                     .lineLimit(1)
 
                 if !diaperRelativeTime.isEmpty {
@@ -75,7 +75,7 @@ struct StatusRow: View {
             VStack(alignment: .leading, spacing: GGSpacing.xs) {
                 Image(systemName: "baby.bottle.fill")
                     .font(.system(size: 18))
-                    .foregroundStyle(isNightMode ? GGColors.primaryDim : GGColors.primary)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.primaryDark : GGColors.primary)
 
                 Text("FEEDINGS")
                     .font(.ggLabelSmall)
@@ -84,7 +84,7 @@ struct StatusRow: View {
 
                 Text("\(feedingCount)")
                     .font(.ggTitleMedium)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
 
                 Text("today")
                     .font(.ggLabelSmall)
