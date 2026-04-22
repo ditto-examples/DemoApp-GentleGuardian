@@ -7,16 +7,12 @@
 
 import SwiftUI
 
-// MARK: - Night Mode Environment Key
-
-struct NightModeKey: EnvironmentKey {
-    static let defaultValue: Bool = false
-}
+// MARK: - Color Scheme Convenience
 
 extension EnvironmentValues {
-    var isNightMode: Bool {
-        get { self[NightModeKey.self] }
-        set { self[NightModeKey.self] = newValue }
+    /// Returns true when the system is in dark mode.
+    var isDarkMode: Bool {
+        self.colorScheme == .dark
     }
 }
 
@@ -94,30 +90,50 @@ enum GGColors: Sendable {
     static let inverseOnSurface = Color(hex: 0xEFF1F5)
     static let inversePrimary = Color(hex: 0x8BD4C4)
 
-    // MARK: - Night / Dim Mode Variants
+    // MARK: - Dark Mode Variants (from designs/dark/DESIGN.md)
 
-    static let primaryDim = Color(hex: 0x6BBCAC)
-    static let onPrimaryDim = Color(hex: 0x00382E)
-    static let primaryContainerDim = Color(hex: 0x005145)
+    static let primaryDark = Color(hex: 0x57F1DB)
+    static let onPrimaryDark = Color(hex: 0x003731)
+    static let primaryContainerDark = Color(hex: 0x2DD4BF)
+    static let onPrimaryContainerDark = Color(hex: 0x00574D)
 
-    static let secondaryDim = Color(hex: 0x8ECBF0)
-    static let onSecondaryDim = Color(hex: 0x0E3C54)
-    static let secondaryContainerDim = Color(hex: 0x1D4D68)
+    static let secondaryDark = Color(hex: 0xBEC6E0)
+    static let onSecondaryDark = Color(hex: 0x283044)
+    static let secondaryContainerDark = Color(hex: 0x3F465C)
+    static let onSecondaryContainerDark = Color(hex: 0xADB4CE)
+    static let secondaryFixedDark = Color(hex: 0xDAE2FD)
 
-    static let tertiaryDim = Color(hex: 0xE6C16A)
-    static let onTertiaryDim = Color(hex: 0x3F2E00)
-    static let tertiaryContainerDim = Color(hex: 0x594200)
+    static let tertiaryDark = Color(hex: 0xCFDAF2)
+    static let onTertiaryDark = Color(hex: 0x263143)
+    static let tertiaryContainerDark = Color(hex: 0xB3BED5)
+    static let onTertiaryContainerDark = Color(hex: 0x424D61)
 
-    static let surfaceDim = Color(hex: 0x121619)
-    static let onSurfaceDim = Color(hex: 0xC2C7CE)
-    static let surfaceContainerDim = Color(hex: 0x1A1E22)
-    static let surfaceContainerHighDim = Color(hex: 0x242A2E)
-    static let surfaceContainerLowestDim = Color(hex: 0x2A3036)
+    static let errorDark = Color(hex: 0xFFB4AB)
+    static let onErrorDark = Color(hex: 0x690005)
+    static let errorContainerDark = Color(hex: 0x93000A)
+    static let onErrorContainerDark = Color(hex: 0xFFDAD6)
 
-    static let errorContainerDim = Color(hex: 0x93000A)
-    static let onErrorContainerDim = Color(hex: 0xFFB4AB)
+    static let surfaceDark = Color(hex: 0x051424)
+    static let backgroundDark = Color(hex: 0x051424)
+    static let onSurfaceDark = Color(hex: 0xD4E4FA)
+    static let onBackgroundDark = Color(hex: 0xD4E4FA)
+    static let onSurfaceVariantDark = Color(hex: 0xBACAC5)
 
-    static let outlineVariantDim = Color(hex: 0x3F484F)
+    static let surfaceContainerDark = Color(hex: 0x122131)
+    static let surfaceContainerLowDark = Color(hex: 0x0D1C2D)
+    static let surfaceContainerHighDark = Color(hex: 0x1C2B3C)
+    static let surfaceContainerHighestDark = Color(hex: 0x273647)
+    static let surfaceContainerLowestDark = Color(hex: 0x010F1F)
+    static let surfaceBrightDark = Color(hex: 0x2C3A4C).opacity(0.85)
+
+    static let outlineDark = Color(hex: 0x859490)
+    static let outlineVariantDark = Color(hex: 0x3C4A46)
+
+    static let inverseSurfaceDark = Color(hex: 0xD4E4FA)
+    static let inverseOnSurfaceDark = Color(hex: 0x233143)
+    static let inversePrimaryDark = Color(hex: 0x006B5F)
+
+    static let surfaceTintDark = Color(hex: 0x3CDDC7)
 
     // MARK: - Hero Gradient
 
@@ -129,8 +145,8 @@ enum GGColors: Sendable {
         endPoint: UnitPoint(x: 1, y: 0.87)
     )
 
-    static let heroGradientDim = LinearGradient(
-        colors: [primaryContainerDim, primaryDim.opacity(0.6)],
+    static let heroGradientDark = LinearGradient(
+        colors: [primaryContainerDark.opacity(0.8), primaryDark.opacity(0.4)],
         startPoint: UnitPoint(x: 0, y: 0.13),
         endPoint: UnitPoint(x: 1, y: 0.87)
     )
@@ -139,12 +155,6 @@ enum GGColors: Sendable {
 
     static let ambientShadow = Color(hex: 0x2C3339).opacity(0.06)
 
-    // MARK: - Convenience: Adaptive Colors (light/night)
-
-    /// Returns the appropriate color depending on night mode state.
-    static func adaptive(light: Color, night: Color, isNight: Bool) -> Color {
-        isNight ? night : light
-    }
 }
 
 // MARK: - Color Hex Initializer
@@ -160,41 +170,64 @@ extension Color {
 
 // MARK: - Adaptive Color Provider
 
-/// Provides night-mode-aware color resolution via the SwiftUI environment.
+/// Provides ColorScheme-aware color resolution via the SwiftUI environment.
 struct GGAdaptiveColors: Sendable {
-    let isNightMode: Bool
+    let isDarkMode: Bool
 
-    var primary: Color { isNightMode ? GGColors.primaryDim : GGColors.primary }
-    var onPrimary: Color { isNightMode ? GGColors.onPrimaryDim : GGColors.onPrimary }
-    var primaryContainer: Color { isNightMode ? GGColors.primaryContainerDim : GGColors.primaryContainer }
+    init(colorScheme: ColorScheme) {
+        self.isDarkMode = colorScheme == .dark
+    }
 
-    var secondary: Color { isNightMode ? GGColors.secondaryDim : GGColors.secondary }
-    var onSecondary: Color { isNightMode ? GGColors.onSecondaryDim : GGColors.onSecondary }
-    var secondaryContainer: Color { isNightMode ? GGColors.secondaryContainerDim : GGColors.secondaryContainer }
-    var onSecondaryContainer: Color { isNightMode ? GGColors.onSecondaryDim : GGColors.onSecondaryContainer }
+    init(isDarkMode: Bool) {
+        self.isDarkMode = isDarkMode
+    }
 
-    var tertiary: Color { isNightMode ? GGColors.tertiaryDim : GGColors.tertiary }
-    var onTertiary: Color { isNightMode ? GGColors.onTertiaryDim : GGColors.onTertiary }
-    var tertiaryContainer: Color { isNightMode ? GGColors.tertiaryContainerDim : GGColors.tertiaryContainer }
+    var primary: Color { isDarkMode ? GGColors.primaryDark : GGColors.primary }
+    var onPrimary: Color { isDarkMode ? GGColors.onPrimaryDark : GGColors.onPrimary }
+    var primaryContainer: Color { isDarkMode ? GGColors.primaryContainerDark : GGColors.primaryContainer }
+    var onPrimaryContainer: Color { isDarkMode ? GGColors.onPrimaryContainerDark : GGColors.onPrimaryContainer }
 
-    var surface: Color { isNightMode ? GGColors.surfaceDim : GGColors.surface }
-    var onSurface: Color { isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface }
-    var surfaceContainer: Color { isNightMode ? GGColors.surfaceContainerDim : GGColors.surfaceContainer }
-    var surfaceContainerHigh: Color { isNightMode ? GGColors.surfaceContainerHighDim : GGColors.surfaceContainerHigh }
-    var surfaceContainerLowest: Color { isNightMode ? GGColors.surfaceContainerLowestDim : GGColors.surfaceContainerLowest }
+    var secondary: Color { isDarkMode ? GGColors.secondaryDark : GGColors.secondary }
+    var onSecondary: Color { isDarkMode ? GGColors.onSecondaryDark : GGColors.onSecondary }
+    var secondaryContainer: Color { isDarkMode ? GGColors.secondaryContainerDark : GGColors.secondaryContainer }
+    var onSecondaryContainer: Color { isDarkMode ? GGColors.onSecondaryContainerDark : GGColors.onSecondaryContainer }
 
-    var errorContainer: Color { isNightMode ? GGColors.errorContainerDim : GGColors.errorContainer }
-    var onErrorContainer: Color { isNightMode ? GGColors.onErrorContainerDim : GGColors.onErrorContainer }
+    var tertiary: Color { isDarkMode ? GGColors.tertiaryDark : GGColors.tertiary }
+    var onTertiary: Color { isDarkMode ? GGColors.onTertiaryDark : GGColors.onTertiary }
+    var tertiaryContainer: Color { isDarkMode ? GGColors.tertiaryContainerDark : GGColors.tertiaryContainer }
+    var onTertiaryContainer: Color { isDarkMode ? GGColors.onTertiaryContainerDark : GGColors.onTertiaryContainer }
 
-    var outlineVariant: Color { isNightMode ? GGColors.outlineVariantDim : GGColors.outlineVariant }
+    var error: Color { isDarkMode ? GGColors.errorDark : GGColors.error }
+    var onError: Color { isDarkMode ? GGColors.onErrorDark : GGColors.onError }
+    var errorContainer: Color { isDarkMode ? GGColors.errorContainerDark : GGColors.errorContainer }
+    var onErrorContainer: Color { isDarkMode ? GGColors.onErrorContainerDark : GGColors.onErrorContainer }
 
-    var heroGradient: LinearGradient { isNightMode ? GGColors.heroGradientDim : GGColors.heroGradient }
+    var surface: Color { isDarkMode ? GGColors.surfaceDark : GGColors.surface }
+    var background: Color { isDarkMode ? GGColors.backgroundDark : GGColors.background }
+    var onSurface: Color { isDarkMode ? GGColors.onSurfaceDark : GGColors.onSurface }
+    var onBackground: Color { isDarkMode ? GGColors.onBackgroundDark : GGColors.onBackground }
+    var onSurfaceVariant: Color { isDarkMode ? GGColors.onSurfaceVariantDark : GGColors.onSurfaceVariant }
+
+    var surfaceContainer: Color { isDarkMode ? GGColors.surfaceContainerDark : GGColors.surfaceContainer }
+    var surfaceContainerLow: Color { isDarkMode ? GGColors.surfaceContainerLowDark : GGColors.surfaceContainerLow }
+    var surfaceContainerHigh: Color { isDarkMode ? GGColors.surfaceContainerHighDark : GGColors.surfaceContainerHigh }
+    var surfaceContainerHighest: Color { isDarkMode ? GGColors.surfaceContainerHighestDark : GGColors.surfaceContainerHighest }
+    var surfaceContainerLowest: Color { isDarkMode ? GGColors.surfaceContainerLowestDark : GGColors.surfaceContainerLowest }
+
+    var outline: Color { isDarkMode ? GGColors.outlineDark : GGColors.outline }
+    var outlineVariant: Color { isDarkMode ? GGColors.outlineVariantDark : GGColors.outlineVariant }
+
+    var inverseSurface: Color { isDarkMode ? GGColors.inverseSurfaceDark : GGColors.inverseSurface }
+    var inverseOnSurface: Color { isDarkMode ? GGColors.inverseOnSurfaceDark : GGColors.inverseOnSurface }
+    var inversePrimary: Color { isDarkMode ? GGColors.inversePrimaryDark : GGColors.inversePrimary }
+
+    var heroGradient: LinearGradient { isDarkMode ? GGColors.heroGradientDark : GGColors.heroGradient }
 }
 
 // MARK: - Environment-based Adaptive Colors Key
 
 struct AdaptiveColorsKey: EnvironmentKey {
-    static let defaultValue = GGAdaptiveColors(isNightMode: false)
+    static let defaultValue = GGAdaptiveColors(isDarkMode: false)
 }
 
 extension EnvironmentValues {
