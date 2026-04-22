@@ -39,6 +39,15 @@ final class RegisterChildViewModel {
     /// Number of weeks premature (gestational age at birth).
     var prematurityWeeks: Int = 37
 
+    /// Whether vaccination tracking is enabled.
+    var isVaccinationTrackingEnabled: Bool = false
+
+    /// Selected vaccination region.
+    var vaccinationRegion: VaccinationRegion = .usa
+
+    /// Selected country code for vaccination schedule.
+    var vaccinationCountryCode: String = "US"
+
     // MARK: - UI State
 
     /// Whether a save operation is in progress.
@@ -128,7 +137,10 @@ final class RegisterChildViewModel {
             sex: sex,
             prematurityWeeks: isPremature ? prematurityWeeks : nil,
             prematurityStatus: computedPrematurityStatus,
-            syncCode: syncCode
+            syncCode: syncCode,
+            vaccinationRegion: isVaccinationTrackingEnabled ? vaccinationRegion.rawValue : nil,
+            vaccinationCountry: isVaccinationTrackingEnabled ? (vaccinationRegion == .usa ? "US" : vaccinationCountryCode) : nil,
+            isVaccinationTrackingEnabled: isVaccinationTrackingEnabled
         )
 
         do {

@@ -76,6 +76,9 @@ struct RegisterChildView: View {
                 // Prematurity toggle
                 prematuritySection(viewModel: viewModel)
 
+                // Vaccination tracking
+                vaccinationSection(viewModel: viewModel)
+
                 // Error message
                 if let error = viewModel.errorMessage {
                     errorBanner(message: error)
@@ -254,6 +257,25 @@ struct RegisterChildView: View {
                 }
             }
         }
+    }
+
+    // MARK: - Vaccination Section
+
+    private func vaccinationSection(viewModel: RegisterChildViewModel) -> some View {
+        VaccinationSettingsCard(
+            isTrackingEnabled: Binding(
+                get: { viewModel.isVaccinationTrackingEnabled },
+                set: { viewModel.isVaccinationTrackingEnabled = $0 }
+            ),
+            selectedRegion: Binding(
+                get: { viewModel.vaccinationRegion },
+                set: { viewModel.vaccinationRegion = $0 }
+            ),
+            selectedCountryCode: Binding(
+                get: { viewModel.vaccinationCountryCode },
+                set: { viewModel.vaccinationCountryCode = $0 }
+            )
+        )
     }
 
     // MARK: - Error Banner
