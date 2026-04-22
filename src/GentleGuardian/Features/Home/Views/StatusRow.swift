@@ -11,7 +11,7 @@ struct StatusRow: View {
     let diaperRelativeTime: String
     let feedingCount: Int
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         HStack(spacing: GGSpacing.sm) {
@@ -28,16 +28,16 @@ struct StatusRow: View {
             VStack(alignment: .leading, spacing: GGSpacing.xs) {
                 Image(systemName: "moon.fill")
                     .font(.system(size: 18))
-                    .foregroundStyle(isNightMode ? GGColors.secondaryDim : GGColors.secondary)
+                    .foregroundStyle(colors.secondary)
 
                 Text("SLEEP")
                     .font(.ggLabelSmall)
-                    .foregroundStyle(GGColors.onSurfaceVariant)
+                    .foregroundStyle(colors.onSurfaceVariant)
                     .tracking(0.8)
 
                 Text(sleepLabel)
                     .font(.ggTitleMedium)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colors.onSurface)
                     .lineLimit(1)
             }
         }
@@ -48,22 +48,22 @@ struct StatusRow: View {
             VStack(alignment: .leading, spacing: GGSpacing.xs) {
                 Image(systemName: "humidity.fill")
                     .font(.system(size: 18))
-                    .foregroundStyle(isNightMode ? GGColors.tertiaryDim : GGColors.tertiary)
+                    .foregroundStyle(colors.tertiary)
 
                 Text("DIAPER")
                     .font(.ggLabelSmall)
-                    .foregroundStyle(GGColors.onSurfaceVariant)
+                    .foregroundStyle(colors.onSurfaceVariant)
                     .tracking(0.8)
 
                 Text(diaperLabel)
                     .font(.ggTitleMedium)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colors.onSurface)
                     .lineLimit(1)
 
                 if !diaperRelativeTime.isEmpty {
                     Text(diaperRelativeTime)
                         .font(.ggLabelSmall)
-                        .foregroundStyle(GGColors.onSurfaceVariant)
+                        .foregroundStyle(colors.onSurfaceVariant)
                         .lineLimit(1)
                 }
             }
@@ -75,22 +75,28 @@ struct StatusRow: View {
             VStack(alignment: .leading, spacing: GGSpacing.xs) {
                 Image(systemName: "baby.bottle.fill")
                     .font(.system(size: 18))
-                    .foregroundStyle(isNightMode ? GGColors.primaryDim : GGColors.primary)
+                    .foregroundStyle(colors.primary)
 
                 Text("FEEDINGS")
                     .font(.ggLabelSmall)
-                    .foregroundStyle(GGColors.onSurfaceVariant)
+                    .foregroundStyle(colors.onSurfaceVariant)
                     .tracking(0.8)
 
                 Text("\(feedingCount)")
                     .font(.ggTitleMedium)
-                    .foregroundStyle(isNightMode ? GGColors.onSurfaceDim : GGColors.onSurface)
+                    .foregroundStyle(colors.onSurface)
 
                 Text("today")
                     .font(.ggLabelSmall)
-                    .foregroundStyle(GGColors.onSurfaceVariant)
+                    .foregroundStyle(colors.onSurfaceVariant)
             }
         }
+    }
+
+    // MARK: - Colors
+
+    private var colors: GGAdaptiveColors {
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

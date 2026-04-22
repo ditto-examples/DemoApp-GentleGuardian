@@ -28,7 +28,7 @@ struct GGButton: View {
     let isDisabled: Bool
     let action: @MainActor () -> Void
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
     @State private var isPressed = false
 
     init(
@@ -82,10 +82,11 @@ struct GGButton: View {
     // MARK: - Colors
 
     private var backgroundColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         switch variant {
         case .primary:
-            return colors.primary
+            // In dark mode, use a darker teal background for better text contrast
+            return colorScheme == .dark ? GGColors.onPrimaryContainerDark : colors.primary
         case .secondary:
             return colors.secondaryContainer
         case .tertiary:
@@ -94,10 +95,11 @@ struct GGButton: View {
     }
 
     private var foregroundColor: Color {
-        let colors = GGAdaptiveColors(isNightMode: isNightMode)
+        let colors = GGAdaptiveColors(colorScheme: colorScheme)
         switch variant {
         case .primary:
-            return isNightMode ? GGColors.onPrimaryDim : GGColors.onPrimary
+            // In dark mode, use bright teal text on the dark teal background
+            return colorScheme == .dark ? GGColors.primaryDark : colors.onPrimary
         case .secondary:
             return colors.onSecondaryContainer
         case .tertiary:

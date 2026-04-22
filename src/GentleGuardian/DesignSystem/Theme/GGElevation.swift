@@ -31,9 +31,9 @@ enum SurfaceLevel: Int, Sendable, CaseIterable {
 enum GGElevation: Sendable {
 
     /// Returns the background color for a given surface level.
-    static func backgroundColor(for level: SurfaceLevel, isNightMode: Bool = false) -> Color {
-        if isNightMode {
-            return nightBackground(for: level)
+    static func backgroundColor(for level: SurfaceLevel, colorScheme: ColorScheme = .light) -> Color {
+        if colorScheme == .dark {
+            return darkBackground(for: level)
         }
         return lightBackground(for: level)
     }
@@ -53,18 +53,18 @@ enum GGElevation: Sendable {
         }
     }
 
-    private static func nightBackground(for level: SurfaceLevel) -> Color {
+    private static func darkBackground(for level: SurfaceLevel) -> Color {
         switch level {
         case .base:
-            return GGColors.surfaceDim
+            return GGColors.surfaceDark
         case .container:
-            return GGColors.surfaceContainerDim
+            return GGColors.surfaceContainerDark
         case .containerLow:
-            return GGColors.surfaceContainerDim.opacity(0.8)
+            return GGColors.surfaceContainerLowDark
         case .containerHigh, .containerHighest:
-            return GGColors.surfaceContainerHighDim
+            return GGColors.surfaceContainerHighDark
         case .floating:
-            return GGColors.surfaceContainerLowestDim
+            return GGColors.surfaceContainerLowestDark
         }
     }
 
@@ -83,8 +83,8 @@ enum GGElevation: Sendable {
 extension View {
     /// Applies a tonal lift by setting the background to the appropriate surface level.
     /// This is the primary way to convey depth - no traditional shadows needed.
-    func tonalLift(_ level: SurfaceLevel, isNightMode: Bool = false) -> some View {
-        self.background(GGElevation.backgroundColor(for: level, isNightMode: isNightMode))
+    func tonalLift(_ level: SurfaceLevel, colorScheme: ColorScheme = .light) -> some View {
+        self.background(GGElevation.backgroundColor(for: level, colorScheme: colorScheme))
     }
 
     /// Adds the ambient shadow for floating elements (e.g., FABs, floating log buttons).

@@ -12,6 +12,7 @@ struct HomeView: View {
     // MARK: - Environment
 
     @Environment(ActiveChildState.self) private var activeChildState
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -51,7 +52,7 @@ struct HomeView: View {
             }
             .padding(.bottom, GGSpacing.xxl)
         }
-        .background(GGColors.surface)
+        .background(colors.surface)
         .navigationTitle("Gentle Guardian")
         .inlineNavigationBarTitle()
         .toolbar {
@@ -76,11 +77,11 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: GGSpacing.xs) {
             Text("\(viewModel.greeting)")
                 .font(.ggHeadlineLarge)
-                .foregroundStyle(GGColors.onSurface)
+                .foregroundStyle(colors.onSurface)
 
             Text(viewModel.greetingSubtitle)
                 .font(.ggBodyMedium)
-                .foregroundStyle(GGColors.onSurfaceVariant)
+                .foregroundStyle(colors.onSurfaceVariant)
         }
         .padding(.top, GGSpacing.md)
         .asymmetricHorizontalPadding()
@@ -117,7 +118,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: GGSpacing.md) {
             Text("Quick Log")
                 .font(.ggTitleLarge)
-                .foregroundStyle(GGColors.onSurface)
+                .foregroundStyle(colors.onSurface)
                 .asymmetricHorizontalPadding()
 
             QuickLogGrid { category in
@@ -134,6 +135,12 @@ struct HomeView: View {
         if let childId = activeChildState.activeChildId {
             LogEventSheet(category: category, childId: childId)
         }
+    }
+
+    // MARK: - Colors
+
+    private var colors: GGAdaptiveColors {
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

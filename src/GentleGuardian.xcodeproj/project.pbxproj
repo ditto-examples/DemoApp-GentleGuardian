@@ -17,6 +17,7 @@
 		0B39D097EF855936EA9FC9B2 /* CustomItemRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4E76E15E99957D94E93A4 /* CustomItemRepositoryTests.swift */; };
 		0BF5F4113D77BC78C508AD4E /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20C54E29A7DB9C032B94DA2 /* UserSettings.swift */; };
 		0D55F9569941B65A3D3C7B08 /* LogDiaperViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553183B0AAECF02CA27293EA /* LogDiaperViewModel.swift */; };
+		0DBD267C2F98551E006AD01E /* ditto.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DBD267B2F98551E006AD01E /* ditto.plist */; };
 		11BB99EBB1B50B3759D8B0AD /* ActivityEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E8CE79642B8BAA42EB67E9 /* ActivityEventTests.swift */; };
 		12CA4A838EFE0BE255B02622 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B732B6441F59D5C495F3E0C3 /* HomeViewModel.swift */; };
 		135E602AE305E606061BF959 /* View+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09E792AE2861D3AC375D997 /* View+Platform.swift */; };
@@ -87,7 +88,6 @@
 		8C1908852C21C6634BC33231 /* GGActivityBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977D860721B7F549F8A72F1F /* GGActivityBubble.swift */; };
 		8E8ACE0AE7E014FF774825A0 /* StatusRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD646519AB4572B12EF0E9C /* StatusRow.swift */; };
 		8EBED9B31DFDC7E75BA8CC90 /* DiaperConsistency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA61BE1813022B03E2F81B2 /* DiaperConsistency.swift */; };
-		904AB1BDA061CAA83E07389F /* GGNightModeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */; };
 		94375443142386AD85437B01 /* LogSolidsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653748BE566556698334222A /* LogSolidsView.swift */; };
 		95B0B6E141098175D214C045 /* SummaryStatsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1274D6556A0DC0ACE8633C /* SummaryStatsRow.swift */; };
 		9684C7D068E5EF6537E4D974 /* LogOtherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A154A9E55E31749C76A30C15 /* LogOtherViewModel.swift */; };
@@ -107,7 +107,6 @@
 		AD24B0E0C36FB03D125DBAB8 /* RegisterChildViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A4A1E049D618F2ED2FAE9 /* RegisterChildViewModelTests.swift */; };
 		ADD79A53D10063653A2FCB7B /* OtherEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */; };
 		B3060173CAA01BD499EEE14C /* DittoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 73A7E89A43B84AC9A16A8F1E /* DittoSwift */; };
-		B4FB70FAB2B3EC05E74913B1 /* ditto.plist in Resources */ = {isa = PBXBuildFile; fileRef = 039E67C40BAA4694780B569B /* ditto.plist */; };
 		B542BFE8943A60B3781B442D /* InformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C49B34FD9911902848BE88 /* InformationViewModel.swift */; };
 		B6AD6E01B8B6912635F05CAA /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C22D2E04C6950E738CC90A0 /* InformationView.swift */; };
 		B8188FA1A75FDC7FFBAF062D /* LogFeedingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECE51C1D398D7B0D4DC23D1 /* LogFeedingViewModel.swift */; };
@@ -168,11 +167,11 @@
 
 /* Begin PBXFileReference section */
 		0317DD016220B3F77740ED2F /* SyncCodeDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeDisplay.swift; sourceTree = "<group>"; };
-		039E67C40BAA4694780B569B /* ditto.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = ditto.plist; sourceTree = "<group>"; };
 		0477343D504830AD65B74E20 /* QueryHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryHelpers.swift; sourceTree = "<group>"; };
 		06F1E1E0C76FBD264FA12BF1 /* GGColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGColors.swift; sourceTree = "<group>"; };
 		080D386C0AE1443026D9A969 /* LogHealthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHealthViewModel.swift; sourceTree = "<group>"; };
 		0C346119499BFF551EB1FDC0 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		0DBD267B2F98551E006AD01E /* ditto.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ditto.plist; sourceTree = "<group>"; };
 		0E9F1DCDFEFBE08EA954DE54 /* JoinFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinFamilyView.swift; sourceTree = "<group>"; };
 		0F795CEFD1CA1EF5CD192B26 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0F811C8E510C441D86720188 /* HealthEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventTests.swift; sourceTree = "<group>"; };
@@ -217,7 +216,7 @@
 		5B7CF6ADBA0009D715F53134 /* ActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRepository.swift; sourceTree = "<group>"; };
 		5BB03AA50F7A8B8064F4302E /* FeedingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedingEvent.swift; sourceTree = "<group>"; };
 		5C1823001F43C3524D5D623B /* GGSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGSpacing.swift; sourceTree = "<group>"; };
-		5EA22759A698ADE8C5DC5877 /* GentleGuardianUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GentleGuardianUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA22759A698ADE8C5DC5877 /* GentleGuardianUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GentleGuardianUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F48D2620750485576EA77E0 /* ChildProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfileViewModel.swift; sourceTree = "<group>"; };
 		6037803F597ACD5051495765 /* SyncCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeGenerator.swift; sourceTree = "<group>"; };
 		63B4410B2666BDAF0B2EDED3 /* GGGlassBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGGlassBar.swift; sourceTree = "<group>"; };
@@ -227,13 +226,12 @@
 		67643C618B2BFF518B8E17F1 /* gental-gardian-icon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "gental-gardian-icon.icon"; sourceTree = "<group>"; };
 		686B22DD5F08CE8F279E091D /* LogDiaperViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDiaperViewModelTests.swift; sourceTree = "<group>"; };
 		6A3325BBC5A2F687DC8C2676 /* SleepRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRepository.swift; sourceTree = "<group>"; };
-		6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGNightModeToggle.swift; sourceTree = "<group>"; };
 		745B2B15CB20F0D7ABF65F19 /* CustomItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemTests.swift; sourceTree = "<group>"; };
 		76C49B34FD9911902848BE88 /* InformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewModel.swift; sourceTree = "<group>"; };
 		7B283D0A4C4B5A214A98AD49 /* DiaperEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperEventTests.swift; sourceTree = "<group>"; };
 		7B36AAAADAE4352D42C5048E /* LogSleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSleepView.swift; sourceTree = "<group>"; };
 		7CEA971BEE2976B6C3675E10 /* LogTemperatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTemperatureView.swift; sourceTree = "<group>"; };
-		8041EF2C923D2F42D36DAA82 /* GentleGuardianTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GentleGuardianTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8041EF2C923D2F42D36DAA82 /* GentleGuardianTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GentleGuardianTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C22D2E04C6950E738CC90A0 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		8D16B97BE437AEAC58A26DA9 /* HeightUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightUnit.swift; sourceTree = "<group>"; };
 		8F9B948618B7BD5F282D4C95 /* Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Child.swift; sourceTree = "<group>"; };
@@ -295,9 +293,9 @@
 		DAFEF1838F33FC67ECBE4441 /* RegisterChildViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterChildViewModel.swift; sourceTree = "<group>"; };
 		DD2596932B761DB78C91177A /* SummaryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelTests.swift; sourceTree = "<group>"; };
 		DE1274D6556A0DC0ACE8633C /* SummaryStatsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryStatsRow.swift; sourceTree = "<group>"; };
-		DE55BC9C82C6C0384F98DBA0 /* ditto.plist.example */ = {isa = PBXFileReference; path = ditto.plist.example; sourceTree = "<group>"; };
+		DE55BC9C82C6C0384F98DBA0 /* ditto.plist.example */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ditto.plist.example; sourceTree = "<group>"; };
 		DFFEB5C54C21E6C46D7B73C5 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
-		E02B16D148A53AA2F62849D8 /* GentleGuardian.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GentleGuardian.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E02B16D148A53AA2F62849D8 /* GentleGuardian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GentleGuardian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E8CE79642B8BAA42EB67E9 /* ActivityEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEventTests.swift; sourceTree = "<group>"; };
 		E73F6E0E1ECE7694F612F222 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		EF2FD2CFBA563DCF294A0565 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
@@ -454,7 +452,6 @@
 				980974D37A3E40391D40B453 /* GGCard.swift */,
 				63B4410B2666BDAF0B2EDED3 /* GGGlassBar.swift */,
 				B2A0EA932BC3780969A77E06 /* GGGradientBackground.swift */,
-				6DC7FD7EB2F257B5495D8AD2 /* GGNightModeToggle.swift */,
 				C1B39D97E6CE9BC166FD258A /* GGTextField.swift */,
 			);
 			path = Components;
@@ -765,8 +762,8 @@
 			isa = PBXGroup;
 			children = (
 				57E4A34A1C0A44D423DC2980 /* Assets.xcassets */,
-				039E67C40BAA4694780B569B /* ditto.plist */,
 				DE55BC9C82C6C0384F98DBA0 /* ditto.plist.example */,
+				0DBD267B2F98551E006AD01E /* ditto.plist */,
 				67643C618B2BFF518B8E17F1 /* gental-gardian-icon.icon */,
 			);
 			path = Resources;
@@ -949,10 +946,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					13D86FBC8722B0B743A0C5C5 = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					BD28DF13DD13DEC2CD2A759D = {
@@ -989,8 +985,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DBD267C2F98551E006AD01E /* ditto.plist in Resources */,
 				E53DA0BED28C171218AA6FAA /* Assets.xcassets in Resources */,
-				B4FB70FAB2B3EC05E74913B1 /* ditto.plist in Resources */,
 				DC97859F5412CD55BD6E04FD /* ditto.plist.example in Resources */,
 				27E2240D8DD6BE0785048070 /* gental-gardian-icon.icon in Resources */,
 			);
@@ -1077,7 +1073,6 @@
 				1C96D68C352C4AA780DAEF9D /* GGElevation.swift in Sources */,
 				25B8C523BFE7849770C7C1A2 /* GGGlassBar.swift in Sources */,
 				68C0924087FC3FF243598431 /* GGGradientBackground.swift in Sources */,
-				904AB1BDA061CAA83E07389F /* GGNightModeToggle.swift in Sources */,
 				2D5C01A10B9ED0745E27C0A7 /* GGSpacing.swift in Sources */,
 				36273E3A524982E1431DC5F9 /* GGTextField.swift in Sources */,
 				0678B883244B0C2265ADE63D /* GGTypography.swift in Sources */,
@@ -1183,10 +1178,11 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ditto.gentleguardian.tests;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GentleGuardian.app/GentleGuardian";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GentleGuardian.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GentleGuardian";
 			};
 			name = Release;
 		};
@@ -1202,7 +1198,8 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ditto.gentleguardian.uitests;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = GentleGuardian;
@@ -1213,6 +1210,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1246,6 +1244,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1259,7 +1258,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -1274,16 +1274,23 @@
 				CODE_SIGN_ENTITLEMENTS = GentleGuardian/App/GentleGuardian.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3T2VMFZPPQ;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = GentleGuardian/App/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ditto.gentleguardian;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
@@ -1299,16 +1306,23 @@
 				CODE_SIGN_ENTITLEMENTS = GentleGuardian/App/GentleGuardian.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3T2VMFZPPQ;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = GentleGuardian/App/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ditto.gentleguardian;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
@@ -1328,7 +1342,8 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ditto.gentleguardian.uitests;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = GentleGuardian;
@@ -1347,10 +1362,11 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ditto.gentleguardian.tests;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GentleGuardian.app/GentleGuardian";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GentleGuardian.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GentleGuardian";
 			};
 			name = Debug;
 		};
@@ -1358,6 +1374,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1391,6 +1408,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1411,7 +1429,8 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1464,8 +1483,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getditto/DittoSwiftPackage";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = "5.0.0-rc.2";
+				kind = exactVersion;
+				version = "5.0.0-rc.3";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

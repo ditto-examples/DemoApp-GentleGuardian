@@ -12,7 +12,7 @@ import SwiftUI
 struct GGGlassBar<Content: View>: View {
     let content: Content
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
@@ -40,8 +40,8 @@ struct GGGlassBar<Content: View>: View {
     }
 
     private var backgroundFill: Color {
-        if isNightMode {
-            return GGColors.surfaceDim.opacity(0.75)
+        if colorScheme == .dark {
+            return GGColors.surfaceDark.opacity(0.75)
         }
         return GGColors.surface.opacity(0.85)
     }
@@ -52,7 +52,7 @@ struct GGGlassBar<Content: View>: View {
 struct GGFloatingGlassBar<Content: View>: View {
     let content: Content
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
@@ -84,8 +84,8 @@ struct GGFloatingGlassBar<Content: View>: View {
     }
 
     private var backgroundFill: Color {
-        if isNightMode {
-            return GGColors.surfaceDim.opacity(0.85)
+        if colorScheme == .dark {
+            return GGColors.surfaceDark.opacity(0.85)
         }
         return GGColors.surface.opacity(0.9)
     }
@@ -99,7 +99,7 @@ struct GGTabItem: View {
     let isSelected: Bool
     let action: @MainActor () -> Void
 
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         Button(action: action) {
@@ -121,9 +121,9 @@ struct GGTabItem: View {
 
     private var tabColor: Color {
         if isSelected {
-            return isNightMode ? GGColors.primaryDim : GGColors.primary
+            return colorScheme == .dark ? GGColors.primaryDark : GGColors.primary
         }
-        return isNightMode ? GGColors.onSurfaceDim.opacity(0.6) : GGColors.onSurfaceVariant.opacity(0.6)
+        return colorScheme == .dark ? GGColors.onSurfaceDark.opacity(0.6) : GGColors.onSurfaceVariant.opacity(0.6)
     }
 }
 

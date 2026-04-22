@@ -10,7 +10,7 @@ struct WelcomeView: View {
     // MARK: - Environment
 
     @Environment(ActiveChildState.self) private var activeChildState
-    @Environment(\.isNightMode) private var isNightMode
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - State
 
@@ -127,7 +127,7 @@ struct WelcomeView: View {
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
-        GGAdaptiveColors(isNightMode: isNightMode)
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 
