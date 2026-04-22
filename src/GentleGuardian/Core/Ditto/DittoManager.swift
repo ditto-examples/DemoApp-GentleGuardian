@@ -159,7 +159,8 @@ actor DittoManager: DittoManaging {
             AppConstants.Collections.health,
             AppConstants.Collections.activity,
             AppConstants.Collections.sleep,
-            AppConstants.Collections.customItems
+            AppConstants.Collections.customItems,
+            AppConstants.Collections.vaccinationRecords
         ]
 
         for collection in collectionsToSync {

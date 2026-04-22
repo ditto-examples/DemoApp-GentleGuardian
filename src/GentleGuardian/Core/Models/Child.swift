@@ -47,6 +47,15 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
     /// The device ID that originally created this child record.
     var createdByDeviceId: String
 
+    /// Vaccination schedule region ("usa" or "europe"). Nil if not configured.
+    var vaccinationRegion: String?
+
+    /// ISO 3166-1 alpha-2 country code for vaccination schedule. Nil if not configured.
+    var vaccinationCountry: String?
+
+    /// Whether vaccination tracking is enabled for this child.
+    var isVaccinationTrackingEnabled: Bool
+
     // MARK: - Initialization
 
     /// Creates a new Child with default values.
@@ -63,7 +72,10 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
         isArchived: Bool = false,
-        createdByDeviceId: String = ""
+        createdByDeviceId: String = "",
+        vaccinationRegion: String? = nil,
+        vaccinationCountry: String? = nil,
+        isVaccinationTrackingEnabled: Bool = false
     ) {
         self.id = id
         self.firstName = firstName
@@ -78,6 +90,9 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
         self.updatedAt = updatedAt
         self.isArchived = isArchived
         self.createdByDeviceId = createdByDeviceId
+        self.vaccinationRegion = vaccinationRegion
+        self.vaccinationCountry = vaccinationCountry
+        self.isVaccinationTrackingEnabled = isVaccinationTrackingEnabled
     }
 
     /// Initializes a Child from a Ditto document dictionary.
@@ -101,6 +116,9 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
         self.updatedAt = DateService.date(fromISO8601: document["updatedAt"] as? String) ?? Date()
         self.isArchived = document["isArchived"] as? Bool ?? false
         self.createdByDeviceId = document["createdByDeviceId"] as? String ?? ""
+        self.vaccinationRegion = document["vaccinationRegion"] as? String
+        self.vaccinationCountry = document["vaccinationCountry"] as? String
+        self.isVaccinationTrackingEnabled = document["isVaccinationTrackingEnabled"] as? Bool ?? false
     }
 
     // MARK: - Serialization
@@ -120,7 +138,10 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
             "createdAt": DateService.iso8601String(from: createdAt),
             "updatedAt": DateService.iso8601String(from: updatedAt),
             "isArchived": isArchived,
-            "createdByDeviceId": createdByDeviceId
+            "createdByDeviceId": createdByDeviceId,
+            "vaccinationRegion": vaccinationRegion,
+            "vaccinationCountry": vaccinationCountry,
+            "isVaccinationTrackingEnabled": isVaccinationTrackingEnabled
         ]
     }
 

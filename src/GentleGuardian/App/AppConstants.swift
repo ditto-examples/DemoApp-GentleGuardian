@@ -66,10 +66,11 @@ enum AppConstants {
         static let sleep = "sleep"
         static let customItems = "customItems"
         static let otherEvents = "otherEvents"
+        static let vaccinationRecords = "vaccinationRecords"
 
         /// All collection names for bulk operations like sync scope configuration.
         static let all: [String] = [
-            children, feeding, diaper, health, activity, sleep, customItems, otherEvents
+            children, feeding, diaper, health, activity, sleep, customItems, otherEvents, vaccinationRecords
         ]
     }
 
