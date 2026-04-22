@@ -36,22 +36,64 @@ final class InformationViewModel {
     /// Controls presentation of the legal information sheet.
     var showLegalInfo: Bool = false
 
+    // MARK: - Export State
+
+    /// Whether an export operation is in progress.
+    var isExporting: Bool = false
+
+    /// The generated CSV document ready for the file exporter.
+    var exportDocument: CSVDocument?
+
+    /// Whether the file exporter sheet is presented.
+    var showExporter: Bool = false
+
+    /// Export error message to display, if any.
+    var exportError: String?
+
     // MARK: - Dependencies
 
     private let dittoManager: any DittoManaging
     private let userSettings: UserSettings
+    private let exportService: ExportService
 
     // MARK: - Initialization
 
     init(dittoManager: any DittoManaging, userSettings: UserSettings) {
         self.dittoManager = dittoManager
         self.userSettings = userSettings
+        self.exportService = ExportService(dittoManager: dittoManager)
 
         self.appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         self.sdkVersion = Ditto.version
     }
 
     // MARK: - Actions
+
+    /// Generates a CSV export of all child data and triggers the file exporter.
+    func exportData(child: Child) async {
+        isExporting = true
+        exportError = nil
+
+        do {
+            let csvString = try await exportService.generateCSV(for: child, childId: child.id)
+            exportDocument = CSVDocument(csvString: csvString)
+            showExporter = true
+        } catch {
+            exportError = "Export failed. Please try again."
+        }
+
+        isExporting = false
+    }
+
+    /// Suggested file name for the CSV export.
+    func exportFileName(for child: Child) -> String {
+        let dateStr = DateService.dateString(from: Date())
+        let safeName = child.firstName
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: " ", with: "-")
+            .lowercased()
+        return "gentleguardian-\(safeName)-\(dateStr).csv"
+    }
 
     /// Starts observing the Ditto presence graph for peer changes.
     func startObservingPresence() async {

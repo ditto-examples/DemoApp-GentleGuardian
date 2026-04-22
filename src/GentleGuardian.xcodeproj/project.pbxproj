@@ -165,6 +165,8 @@
 		F4E08998C035CEEF91753953 /* LogOtherVaccineSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F5D213FF6CC12A7FF9E8 /* LogOtherVaccineSheet.swift */; };
 		F6F290D006E8A4696328F7E5 /* VaccinationSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDB1F09C3D306DE273CF6B5 /* VaccinationSchedule.swift */; };
 		F978EECBCD82F21EC6A8F70E /* ActiveChildStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55817BDA0FD50B7B08F1788A /* ActiveChildStateTests.swift */; };
+		EC40A0854CC564E3F759CB48 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1912AB5FF3010D9442EFF0B1 /* CSVDocument.swift */; };
+		7DD97D7342B82D9A839BEC6E /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698FC3A530F4753D9A665782 /* ExportService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -347,6 +349,8 @@
 		FAEB187DFAA91A3614649174 /* EventLoggingE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLoggingE2ETests.swift; sourceTree = "<group>"; };
 		FB222AC79431A40B608004E4 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		FEDB55225B7C31CD91923485 /* DittoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DittoManager.swift; sourceTree = "<group>"; };
+		1912AB5FF3010D9442EFF0B1 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
+		698FC3A530F4753D9A665782 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,6 +634,8 @@
 			isa = PBXGroup;
 			children = (
 				2442A09C0F894410D7637AA7 /* ActiveChildState.swift */,
+				1912AB5FF3010D9442EFF0B1 /* CSVDocument.swift */,
+				698FC3A530F4753D9A665782 /* ExportService.swift */,
 				DFFEB5C54C21E6C46D7B73C5 /* DateService.swift */,
 				6037803F597ACD5051495765 /* SyncCodeGenerator.swift */,
 				D20C54E29A7DB9C032B94DA2 /* UserSettings.swift */,
@@ -1134,7 +1140,9 @@
 				6FEFBDE7C15B502DAB65C225 /* CustomItemCategory.swift in Sources */,
 				7B43B881E19E7C2821F92147 /* CustomItemRepository.swift in Sources */,
 				EBA71DA2C88155A8C056DFE5 /* Date+Extensions.swift in Sources */,
+				EC40A0854CC564E3F759CB48 /* CSVDocument.swift in Sources */,
 				673179268B1325A2FF3E7763 /* DateService.swift in Sources */,
+				7DD97D7342B82D9A839BEC6E /* ExportService.swift in Sources */,
 				141BB847768331DB0F5B9028 /* DiaperColor.swift in Sources */,
 				8EBED9B31DFDC7E75BA8CC90 /* DiaperConsistency.swift in Sources */,
 				BD5CA8407F4B72AB242B9F92 /* DiaperEvent.swift in Sources */,
