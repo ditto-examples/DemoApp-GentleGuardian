@@ -104,12 +104,14 @@
 		A656AA04DD1A801067750EA8 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2FD2CFBA563DCF294A0565 /* WelcomeView.swift */; };
 		A66DE2F1867E709B71A03B57 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C346119499BFF551EB1FDC0 /* TestHelpers.swift */; };
 		A9990C7FFAD37D52CA2B7253 /* TemperatureUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF58F7A011989F6DA5DE2B4A /* TemperatureUnit.swift */; };
+		AC1D28D5F57E17403BE8FCB2 /* VaccinationRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4CF032693E0870F81C08BC /* VaccinationRegion.swift */; };
 		AD24B0E0C36FB03D125DBAB8 /* RegisterChildViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A4A1E049D618F2ED2FAE9 /* RegisterChildViewModelTests.swift */; };
 		ADD79A53D10063653A2FCB7B /* OtherEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */; };
 		B3060173CAA01BD499EEE14C /* DittoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 73A7E89A43B84AC9A16A8F1E /* DittoSwift */; };
 		B4FB70FAB2B3EC05E74913B1 /* ditto.plist in Resources */ = {isa = PBXBuildFile; fileRef = 039E67C40BAA4694780B569B /* ditto.plist */; };
 		B542BFE8943A60B3781B442D /* InformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C49B34FD9911902848BE88 /* InformationViewModel.swift */; };
 		B6AD6E01B8B6912635F05CAA /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C22D2E04C6950E738CC90A0 /* InformationView.swift */; };
+		B6BC864A10D20476E2029486 /* VaccineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F7C8B0CFBA8643BEC4F11C /* VaccineType.swift */; };
 		B8188FA1A75FDC7FFBAF062D /* LogFeedingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECE51C1D398D7B0D4DC23D1 /* LogFeedingViewModel.swift */; };
 		B88DB08AA578442179BF95C8 /* SummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A9CA3D02EFAE1725AC77A0 /* SummaryViewModel.swift */; };
 		BD0C1D02D6CC79D4DFCEF1DF /* ActivityEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E09C4E149D491BDB36CBD8 /* ActivityEvent.swift */; };
@@ -192,8 +194,10 @@
 		24D04D634AB2D4384A7BCABE /* DittoManagerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DittoManagerIntegrationTests.swift; sourceTree = "<group>"; };
 		289D469414AEC3C8646B1344 /* FeedingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedingRepository.swift; sourceTree = "<group>"; };
 		2A423A5431B0F1C08C963563 /* OtherEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEvent.swift; sourceTree = "<group>"; };
+		31F7C8B0CFBA8643BEC4F11C /* VaccineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccineType.swift; sourceTree = "<group>"; };
 		353E79310F11334D1E4D4B41 /* HealthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRepository.swift; sourceTree = "<group>"; };
 		36B87AC2EF5AB0B929E4238C /* ChildTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildTests.swift; sourceTree = "<group>"; };
+		3A4CF032693E0870F81C08BC /* VaccinationRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaccinationRegion.swift; sourceTree = "<group>"; };
 		3AEB4F90933C48D537A7A652 /* LastFeedingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastFeedingCard.swift; sourceTree = "<group>"; };
 		3E05E337F9F78A9323F51E29 /* ChildSelectorMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildSelectorMenu.swift; sourceTree = "<group>"; };
 		3ECE51C1D398D7B0D4DC23D1 /* LogFeedingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFeedingViewModel.swift; sourceTree = "<group>"; };
@@ -534,6 +538,8 @@
 				98A013F61775E8737B7D7B83 /* QuantityUnit.swift */,
 				521EC9A48075B70674DA3D69 /* Sex.swift */,
 				BF58F7A011989F6DA5DE2B4A /* TemperatureUnit.swift */,
+				3A4CF032693E0870F81C08BC /* VaccinationRegion.swift */,
+				31F7C8B0CFBA8643BEC4F11C /* VaccineType.swift */,
 				93487CBE85F5B1C22DE8A452 /* VolumeUnit.swift */,
 				CC8F58D16D5EB39356894140 /* WeightUnit.swift */,
 			);
@@ -1136,6 +1142,8 @@
 				A9990C7FFAD37D52CA2B7253 /* TemperatureUnit.swift in Sources */,
 				00A640782BB871C44F379E15 /* TrackingDaySettings.swift in Sources */,
 				0BF5F4113D77BC78C508AD4E /* UserSettings.swift in Sources */,
+				AC1D28D5F57E17403BE8FCB2 /* VaccinationRegion.swift in Sources */,
+				B6BC864A10D20476E2029486 /* VaccineType.swift in Sources */,
 				135E602AE305E606061BF959 /* View+Platform.swift in Sources */,
 				01278C787EB0EC345CE77E3E /* VolumeUnit.swift in Sources */,
 				D70703481FA4CED855BB037D /* WeightUnit.swift in Sources */,
