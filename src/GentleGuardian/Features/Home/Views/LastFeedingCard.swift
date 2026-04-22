@@ -80,7 +80,7 @@ struct LastFeedingCard: View {
     // MARK: - Colors
 
     private var textColor: Color {
-        colorScheme == .dark ? GGColors.onPrimaryDark : GGColors.onPrimary
+        GGAdaptiveColors(colorScheme: colorScheme).onPrimary
     }
 }
 

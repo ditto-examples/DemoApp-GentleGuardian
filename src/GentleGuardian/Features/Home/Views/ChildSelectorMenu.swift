@@ -37,7 +37,7 @@ struct ChildSelectorMenu: View {
         } label: {
             Image(systemName: "person.crop.circle")
                 .font(.title3)
-                .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurfaceVariant)
+                .foregroundStyle(GGAdaptiveColors(colorScheme: colorScheme).onSurfaceVariant)
         }
         .accessibilityLabel("Switch child")
         .accessibilityIdentifier("child-selector-menu")

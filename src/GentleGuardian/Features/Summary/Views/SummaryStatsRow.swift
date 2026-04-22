@@ -18,21 +18,21 @@ struct SummaryStatsRow: View {
                 icon: "baby.bottle.fill",
                 count: totalFeedings,
                 label: "Total Feedings",
-                tintColor: colorScheme == .dark ? GGColors.primaryDark : GGColors.primary
+                tintColor: colors.primary
             )
 
             statCard(
                 icon: "humidity.fill",
                 count: totalDiapers,
                 label: "Total Diapers",
-                tintColor: colorScheme == .dark ? GGColors.tertiaryDark : GGColors.tertiary
+                tintColor: colors.tertiary
             )
 
             statCard(
                 icon: "figure.play",
                 count: totalActivitiesAndHealth,
                 label: "Activities",
-                tintColor: colorScheme == .dark ? GGColors.secondaryDark : GGColors.secondary
+                tintColor: colors.secondary
             )
         }
     }
@@ -48,14 +48,20 @@ struct SummaryStatsRow: View {
 
                 Text("\(count)")
                     .font(.ggTitleLarge)
-                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
+                    .foregroundStyle(colors.onSurface)
 
                 Text(label)
                     .font(.ggLabelSmall)
-                    .foregroundStyle(GGColors.onSurfaceVariant)
+                    .foregroundStyle(colors.onSurfaceVariant)
                     .lineLimit(1)
             }
         }
+    }
+
+    // MARK: - Colors
+
+    private var colors: GGAdaptiveColors {
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

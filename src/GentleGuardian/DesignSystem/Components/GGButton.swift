@@ -85,7 +85,8 @@ struct GGButton: View {
         let colors = GGAdaptiveColors(colorScheme: colorScheme)
         switch variant {
         case .primary:
-            return colors.primary
+            // In dark mode, use a darker teal background for better text contrast
+            return colorScheme == .dark ? GGColors.onPrimaryContainerDark : colors.primary
         case .secondary:
             return colors.secondaryContainer
         case .tertiary:
@@ -97,7 +98,8 @@ struct GGButton: View {
         let colors = GGAdaptiveColors(colorScheme: colorScheme)
         switch variant {
         case .primary:
-            return colors.onPrimary
+            // In dark mode, use bright teal text on the dark teal background
+            return colorScheme == .dark ? GGColors.primaryDark : colors.onPrimary
         case .secondary:
             return colors.onSecondaryContainer
         case .tertiary:

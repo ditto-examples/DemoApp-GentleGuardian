@@ -146,7 +146,7 @@ struct RegisterChildView: View {
                 if let message = viewModel.nameValidationMessage {
                     Text(message)
                         .font(.ggBodySmall)
-                        .foregroundStyle(GGColors.error)
+                        .foregroundStyle(colors.error)
                 }
             }
         }
@@ -176,7 +176,7 @@ struct RegisterChildView: View {
                 if let message = viewModel.birthdayValidationMessage {
                     Text(message)
                         .font(.ggBodySmall)
-                        .foregroundStyle(GGColors.error)
+                        .foregroundStyle(colors.error)
                 }
             }
         }
@@ -261,7 +261,7 @@ struct RegisterChildView: View {
     private func errorBanner(message: String) -> some View {
         HStack(spacing: GGSpacing.sm) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(GGColors.error)
+                .foregroundStyle(colors.error)
 
             Text(message)
                 .font(.ggBodyMedium)

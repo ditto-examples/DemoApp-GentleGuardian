@@ -78,7 +78,7 @@ struct GGTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.ggBodyMedium)
-                        .foregroundStyle(GGColors.onSurfaceVariant.opacity(0.6))
+                        .foregroundStyle(GGAdaptiveColors(colorScheme: colorScheme).onSurfaceVariant.opacity(0.6))
                 }
                 .buttonStyle(.plain)
             }

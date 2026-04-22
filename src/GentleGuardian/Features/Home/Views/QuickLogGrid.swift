@@ -8,28 +8,34 @@ struct QuickLogGrid: View {
 
     let onCategoryTapped: (EventCategory) -> Void
 
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
         GGQuickLogGrid(bubbles: [
-            .init("Feeding", icon: "spoon.serving", tintColor: GGColors.primary) {
+            .init("Feeding", icon: "spoon.serving", tintColor: colors.primary) {
                 onCategoryTapped(.feeding)
             },
-            .init("Diaper", icon: "humidity.fill", tintColor: GGColors.tertiary) {
+            .init("Diaper", icon: "humidity.fill", tintColor: colors.tertiary) {
                 onCategoryTapped(.diaper)
             },
-            .init("Health", icon: "heart.fill", tintColor: GGColors.error) {
+            .init("Health", icon: "heart.fill", tintColor: colors.error) {
                 onCategoryTapped(.health)
             },
-            .init("Activity", icon: "figure.play", tintColor: GGColors.secondary) {
+            .init("Activity", icon: "figure.play", tintColor: colors.secondary) {
                 onCategoryTapped(.activity)
             },
-            .init("Sleep", icon: "moon.fill", tintColor: GGColors.onSurfaceVariant) {
+            .init("Sleep", icon: "moon.fill", tintColor: colors.onSurfaceVariant) {
                 onCategoryTapped(.sleep)
             },
-            .init("Other", icon: "pencil.and.outline", tintColor: GGColors.tertiary) {
+            .init("Other", icon: "pencil.and.outline", tintColor: colors.tertiary) {
                 onCategoryTapped(.other)
             },
         ])
         .accessibilityIdentifier("quick-log-grid")
+    }
+
+    private var colors: GGAdaptiveColors {
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 

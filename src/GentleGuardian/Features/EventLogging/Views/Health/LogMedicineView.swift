@@ -329,7 +329,7 @@ struct LogMedicineView: View {
     private func errorBanner(message: String) -> some View {
         HStack(spacing: GGSpacing.sm) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(GGColors.error)
+                .foregroundStyle(colors.error)
             Text(message).font(.ggBodyMedium).foregroundStyle(colors.onSurface)
         }
         .padding(GGSpacing.md)

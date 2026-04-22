@@ -4,10 +4,9 @@ import SwiftUI
 ///
 /// Structure:
 /// 1. "Daily Summary" title
-/// 2. Hero stat display (total tracked time or event count)
-/// 3. Stats row (total feedings, diapers, activities)
-/// 4. Date navigation (previous/next day)
-/// 5. Activity feed list (chronological events)
+/// 2. Stats row (total feedings, diapers, activities)
+/// 3. Date navigation (previous/next day)
+/// 4. Activity feed list (chronological events)
 struct SummaryView: View {
 
     // MARK: - Environment
@@ -46,14 +45,13 @@ struct SummaryView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: GGSpacing.sectionGap) {
-                heroSection
                 statsSection
                 dateNavigationSection
                 activityFeedSection
             }
             .padding(.bottom, GGSpacing.xxl)
         }
-        .background(GGColors.surface)
+        .background(colors.surface)
         .navigationTitle("Daily Summary")
         .toolbar {
             ToolbarItem(placement: .trailingToolbar) {
@@ -66,32 +64,6 @@ struct SummaryView: View {
         .onChange(of: activeChildState.activeChildId) {
             viewModel.onChildChanged()
         }
-    }
-
-    // MARK: - Hero Section
-
-    private var heroSection: some View {
-        VStack(spacing: GGSpacing.sm) {
-            GGCard(style: .hero) {
-                VStack(spacing: GGSpacing.sm) {
-                    Text(viewModel.heroStatSubtitle.uppercased())
-                        .font(.ggLabelSmall)
-                        .foregroundStyle(heroTextColor.opacity(0.7))
-                        .tracking(1.2)
-
-                    Text(viewModel.heroStatLabel)
-                        .font(.ggDisplayMedium)
-                        .foregroundStyle(heroTextColor)
-
-                    Text(viewModel.heroStatSubtitle)
-                        .font(.ggBodyMedium)
-                        .foregroundStyle(heroTextColor.opacity(0.7))
-                }
-                .frame(maxWidth: .infinity)
-            }
-        }
-        .padding(.top, GGSpacing.md)
-        .pageHorizontalPadding()
     }
 
     // MARK: - Stats Section
@@ -111,7 +83,7 @@ struct SummaryView: View {
         HStack {
             Text("Activity Feed")
                 .font(.ggTitleLarge)
-                .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
+                .foregroundStyle(colors.onSurface)
 
             Spacer()
 
@@ -121,13 +93,13 @@ struct SummaryView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.ggLabelLarge)
-                        .foregroundStyle(colorScheme == .dark ? GGColors.primaryDark : GGColors.primary)
+                        .foregroundStyle(colors.primary)
                         .frame(minWidth: GGSpacing.minimumTouchTarget, minHeight: GGSpacing.minimumTouchTarget)
                 }
 
                 Text(viewModel.isToday ? "Today" : viewModel.selectedDateDisplay)
                     .font(.ggLabelLarge)
-                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
+                    .foregroundStyle(colors.onSurface)
 
                 Button {
                     viewModel.goToNextDay()
@@ -136,8 +108,8 @@ struct SummaryView: View {
                         .font(.ggLabelLarge)
                         .foregroundStyle(
                             viewModel.canGoForward
-                                ? (colorScheme == .dark ? GGColors.primaryDark : GGColors.primary)
-                                : GGColors.onSurfaceVariant.opacity(0.3)
+                                ? colors.primary
+                                : colors.onSurfaceVariant.opacity(0.3)
                         )
                         .frame(minWidth: GGSpacing.minimumTouchTarget, minHeight: GGSpacing.minimumTouchTarget)
                 }
@@ -156,7 +128,7 @@ struct SummaryView: View {
 
     // MARK: - Helpers
 
-    private var heroTextColor: Color {
-        colorScheme == .dark ? GGColors.onPrimaryDark : GGColors.onPrimary
+    private var colors: GGAdaptiveColors {
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }

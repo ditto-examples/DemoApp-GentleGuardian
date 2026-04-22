@@ -162,7 +162,7 @@ struct LogSolidsView: View {
                 if let error = viewModel.errorMessage {
                     HStack(spacing: GGSpacing.sm) {
                         Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundStyle(GGColors.error)
+                            .foregroundStyle(colors.error)
                         Text(error).font(.ggBodyMedium).foregroundStyle(colors.onSurface)
                     }
                     .padding(GGSpacing.md)

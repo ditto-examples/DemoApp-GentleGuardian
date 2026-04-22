@@ -129,7 +129,7 @@ struct LogActivityView: View {
             .padding(.vertical, GGSpacing.sm)
             .background(
                 RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.75, style: .continuous)
-                    .fill(isSelected ? colors.primary : (colorScheme == .dark ? GGColors.secondaryContainerDark.opacity(0.5) : GGColors.secondaryFixed))
+                    .fill(isSelected ? colors.primary : colors.secondaryContainer.opacity(colorScheme == .dark ? 0.5 : 1.0))
             )
         }
         .buttonStyle(GGBubbleSelectionStyle())
@@ -207,7 +207,7 @@ struct LogActivityView: View {
     private func errorBanner(message: String) -> some View {
         HStack(spacing: GGSpacing.sm) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(GGColors.error)
+                .foregroundStyle(colors.error)
             Text(message).font(.ggBodyMedium).foregroundStyle(colors.onSurface)
         }
         .padding(GGSpacing.md)

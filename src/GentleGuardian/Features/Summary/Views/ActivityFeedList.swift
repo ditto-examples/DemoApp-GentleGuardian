@@ -31,7 +31,7 @@ struct ActivityFeedList: View {
                 // Time
                 Text(event.timeString)
                     .font(.ggTitleSmall)
-                    .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
+                    .foregroundStyle(colors.onSurface)
                     .frame(width: 70, alignment: .leading)
 
                 // Category color indicator
@@ -48,13 +48,13 @@ struct ActivityFeedList: View {
 
                         Text(event.title)
                             .font(GGTypography.bodyLarge(weight: .medium))
-                            .foregroundStyle(colorScheme == .dark ? GGColors.onSurfaceDark : GGColors.onSurface)
+                            .foregroundStyle(colors.onSurface)
                     }
 
                     if !event.detail.isEmpty {
                         Text(event.detail)
                             .font(.ggBodyMedium)
-                            .foregroundStyle(GGColors.onSurfaceVariant)
+                            .foregroundStyle(colors.onSurfaceVariant)
                             .lineLimit(2)
                     }
                 }
@@ -70,15 +70,15 @@ struct ActivityFeedList: View {
         VStack(spacing: GGSpacing.md) {
             Image(systemName: "calendar.badge.clock")
                 .font(.system(size: 40))
-                .foregroundStyle(GGColors.onSurfaceVariant.opacity(0.5))
+                .foregroundStyle(colors.onSurfaceVariant.opacity(0.5))
 
             Text("No events recorded")
                 .font(.ggTitleMedium)
-                .foregroundStyle(GGColors.onSurfaceVariant)
+                .foregroundStyle(colors.onSurfaceVariant)
 
             Text("Events logged throughout the day will appear here.")
                 .font(.ggBodyMedium)
-                .foregroundStyle(GGColors.onSurfaceVariant.opacity(0.7))
+                .foregroundStyle(colors.onSurfaceVariant.opacity(0.7))
                 .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
@@ -90,18 +90,22 @@ struct ActivityFeedList: View {
     private func categoryColor(for category: EventCategory) -> Color {
         switch category {
         case .feeding:
-            return colorScheme == .dark ? GGColors.primaryDark : GGColors.primary
+            return colors.primary
         case .diaper:
-            return colorScheme == .dark ? GGColors.tertiaryDark : GGColors.tertiary
+            return colors.tertiary
         case .health:
-            return GGColors.error
+            return colors.error
         case .activity:
-            return colorScheme == .dark ? GGColors.secondaryDark : GGColors.secondary
+            return colors.secondary
         case .sleep:
-            return colorScheme == .dark ? GGColors.secondaryDark : GGColors.secondary
+            return colors.secondary
         case .other:
-            return colorScheme == .dark ? GGColors.tertiaryDark : GGColors.tertiary
+            return colors.tertiary
         }
+    }
+
+    private var colors: GGAdaptiveColors {
+        GGAdaptiveColors(colorScheme: colorScheme)
     }
 }
 
