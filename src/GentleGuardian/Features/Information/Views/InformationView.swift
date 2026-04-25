@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 /// Scrollable Information tab displaying app metadata, connected peers,
 /// Ditto P2P explanation, privacy/legal links, and copyright.
@@ -7,6 +8,7 @@ struct InformationView: View {
     // MARK: - Environment
 
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(ActiveChildState.self) private var activeChildState
 
     // MARK: - State
 
@@ -71,11 +73,30 @@ struct InformationView: View {
                 // Privacy & Legal
                 legalSection(viewModel: viewModel)
 
+                // Export data
+                exportSection(viewModel: viewModel)
+
                 // Copyright
                 copyrightSection
             }
             .padding(GGSpacing.pageInsets)
             .padding(.bottom, GGSpacing.xxl)
+        }
+        .fileExporter(
+            isPresented: Binding(
+                get: { viewModel.showExporter },
+                set: { viewModel.showExporter = $0 }
+            ),
+            document: viewModel.exportDocument,
+            contentType: .commaSeparatedText,
+            defaultFilename: activeChildState.activeChild.map { viewModel.exportFileName(for: $0) } ?? "export.csv"
+        ) { result in
+            if case .failure(let error) = result {
+                let nsError = error as NSError
+                if nsError.domain != NSCocoaErrorDomain || nsError.code != NSUserCancelledError {
+                    viewModel.exportError = "Could not save the file. Please try again."
+                }
+            }
         }
     }
 
@@ -181,6 +202,39 @@ struct InformationView: View {
 
                 GGButton("Legal Information", variant: .secondary, icon: "doc.text.fill") {
                     viewModel.showLegalInfo = true
+                }
+            }
+        }
+    }
+
+    // MARK: - Export Section
+
+    private func exportSection(viewModel: InformationViewModel) -> some View {
+        GGCard(style: .standard) {
+            VStack(spacing: GGSpacing.md) {
+                GGButton(
+                    "Export All Data",
+                    variant: .secondary,
+                    icon: "square.and.arrow.up",
+                    isLoading: viewModel.isExporting
+                ) {
+                    if let child = activeChildState.activeChild {
+                        Task {
+                            await viewModel.exportData(child: child)
+                        }
+                    }
+                }
+
+                if let exportError = viewModel.exportError {
+                    HStack(spacing: GGSpacing.sm) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundStyle(colors.error)
+                        Text(exportError)
+                            .font(.ggBodyMedium)
+                            .foregroundStyle(colors.onSurface)
+                    }
+                    .padding(GGSpacing.sm)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }
