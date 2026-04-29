@@ -167,8 +167,8 @@ struct SummaryView: View {
                     Image(systemName: "chevron.left")
                         .font(.ggLabelLarge)
                         .foregroundStyle(colors.primary)
-                        .frame(minWidth: GGSpacing.minimumTouchTarget, minHeight: GGSpacing.minimumTouchTarget)
                 }
+                .summaryDateButtonStyle()
 
                 Text(viewModel.isToday ? "Today" : viewModel.selectedDateDisplay)
                     .font(.ggLabelLarge)
@@ -184,8 +184,8 @@ struct SummaryView: View {
                                 ? colors.primary
                                 : colors.onSurfaceVariant.opacity(0.3)
                         )
-                        .frame(minWidth: GGSpacing.minimumTouchTarget, minHeight: GGSpacing.minimumTouchTarget)
                 }
+                .summaryDateButtonStyle()
                 .disabled(!viewModel.canGoForward)
             }
         }
@@ -269,5 +269,24 @@ struct SummaryView: View {
 
     private var colors: GGAdaptiveColors {
         GGAdaptiveColors(colorScheme: colorScheme)
+    }
+}
+
+private extension View {
+    /// Sizes a date-navigation button.
+    /// macOS: borderless 28×28 chrome.
+    /// iOS: a 44×44 minimum touch target so taps never miss.
+    @ViewBuilder
+    func summaryDateButtonStyle() -> some View {
+        #if os(macOS)
+        self.buttonStyle(.plain)
+            .frame(width: 28, height: 28)
+            .contentShape(Rectangle())
+        #else
+        self.frame(
+            minWidth: GGSpacing.minimumTouchTarget,
+            minHeight: GGSpacing.minimumTouchTarget
+        )
+        #endif
     }
 }
