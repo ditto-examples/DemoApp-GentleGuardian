@@ -153,41 +153,35 @@ struct SummaryView: View {
     }
 
     private var dateNavigationRow: some View {
-        HStack {
-            Text("Activity Feed")
-                .font(.ggTitleLarge)
-                .foregroundStyle(colors.onSurface)
-
+        HStack(spacing: GGSpacing.md) {
             Spacer()
 
-            HStack(spacing: GGSpacing.md) {
-                Button {
-                    viewModel.goToPreviousDay()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.ggLabelLarge)
-                        .foregroundStyle(colors.primary)
-                }
-                .summaryDateButtonStyle()
-
-                Text(viewModel.isToday ? "Today" : viewModel.selectedDateDisplay)
+            Button {
+                viewModel.goToPreviousDay()
+            } label: {
+                Image(systemName: "chevron.left")
                     .font(.ggLabelLarge)
-                    .foregroundStyle(colors.onSurface)
-
-                Button {
-                    viewModel.goToNextDay()
-                } label: {
-                    Image(systemName: "chevron.right")
-                        .font(.ggLabelLarge)
-                        .foregroundStyle(
-                            viewModel.canGoForward
-                                ? colors.primary
-                                : colors.onSurfaceVariant.opacity(0.3)
-                        )
-                }
-                .summaryDateButtonStyle()
-                .disabled(!viewModel.canGoForward)
+                    .foregroundStyle(colors.primary)
             }
+            .summaryDateButtonStyle()
+
+            Text(viewModel.isToday ? "Today" : viewModel.selectedDateDisplay)
+                .font(.ggLabelLarge)
+                .foregroundStyle(colors.onSurface)
+
+            Button {
+                viewModel.goToNextDay()
+            } label: {
+                Image(systemName: "chevron.right")
+                    .font(.ggLabelLarge)
+                    .foregroundStyle(
+                        viewModel.canGoForward
+                            ? colors.primary
+                            : colors.onSurfaceVariant.opacity(0.3)
+                    )
+            }
+            .summaryDateButtonStyle()
+            .disabled(!viewModel.canGoForward)
         }
         .asymmetricHorizontalPadding()
     }
@@ -195,34 +189,20 @@ struct SummaryView: View {
     // MARK: - Growth Section
 
     private var growthSection: some View {
-        VStack(alignment: .leading, spacing: GGSpacing.sectionGap) {
-            Text("Growth")
-                .font(.ggTitleLarge)
-                .foregroundStyle(colors.onSurface)
-                .asymmetricHorizontalPadding()
-
-            GrowthList(events: viewModel.growthEvents) { event in
-                selectedGrowthEvent = event
-            }
-            .pageHorizontalPadding()
+        GrowthList(events: viewModel.growthEvents) { event in
+            selectedGrowthEvent = event
         }
+        .pageHorizontalPadding()
     }
 
     // MARK: - Food Ranking Section
 
     private var foodRankingSection: some View {
-        VStack(alignment: .leading, spacing: GGSpacing.sectionGap) {
-            Text("Food Ranking")
-                .font(.ggTitleLarge)
-                .foregroundStyle(colors.onSurface)
-                .asymmetricHorizontalPadding()
-
-            FoodRankingList(
-                filter: $viewModel.foodRankingFilter,
-                summaries: viewModel.filteredFoodSummaries
-            )
-            .pageHorizontalPadding()
-        }
+        FoodRankingList(
+            filter: $viewModel.foodRankingFilter,
+            summaries: viewModel.filteredFoodSummaries
+        )
+        .pageHorizontalPadding()
     }
 
     // MARK: - Edit Sheet Routing
