@@ -113,6 +113,30 @@ protocol DittoManaging: Sendable {
     ///
     /// - Parameter handler: Called with a complete snapshot of all peers (local + remote).
     func observePresence(handler: @escaping @Sendable ([PeerInfo]) -> Void) async
+
+    // MARK: - Attachments
+
+    /// Stores a binary blob in Ditto's attachment store and returns a token that
+    /// can be persisted on a document and synced to other peers.
+    ///
+    /// - Parameters:
+    ///   - data: Raw binary data (e.g. JPEG-encoded image bytes).
+    ///   - metadata: Optional string-keyed metadata stored alongside the attachment.
+    /// - Returns: A token string suitable for storing on a Ditto document.
+    /// - Throws: `DittoManagerError.queryFailed` if the attachment cannot be created.
+    func newAttachment(data: Data, metadata: [String: String]) async throws -> String
+
+    /// Fetches the binary contents of an attachment by token.
+    ///
+    /// - Parameter token: The attachment token previously returned by `newAttachment`.
+    /// - Returns: The attachment's raw bytes, or `nil` if it cannot be fetched
+    ///            (e.g. not yet replicated to this peer).
+    func fetchAttachment(token: String) async -> Data?
+
+    /// Disposes of an attachment, releasing its storage on the local peer.
+    ///
+    /// - Parameter token: The token of the attachment to dispose.
+    func disposeAttachment(token: String) async
 }
 
 /// Convenience overload allowing calls without arguments.

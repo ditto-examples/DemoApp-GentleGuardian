@@ -110,12 +110,14 @@ final class MockFeedingRepository {
     var updatedEvents: [FeedingEvent] = []
     var softDeletedEventIds: [String] = []
     var countForDayArgs: (childId: String, date: String)?
+    var fetchAllSolidFeedingsCalledForChildId: String?
 
     // MARK: - Configuration
 
     var shouldThrow = false
     var mockError: Error = DittoManagerError.queryFailed("Mock repository error")
     var mockCount = 0
+    var mockSolidFeedings: [FeedingEvent] = []
 
     // MARK: - Methods
 
@@ -125,6 +127,12 @@ final class MockFeedingRepository {
 
     func observeLatestFeeding(childId: String) {
         observeLatestArgs = childId
+    }
+
+    func fetchAllSolidFeedings(childId: String) async throws -> [FeedingEvent] {
+        fetchAllSolidFeedingsCalledForChildId = childId
+        if shouldThrow { throw mockError }
+        return mockSolidFeedings
     }
 
     func insert(event: FeedingEvent) async throws {
@@ -163,8 +171,10 @@ final class MockFeedingRepository {
         updatedEvents.removeAll()
         softDeletedEventIds.removeAll()
         countForDayArgs = nil
+        fetchAllSolidFeedingsCalledForChildId = nil
         shouldThrow = false
         mockCount = 0
+        mockSolidFeedings.removeAll()
     }
 }
 
@@ -265,12 +275,14 @@ final class MockHealthRepository {
     var updatedEvents: [HealthEvent] = []
     var softDeletedEventIds: [String] = []
     var latestGrowthCalledForChildId: String?
+    var fetchAllGrowthCalledForChildId: String?
 
     // MARK: - Configuration
 
     var shouldThrow = false
     var mockError: Error = DittoManagerError.queryFailed("Mock repository error")
     var mockLatestGrowth: HealthEvent?
+    var mockAllGrowth: [HealthEvent] = []
 
     // MARK: - Methods
 
@@ -308,6 +320,12 @@ final class MockHealthRepository {
         return mockLatestGrowth
     }
 
+    func fetchAllGrowth(childId: String) async throws -> [HealthEvent] {
+        fetchAllGrowthCalledForChildId = childId
+        if shouldThrow { throw mockError }
+        return mockAllGrowth
+    }
+
     func reset() {
         events.removeAll()
         observeEventsArgs = nil
@@ -316,8 +334,10 @@ final class MockHealthRepository {
         updatedEvents.removeAll()
         softDeletedEventIds.removeAll()
         latestGrowthCalledForChildId = nil
+        fetchAllGrowthCalledForChildId = nil
         shouldThrow = false
         mockLatestGrowth = nil
+        mockAllGrowth.removeAll()
     }
 }
 
@@ -605,4 +625,3 @@ extension MockOtherEventRepository: LogOtherDataSource {}
 
 extension MockChildRepository: JoinFamilyChildDataSource {}
 extension MockChildRepository: RegisterChildDataSource {}
-extension MockCustomItemRepository: LogFeedingCustomItemDataSource {}

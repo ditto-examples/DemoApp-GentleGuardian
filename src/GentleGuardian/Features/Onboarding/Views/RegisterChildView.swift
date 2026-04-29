@@ -44,7 +44,8 @@ struct RegisterChildView: View {
                     childRepository: ChildRepository(dittoManager: DittoManager.shared),
                     activeChildState: activeChildState,
                     dittoManager: DittoManager.shared,
-                    userSettings: userSettings
+                    userSettings: userSettings,
+                    customItemRepository: CustomItemRepository(dittoManager: DittoManager.shared)
                 )
             }
         }
@@ -75,6 +76,9 @@ struct RegisterChildView: View {
 
                 // Prematurity toggle
                 prematuritySection(viewModel: viewModel)
+
+                // Country
+                countrySection(viewModel: viewModel)
 
                 // Vaccination tracking
                 vaccinationSection(viewModel: viewModel)
@@ -255,6 +259,29 @@ struct RegisterChildView: View {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // MARK: - Country Section
+
+    private func countrySection(viewModel: RegisterChildViewModel) -> some View {
+        GGCard(style: .standard) {
+            VStack(alignment: .leading, spacing: GGSpacing.sm) {
+                Text("Country")
+                    .font(.ggLabelLarge)
+                    .foregroundStyle(colors.onSurface)
+
+                Text("Used to tailor pre-filled options like infant formula brands.")
+                    .font(.ggBodySmall)
+                    .foregroundStyle(colors.onSurface.opacity(0.6))
+
+                GGCountryPicker(
+                    selectedCode: Binding(
+                        get: { viewModel.countryCode },
+                        set: { viewModel.countryCode = $0 }
+                    )
+                )
             }
         }
     }

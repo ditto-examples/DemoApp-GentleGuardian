@@ -29,6 +29,10 @@
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Gentle Guardian uses your local network to sync baby care data with nearby family devices.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Gentle Guardian can attach photos to formula and food entries so caregivers can recognize them at a glance.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Gentle Guardian can attach photos from your library to formula and food entries.</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

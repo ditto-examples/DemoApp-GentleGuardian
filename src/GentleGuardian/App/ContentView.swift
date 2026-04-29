@@ -21,6 +21,7 @@ struct ContentView: View {
     let sleepRepository: SleepRepository
     let otherEventRepository: OtherEventRepository
     let vaccinationRepository: VaccinationRepository
+    let customItemAttachmentLoader: CustomItemAttachmentLoader
 
     // MARK: - State
 
@@ -66,7 +67,8 @@ struct ContentView: View {
                         healthRepository: healthRepository,
                         sleepRepository: sleepRepository,
                         otherEventRepository: otherEventRepository,
-                        activeChildState: activeChildState
+                        activeChildState: activeChildState,
+                        customItemAttachmentLoader: customItemAttachmentLoader
                     )
                 }
             }
@@ -81,7 +83,8 @@ struct ContentView: View {
                         activityRepository: activityRepository,
                         sleepRepository: sleepRepository,
                         otherEventRepository: otherEventRepository,
-                        activeChildState: activeChildState
+                        activeChildState: activeChildState,
+                        attachmentLoader: customItemAttachmentLoader
                     )
                 }
             }
@@ -132,7 +135,8 @@ struct ContentView: View {
                     healthRepository: healthRepository,
                     sleepRepository: sleepRepository,
                     otherEventRepository: otherEventRepository,
-                    activeChildState: activeChildState
+                    activeChildState: activeChildState,
+                    customItemAttachmentLoader: customItemAttachmentLoader
                 )
             case .summary:
                 SummaryView(
@@ -142,7 +146,8 @@ struct ContentView: View {
                     activityRepository: activityRepository,
                     sleepRepository: sleepRepository,
                     otherEventRepository: otherEventRepository,
-                    activeChildState: activeChildState
+                    activeChildState: activeChildState,
+                    attachmentLoader: customItemAttachmentLoader
                 )
             case .child:
                 ChildProfileView()

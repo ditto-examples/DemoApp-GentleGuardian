@@ -56,6 +56,11 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
     /// Whether vaccination tracking is enabled for this child.
     var isVaccinationTrackingEnabled: Bool
 
+    /// General ISO 3166-1 alpha-2 country code where this child lives (e.g. "US", "GB", "JP").
+    /// Independent of `vaccinationCountry`. Used to drive locale-specific seed data
+    /// such as the FDA-published list of US-marketed infant formulas.
+    var country: String?
+
     // MARK: - Initialization
 
     /// Creates a new Child with default values.
@@ -75,7 +80,8 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
         createdByDeviceId: String = "",
         vaccinationRegion: String? = nil,
         vaccinationCountry: String? = nil,
-        isVaccinationTrackingEnabled: Bool = false
+        isVaccinationTrackingEnabled: Bool = false,
+        country: String? = nil
     ) {
         self.id = id
         self.firstName = firstName
@@ -93,6 +99,7 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
         self.vaccinationRegion = vaccinationRegion
         self.vaccinationCountry = vaccinationCountry
         self.isVaccinationTrackingEnabled = isVaccinationTrackingEnabled
+        self.country = country
     }
 
     /// Initializes a Child from a Ditto document dictionary.
@@ -119,6 +126,7 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
         self.vaccinationRegion = document["vaccinationRegion"] as? String
         self.vaccinationCountry = document["vaccinationCountry"] as? String
         self.isVaccinationTrackingEnabled = document["isVaccinationTrackingEnabled"] as? Bool ?? false
+        self.country = document["country"] as? String
     }
 
     // MARK: - Serialization
@@ -141,7 +149,8 @@ struct Child: Identifiable, Codable, Sendable, Equatable {
             "createdByDeviceId": createdByDeviceId,
             "vaccinationRegion": vaccinationRegion,
             "vaccinationCountry": vaccinationCountry,
-            "isVaccinationTrackingEnabled": isVaccinationTrackingEnabled
+            "isVaccinationTrackingEnabled": isVaccinationTrackingEnabled,
+            "country": country
         ]
     }
 

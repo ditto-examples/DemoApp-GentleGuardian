@@ -32,6 +32,12 @@ struct CustomItem: Identifiable, Codable, Sendable, Equatable {
     /// Soft-delete flag.
     var isArchived: Bool
 
+    /// Whether this item was inserted by a built-in seed list (e.g. FDA US formulas).
+    var isSeeded: Bool
+
+    /// Optional Ditto attachment token for an associated photo (e.g. solid-food package).
+    var attachmentToken: String?
+
     // MARK: - Initialization
 
     init(
@@ -42,7 +48,9 @@ struct CustomItem: Identifiable, Codable, Sendable, Equatable {
         defaultQuantity: Double? = nil,
         defaultQuantityUnit: String? = nil,
         createdAt: Date = Date(),
-        isArchived: Bool = false
+        isArchived: Bool = false,
+        isSeeded: Bool = false,
+        attachmentToken: String? = nil
     ) {
         self.id = id
         self.childId = childId
@@ -52,6 +60,8 @@ struct CustomItem: Identifiable, Codable, Sendable, Equatable {
         self.defaultQuantityUnit = defaultQuantityUnit
         self.createdAt = createdAt
         self.isArchived = isArchived
+        self.isSeeded = isSeeded
+        self.attachmentToken = attachmentToken
     }
 
     /// Initializes from a Ditto document dictionary.
@@ -64,6 +74,8 @@ struct CustomItem: Identifiable, Codable, Sendable, Equatable {
         self.defaultQuantityUnit = document["defaultQuantityUnit"] as? String
         self.createdAt = DateService.date(fromISO8601: document["createdAt"] as? String) ?? Date()
         self.isArchived = document["isArchived"] as? Bool ?? false
+        self.isSeeded = document["isSeeded"] as? Bool ?? false
+        self.attachmentToken = document["attachmentToken"] as? String
     }
 
     // MARK: - Serialization
@@ -78,7 +90,9 @@ struct CustomItem: Identifiable, Codable, Sendable, Equatable {
             "defaultQuantity": defaultQuantity,
             "defaultQuantityUnit": defaultQuantityUnit,
             "createdAt": DateService.iso8601String(from: createdAt),
-            "isArchived": isArchived
+            "isArchived": isArchived,
+            "isSeeded": isSeeded,
+            "attachmentToken": attachmentToken
         ]
     }
 }

@@ -14,7 +14,6 @@ struct LogFeedingViewModelTests {
         let viewModel = LogFeedingViewModel(
             childId: "child-1",
             feedingRepository: feedingRepo,
-            customItemRepository: customItemRepo,
             initialType: type
         )
         return (viewModel, feedingRepo, customItemRepo)
@@ -180,35 +179,6 @@ struct LogFeedingViewModelTests {
 
         #expect(feedingRepo.insertedEvents.isEmpty)
         #expect(!viewModel.didSave)
-    }
-
-    // MARK: - Custom Item Tests
-
-    @Test("Add new formula creates custom item")
-    func addNewFormulaCreatesCustomItem() async {
-        let (viewModel, _, customItemRepo) = makeSUT(type: .bottle)
-        viewModel.newFormulaName = "Similac Pro"
-
-        await viewModel.addNewFormula()
-
-        #expect(customItemRepo.insertedItems.count == 1)
-        #expect(customItemRepo.insertedItems.first?.category == .formula)
-        #expect(customItemRepo.insertedItems.first?.name == "Similac Pro")
-        #expect(viewModel.formulaType == "Similac Pro")
-        #expect(viewModel.newFormulaName.isEmpty)
-    }
-
-    @Test("Add new food creates custom item")
-    func addNewFoodCreatesCustomItem() async {
-        let (viewModel, _, customItemRepo) = makeSUT(type: .solid)
-        viewModel.newFoodName = "Sweet Potato"
-
-        await viewModel.addNewFood()
-
-        #expect(customItemRepo.insertedItems.count == 1)
-        #expect(customItemRepo.insertedItems.first?.category == .solidFood)
-        #expect(customItemRepo.insertedItems.first?.name == "Sweet Potato")
-        #expect(viewModel.solidType == "Sweet Potato")
     }
 
     @Test("Bottle save without formula leaves formulaType nil")

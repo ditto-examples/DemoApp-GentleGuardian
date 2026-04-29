@@ -25,6 +25,9 @@ struct GentleGuardianApp: App {
     @State private var otherEventRepository: OtherEventRepository
     @State private var vaccinationRepository: VaccinationRepository
 
+    /// Shared loader/cache for custom-item attachment thumbnails.
+    @State private var customItemAttachmentLoader: CustomItemAttachmentLoader
+
     /// Tracks whether Ditto initialization has completed.
     @State private var isInitialized = false
 
@@ -42,6 +45,7 @@ struct GentleGuardianApp: App {
         _sleepRepository = State(initialValue: SleepRepository(dittoManager: manager))
         _otherEventRepository = State(initialValue: OtherEventRepository(dittoManager: manager))
         _vaccinationRepository = State(initialValue: VaccinationRepository(dittoManager: manager))
+        _customItemAttachmentLoader = State(initialValue: CustomItemAttachmentLoader(dittoManager: manager))
     }
 
     // MARK: - Body
@@ -67,7 +71,8 @@ struct GentleGuardianApp: App {
                         activityRepository: activityRepository,
                         sleepRepository: sleepRepository,
                         otherEventRepository: otherEventRepository,
-                        vaccinationRepository: vaccinationRepository
+                        vaccinationRepository: vaccinationRepository,
+                        customItemAttachmentLoader: customItemAttachmentLoader
                     )
                 }
             }

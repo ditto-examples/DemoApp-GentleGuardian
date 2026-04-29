@@ -36,7 +36,6 @@ struct LogBreastfeedingView: View {
                 viewModel = LogFeedingViewModel(
                     childId: childId,
                     feedingRepository: FeedingRepository(dittoManager: DittoManager.shared),
-                    customItemRepository: CustomItemRepository(dittoManager: DittoManager.shared),
                     initialType: .breast
                 )
             }

@@ -18,6 +18,8 @@ struct HomeView: View {
 
     @State private var viewModel: HomeViewModel
 
+    private let customItemAttachmentLoader: CustomItemAttachmentLoader
+
     // MARK: - Initialization
 
     init(
@@ -27,7 +29,8 @@ struct HomeView: View {
         healthRepository: HealthRepository,
         sleepRepository: SleepRepository,
         otherEventRepository: OtherEventRepository,
-        activeChildState: ActiveChildState
+        activeChildState: ActiveChildState,
+        customItemAttachmentLoader: CustomItemAttachmentLoader
     ) {
         _viewModel = State(initialValue: HomeViewModel(
             feedingRepository: feedingRepository,
@@ -38,6 +41,7 @@ struct HomeView: View {
             otherEventRepository: otherEventRepository,
             activeChildState: activeChildState
         ))
+        self.customItemAttachmentLoader = customItemAttachmentLoader
     }
 
     // MARK: - Body
@@ -107,7 +111,8 @@ struct HomeView: View {
             sleepLabel: viewModel.sleepDurationLabel,
             diaperLabel: viewModel.diaperStatusLabel,
             diaperRelativeTime: viewModel.diaperRelativeTime,
-            feedingCount: viewModel.todayFeedingCount
+            feedingCount: viewModel.todayFeedingCount,
+            diaperIconColor: viewModel.lastDiaperIconColor
         )
         .pageHorizontalPadding()
     }
@@ -133,7 +138,11 @@ struct HomeView: View {
     @ViewBuilder
     private func eventLoggingSheet(for category: EventCategory) -> some View {
         if let childId = activeChildState.activeChildId {
-            LogEventSheet(category: category, childId: childId)
+            LogEventSheet(
+                category: category,
+                childId: childId,
+                customItemAttachmentLoader: customItemAttachmentLoader
+            )
         }
     }
 

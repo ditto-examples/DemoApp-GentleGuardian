@@ -245,6 +245,37 @@ struct HealthRepositoryTests {
         #expect(query.arguments["type"] as? String == "growth")
     }
 
+    // MARK: - All Growth Query
+
+    @Test("fetchAllGrowth uses correct query with type and ORDER BY DESC")
+    @MainActor
+    func fetchAllGrowthQuery() async {
+        let mock = MockDittoManager()
+        let repo = HealthRepository(dittoManager: mock)
+
+        do {
+            _ = try await repo.fetchAllGrowth(childId: "child-1")
+            Issue.record("Expected throw from MockDittoManager")
+        } catch {
+            // Expected
+        }
+
+        let queries = await mock.executedQueries
+        #expect(queries.count == 1)
+
+        let query = queries[0]
+        #expect(query.query.contains("SELECT * FROM \(AppConstants.Collections.health)"))
+        #expect(query.query.contains("childId = :childId"))
+        #expect(query.query.contains("type = :type"))
+        #expect(query.query.contains(QueryHelpers.notArchived))
+        #expect(query.query.contains("ORDER BY timestamp DESC"))
+        // No LIMIT — caller wants every growth row.
+        #expect(!query.query.contains("LIMIT"))
+
+        #expect(query.arguments["childId"] as? String == "child-1")
+        #expect(query.arguments["type"] as? String == "growth")
+    }
+
     // MARK: - Error Handling
 
     @Test("insert propagates DittoManager errors")

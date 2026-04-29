@@ -143,6 +143,38 @@ final class HealthRepository {
 
     // MARK: - One-Time Queries
 
+    /// Returns every non-archived growth event for a child, newest first.
+    ///
+    /// Used by the Summary tab's Growth section to render a cross-day list of
+    /// height and weight measurements.
+    ///
+    /// - Parameter childId: The child's unique identifier.
+    /// - Returns: All growth events for the child, sorted by `timestamp` desc.
+    func fetchAllGrowth(childId: String) async throws -> [HealthEvent] {
+        let query = """
+            SELECT * FROM \(AppConstants.Collections.health)
+            WHERE childId = :childId
+            AND type = :type
+            AND \(QueryHelpers.notArchived)
+            ORDER BY timestamp DESC
+            """
+
+        var args = QueryHelpers.childArgs(childId)
+        args["type"] = HealthEventType.growth.rawValue
+
+        let result = try await dittoManager.execute(
+            query: query,
+            arguments: args
+        )
+
+        return result.items.map { item -> HealthEvent in
+            let doc = item.value
+            let event = HealthEvent(from: doc)
+            item.dematerialize()
+            return event
+        }
+    }
+
     /// Returns the most recent growth event for a child.
     ///
     /// - Parameter childId: The child's unique identifier.

@@ -48,6 +48,10 @@ final class RegisterChildViewModel {
     /// Selected country code for vaccination schedule.
     var vaccinationCountryCode: String = "US"
 
+    /// General country (ISO 3166-1 alpha-2) where this child lives.
+    /// Defaults to the system locale's region.
+    var countryCode: String = Locale.current.region?.identifier ?? "US"
+
     // MARK: - UI State
 
     /// Whether a save operation is in progress.
@@ -90,6 +94,7 @@ final class RegisterChildViewModel {
     private let activeChildState: ActiveChildState
     private let dittoManager: (any DittoManaging)?
     private let userSettings: UserSettings?
+    private let customItemRepository: CustomItemRepository?
 
     // MARK: - Initialization
 
@@ -97,12 +102,14 @@ final class RegisterChildViewModel {
         childRepository: any RegisterChildDataSource,
         activeChildState: ActiveChildState,
         dittoManager: (any DittoManaging)? = nil,
-        userSettings: UserSettings? = nil
+        userSettings: UserSettings? = nil,
+        customItemRepository: CustomItemRepository? = nil
     ) {
         self.childRepository = childRepository
         self.activeChildState = activeChildState
         self.dittoManager = dittoManager
         self.userSettings = userSettings
+        self.customItemRepository = customItemRepository
         self.userFullName = userSettings?.displayName ?? ""
     }
 
@@ -140,7 +147,8 @@ final class RegisterChildViewModel {
             syncCode: syncCode,
             vaccinationRegion: isVaccinationTrackingEnabled ? vaccinationRegion.rawValue : nil,
             vaccinationCountry: isVaccinationTrackingEnabled ? (vaccinationRegion == .usa ? "US" : vaccinationCountryCode) : nil,
-            isVaccinationTrackingEnabled: isVaccinationTrackingEnabled
+            isVaccinationTrackingEnabled: isVaccinationTrackingEnabled,
+            country: countryCode
         )
 
         do {
@@ -149,6 +157,15 @@ final class RegisterChildViewModel {
             // Subscribe to sync data for this child
             if let dittoManager {
                 await dittoManager.subscribeToChildData(childId: child.id)
+            }
+
+            // Seed locale-specific custom items (e.g. FDA US-marketed infant formulas).
+            if let customItemRepository {
+                await FormulaSeed.seedIfNeeded(
+                    childId: child.id,
+                    repository: customItemRepository,
+                    country: child.country
+                )
             }
 
             // Save the caregiver name and set peer metadata

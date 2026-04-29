@@ -7,6 +7,8 @@ import Observation
 @MainActor
 protocol LogOtherDataSource: AnyObject {
     func insert(event: OtherEvent) async throws
+    func update(event: OtherEvent) async throws
+    func softDelete(eventId: String) async throws
     func distinctNames(childId: String) async throws -> [String]
 }
 
@@ -42,8 +44,17 @@ final class LogOtherViewModel {
     /// Whether the event was saved successfully.
     var didSave: Bool = false
 
+    /// Whether a delete just succeeded.
+    var didDelete: Bool = false
+
     /// Previously used event names for this child.
     var pastNames: [String] = []
+
+    // MARK: - Edit Mode
+
+    private(set) var existingEventId: String?
+
+    var isEditing: Bool { existingEventId != nil }
 
     // MARK: - Validation
 
@@ -69,6 +80,19 @@ final class LogOtherViewModel {
         self.otherEventRepository = otherEventRepository
     }
 
+    /// Edit flow — pre-fills every field from the source event.
+    init(existingEvent: OtherEvent, otherEventRepository: any LogOtherDataSource) {
+        self.childId = existingEvent.childId
+        self.otherEventRepository = otherEventRepository
+        self.existingEventId = existingEvent.id
+        self.name = existingEvent.name
+        self.timestamp = existingEvent.timestamp
+        if let dur = existingEvent.durationMinutes {
+            self.durationMinutes = String(dur)
+        }
+        self.eventDescription = existingEvent.description
+    }
+
     // MARK: - Actions
 
     /// Loads previously used event names for the past-names picker.
@@ -81,7 +105,7 @@ final class LogOtherViewModel {
         }
     }
 
-    /// Saves the other event.
+    /// Saves the other event — inserts when creating, updates when editing.
     func save() async {
         guard isFormValid else { return }
 
@@ -89,6 +113,7 @@ final class LogOtherViewModel {
         errorMessage = nil
 
         let event = OtherEvent(
+            id: existingEventId ?? UUID().uuidString,
             childId: childId,
             name: name.trimmingCharacters(in: .whitespacesAndNewlines),
             timestamp: timestamp,
@@ -97,10 +122,31 @@ final class LogOtherViewModel {
         )
 
         do {
-            try await otherEventRepository.insert(event: event)
+            if isEditing {
+                try await otherEventRepository.update(event: event)
+            } else {
+                try await otherEventRepository.insert(event: event)
+            }
             didSave = true
         } catch {
             errorMessage = "Failed to save event. Please try again."
+        }
+
+        isLoading = false
+    }
+
+    /// Soft-deletes the event currently being edited.
+    func delete() async {
+        guard let id = existingEventId else { return }
+
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            try await otherEventRepository.softDelete(eventId: id)
+            didDelete = true
+        } catch {
+            errorMessage = "Failed to delete event. Please try again."
         }
 
         isLoading = false

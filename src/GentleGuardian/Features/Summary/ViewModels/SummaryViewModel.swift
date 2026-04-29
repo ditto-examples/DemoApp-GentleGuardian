@@ -1,104 +1,170 @@
 import Foundation
 import Observation
 
+// MARK: - EventPayload
+
+/// Discriminated payload that carries the typed event behind a
+/// `TimelineEvent`. Keeping the original event around lets the activity
+/// feed route taps to the right Edit sheet with all fields pre-filled.
+enum EventPayload: Sendable {
+    case feeding(FeedingEvent)
+    case diaper(DiaperEvent)
+    case health(HealthEvent)
+    case activity(ActivityEvent)
+    case sleep(SleepEvent)
+    case other(OtherEvent)
+}
+
 // MARK: - TimelineEvent
 
 /// A unified wrapper representing any event type in the activity feed.
 ///
 /// Allows feeding, diaper, health, and activity events to be merged into
-/// a single chronological list for the daily summary view.
+/// a single chronological list for the daily summary view. Carries the
+/// original typed event via `payload` so taps can open a category-specific
+/// Edit sheet pre-filled with the source event's fields.
 struct TimelineEvent: Identifiable, Sendable {
-    let id: String
-    let timestamp: Date
-    let category: EventCategory
-    let iconName: String
-    let title: String
-    let detail: String
+    let payload: EventPayload
+
+    /// Stable identifier — the underlying event's id.
+    var id: String {
+        switch payload {
+        case .feeding(let event): event.id
+        case .diaper(let event): event.id
+        case .health(let event): event.id
+        case .activity(let event): event.id
+        case .sleep(let event): event.id
+        case .other(let event): event.id
+        }
+    }
+
+    var timestamp: Date {
+        switch payload {
+        case .feeding(let event): event.timestamp
+        case .diaper(let event): event.timestamp
+        case .health(let event): event.timestamp
+        case .activity(let event): event.timestamp
+        case .sleep(let event): event.timestamp
+        case .other(let event): event.timestamp
+        }
+    }
+
+    var category: EventCategory {
+        switch payload {
+        case .feeding: .feeding
+        case .diaper: .diaper
+        case .health: .health
+        case .activity: .activity
+        case .sleep: .sleep
+        case .other: .other
+        }
+    }
+
+    var iconName: String {
+        switch payload {
+        case .feeding(let event): event.type.iconName
+        case .diaper(let event): event.type.iconName
+        case .health(let event): event.type.iconName
+        case .activity(let event): event.activityType.iconName
+        case .sleep: "moon.fill"
+        case .other: "pencil.and.outline"
+        }
+    }
+
+    var title: String {
+        switch payload {
+        case .feeding(let event):
+            switch event.type {
+            case .bottle: "Bottle"
+            case .breast: "Breast"
+            case .solid: "Solid Food"
+            }
+        case .diaper(let event): event.type.displayName
+        case .health(let event): event.type.displayName
+        case .activity(let event): event.activityType.displayName
+        case .sleep: "Sleep"
+        case .other(let event): event.name
+        }
+    }
+
+    var detail: String {
+        switch payload {
+        case .feeding(let event): event.summary
+        case .diaper(let event): event.summary
+        case .health(let event): event.summary
+        case .activity(let event): event.summary
+        case .sleep(let event): event.summary
+        case .other(let event): event.summary
+        }
+    }
 
     /// Display-formatted time string (e.g., "10:30 AM").
     var timeString: String {
         DateService.displayTime(from: timestamp)
     }
 
-    /// Creates a TimelineEvent from a FeedingEvent.
     static func from(_ event: FeedingEvent) -> TimelineEvent {
-        let title: String
-        switch event.type {
-        case .bottle:
-            title = "Bottle"
-        case .breast:
-            title = "Breast"
-        case .solid:
-            title = "Solid Food"
-        }
-        return TimelineEvent(
-            id: event.id,
-            timestamp: event.timestamp,
-            category: .feeding,
-            iconName: event.type.iconName,
-            title: title,
-            detail: event.summary
-        )
+        TimelineEvent(payload: .feeding(event))
     }
 
-    /// Creates a TimelineEvent from a DiaperEvent.
     static func from(_ event: DiaperEvent) -> TimelineEvent {
-        TimelineEvent(
-            id: event.id,
-            timestamp: event.timestamp,
-            category: .diaper,
-            iconName: event.type.iconName,
-            title: event.type.displayName,
-            detail: event.summary
-        )
+        TimelineEvent(payload: .diaper(event))
     }
 
-    /// Creates a TimelineEvent from a HealthEvent.
     static func from(_ event: HealthEvent) -> TimelineEvent {
-        TimelineEvent(
-            id: event.id,
-            timestamp: event.timestamp,
-            category: .health,
-            iconName: event.type.iconName,
-            title: event.type.displayName,
-            detail: event.summary
-        )
+        TimelineEvent(payload: .health(event))
     }
 
-    /// Creates a TimelineEvent from an ActivityEvent.
     static func from(_ event: ActivityEvent) -> TimelineEvent {
-        TimelineEvent(
-            id: event.id,
-            timestamp: event.timestamp,
-            category: .activity,
-            iconName: event.activityType.iconName,
-            title: event.activityType.displayName,
-            detail: event.summary
-        )
+        TimelineEvent(payload: .activity(event))
     }
 
-    /// Creates a TimelineEvent from a SleepEvent.
     static func from(_ event: SleepEvent) -> TimelineEvent {
-        TimelineEvent(
-            id: event.id,
-            timestamp: event.timestamp,
-            category: .sleep,
-            iconName: "moon.fill",
-            title: "Sleep",
-            detail: event.summary
-        )
+        TimelineEvent(payload: .sleep(event))
     }
 
-    /// Creates a TimelineEvent from an OtherEvent.
     static func from(_ event: OtherEvent) -> TimelineEvent {
-        TimelineEvent(
-            id: event.id,
-            timestamp: event.timestamp,
-            category: .other,
-            iconName: "pencil.and.outline",
-            title: event.name,
-            detail: event.summary
-        )
+        TimelineEvent(payload: .other(event))
+    }
+}
+
+// MARK: - SummarySection
+
+/// Top-level segments for the Summary tab.
+enum SummarySection: String, CaseIterable, Identifiable, Sendable {
+    case activityFeed
+    case growth
+    case foodRanking
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .activityFeed: "Activity Feed"
+        case .growth: "Growth"
+        case .foodRanking: "Food Ranking"
+        }
+    }
+}
+
+// MARK: - FoodRankingFilter
+
+/// Filter applied to the Food Ranking list. Backed by overall reaction tilt:
+/// `liked` shows foods with more happy than frown ratings; `hated` shows the
+/// reverse. `all` shows every rated food.
+enum FoodRankingFilter: String, CaseIterable, Identifiable, Sendable {
+    case all
+    case liked
+    case hated
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .all: "All"
+        case .liked: "Liked"
+        case .hated: "Hated"
+        }
     }
 }
 
@@ -109,6 +175,7 @@ struct TimelineEvent: Identifiable, Sendable {
 protocol SummaryViewFeedingDataSource: AnyObject {
     var events: [FeedingEvent] { get }
     func observeEvents(childId: String, date: String)
+    func fetchAllSolidFeedings(childId: String) async throws -> [FeedingEvent]
 }
 
 /// Protocol defining the read interface for diaper data needed by SummaryViewModel.
@@ -123,6 +190,7 @@ protocol SummaryViewDiaperDataSource: AnyObject {
 protocol SummaryViewHealthDataSource: AnyObject {
     var events: [HealthEvent] { get }
     func observeEvents(childId: String, date: String)
+    func fetchAllGrowth(childId: String) async throws -> [HealthEvent]
 }
 
 /// Protocol defining the read interface for activity data needed by SummaryViewModel.
@@ -157,11 +225,15 @@ extension OtherEventRepository: SummaryViewOtherDataSource {}
 
 // MARK: - SummaryViewModel
 
-/// ViewModel powering the Daily Summary screen.
+/// ViewModel powering the Summary screen.
 ///
-/// Merges all event types (feeding, diaper, health, activity) into a single
-/// chronological timeline for the selected date. Provides stat counts and
-/// date navigation.
+/// Hosts three sub-sections selected via a segmented control:
+///   - Activity Feed: chronological list of events for the selected day
+///   - Growth: cross-day list of height/weight measurements
+///   - Food Ranking: cross-day aggregate of solid feedings with happy/neutral/
+///     frown counts and an All/Liked/Hated filter
+///
+/// The Activity Feed is the only section affected by the date selector.
 @Observable
 @MainActor
 final class SummaryViewModel {
@@ -178,12 +250,34 @@ final class SummaryViewModel {
 
     // MARK: - State
 
-    /// The currently selected date for the summary.
+    /// The currently selected date for the Activity Feed section.
     var selectedDate: Date = Date() {
         didSet {
             reloadForSelectedDate()
         }
     }
+
+    /// The active section in the Summary tab. Defaults to `.activityFeed`.
+    var selectedSection: SummarySection = .activityFeed {
+        didSet {
+            // Refresh cross-day data the first time a section becomes visible
+            // (and on every reselection — these are cheap one-shot queries).
+            switch selectedSection {
+            case .activityFeed: break
+            case .growth: Task { await loadGrowthEvents() }
+            case .foodRanking: Task { await loadSolidFeedings() }
+            }
+        }
+    }
+
+    /// Filter applied to the Food Ranking list.
+    var foodRankingFilter: FoodRankingFilter = .all
+
+    /// All-time growth events for the active child, newest first.
+    private(set) var growthEvents: [HealthEvent] = []
+
+    /// All-time solid feedings used to compute food rankings.
+    private(set) var solidFeedings: [FeedingEvent] = []
 
     /// The child ID currently being observed.
     private(set) var observedChildId: String?
@@ -225,27 +319,7 @@ final class SummaryViewModel {
         !isToday
     }
 
-    /// Total feeding count for the selected day.
-    var totalFeedings: Int {
-        feedingDataSource.events.count
-    }
-
-    /// Total diaper count for the selected day.
-    var totalDiapers: Int {
-        diaperDataSource.events.count
-    }
-
-    /// Total activities for the selected day.
-    var totalActivities: Int {
-        activityDataSource.events.count
-    }
-
-    /// Total health events for the selected day.
-    var totalHealthEvents: Int {
-        healthDataSource.events.count
-    }
-
-    /// All events merged and sorted by timestamp descending.
+    /// All daily events merged and sorted by timestamp descending.
     var allEvents: [TimelineEvent] {
         var events: [TimelineEvent] = []
 
@@ -259,47 +333,36 @@ final class SummaryViewModel {
         return events.sorted { $0.timestamp > $1.timestamp }
     }
 
-    /// Total sleep events for the selected day.
-    var totalSleep: Int {
-        sleepDataSource.events.count
+    /// Aggregated food summaries across all solid feedings for the active
+    /// child, filtered to those that have at least one rating.
+    var foodSummaries: [FoodReactionSummary] {
+        FoodReactionAggregator.summarize(events: solidFeedings)
+            .filter { $0.totalRatedCount > 0 }
     }
 
-    /// Total other events for the selected day.
-    var totalOther: Int {
-        otherDataSource.events.count
-    }
-
-    /// Total number of all events for the selected day.
-    var totalEventCount: Int {
-        totalFeedings + totalDiapers + totalActivities + totalHealthEvents + totalSleep + totalOther
-    }
-
-    /// A hero stat string for the summary (e.g., total tracked time or event count).
-    var heroStatLabel: String {
-        let total = totalEventCount
-        if total == 0 {
-            return "0"
+    /// Food summaries with the active filter applied. Sorted newest-rating-
+    /// first by overall score so the strongest tilts surface at the top of
+    /// each filter view (`.liked` puts the most-loved first; `.hated` puts the
+    /// most-disliked first).
+    var filteredFoodSummaries: [FoodReactionSummary] {
+        let base: [FoodReactionSummary]
+        switch foodRankingFilter {
+        case .all:
+            base = foodSummaries
+        case .liked:
+            base = foodSummaries.filter { $0.happyCount > $0.frownCount }
+        case .hated:
+            base = foodSummaries.filter { $0.frownCount > $0.happyCount }
         }
-        // Calculate total tracked time from activities with durations
-        let totalMinutes = activityDataSource.events.compactMap(\.durationMinutes).reduce(0, +)
-        if totalMinutes > 0 {
-            let hours = totalMinutes / 60
-            let minutes = totalMinutes % 60
-            if hours > 0 {
-                return "\(hours)h \(minutes)m"
+        return base.sorted { lhs, rhs in
+            switch foodRankingFilter {
+            case .all, .liked:
+                if lhs.score != rhs.score { return lhs.score > rhs.score }
+            case .hated:
+                if lhs.score != rhs.score { return lhs.score < rhs.score }
             }
-            return "\(minutes)m"
+            return lhs.foodName.localizedCaseInsensitiveCompare(rhs.foodName) == .orderedAscending
         }
-        return "\(total)"
-    }
-
-    /// Subtitle for the hero stat.
-    var heroStatSubtitle: String {
-        let totalMinutes = activityDataSource.events.compactMap(\.durationMinutes).reduce(0, +)
-        if totalMinutes > 0 {
-            return "Total Tracked Time"
-        }
-        return "Total Events"
     }
 
     // MARK: - Actions
@@ -308,6 +371,10 @@ final class SummaryViewModel {
     func onAppear() {
         guard let childId = activeChildState.activeChildId else { return }
         startObserving(childId: childId)
+        // Pre-fetch cross-day data so the segmented control feels instant when
+        // tapped — these are bounded queries (no observers).
+        Task { await loadGrowthEvents() }
+        Task { await loadSolidFeedings() }
     }
 
     /// Called when the active child changes. Restarts observations for the new child.
@@ -315,6 +382,8 @@ final class SummaryViewModel {
         guard let childId = activeChildState.activeChildId else { return }
         guard childId != observedChildId else { return }
         startObserving(childId: childId)
+        Task { await loadGrowthEvents() }
+        Task { await loadSolidFeedings() }
     }
 
     /// Navigates to the previous day.
@@ -328,6 +397,28 @@ final class SummaryViewModel {
         guard canGoForward else { return }
         guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) else { return }
         selectedDate = newDate
+    }
+
+    /// Reloads the all-time growth events list. Exposed so the view can
+    /// re-pull after an Edit sheet has saved or deleted a row.
+    func loadGrowthEvents() async {
+        guard let childId = observedChildId ?? activeChildState.activeChildId else { return }
+        do {
+            growthEvents = try await healthDataSource.fetchAllGrowth(childId: childId)
+        } catch {
+            growthEvents = []
+        }
+    }
+
+    /// Reloads the all-time solid feedings list. Exposed so the view can
+    /// re-pull after an Edit sheet has saved or deleted a row.
+    func loadSolidFeedings() async {
+        guard let childId = observedChildId ?? activeChildState.activeChildId else { return }
+        do {
+            solidFeedings = try await feedingDataSource.fetchAllSolidFeedings(childId: childId)
+        } catch {
+            solidFeedings = []
+        }
     }
 
     // MARK: - Private

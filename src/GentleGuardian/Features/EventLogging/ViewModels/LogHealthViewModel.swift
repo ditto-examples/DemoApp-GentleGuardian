@@ -68,6 +68,15 @@ final class LogHealthViewModel {
     /// Whether the event was saved successfully.
     var didSave: Bool = false
 
+    /// Whether a delete just succeeded.
+    var didDelete: Bool = false
+
+    // MARK: - Edit Mode
+
+    private(set) var existingEventId: String?
+
+    var isEditing: Bool { existingEventId != nil }
+
     // MARK: - Validation
 
     /// Whether the form is valid for the current health type.
@@ -117,9 +126,48 @@ final class LogHealthViewModel {
         self.healthType = initialType
     }
 
+    /// Edit flow — pre-fills every field from the source event.
+    init(existingEvent: HealthEvent, healthRepository: HealthRepository, customItemRepository: CustomItemRepository) {
+        self.childId = existingEvent.childId
+        self.healthRepository = healthRepository
+        self.customItemRepository = customItemRepository
+        self.existingEventId = existingEvent.id
+        self.healthType = existingEvent.type
+        self.timestamp = existingEvent.timestamp
+        self.notes = existingEvent.notes
+
+        self.medicineName = existingEvent.medicineName ?? ""
+        if let qty = existingEvent.medicineQuantity {
+            self.medicineQuantity = formattedNumber(qty)
+        }
+        if let unit = existingEvent.medicineQuantityUnit {
+            self.medicineUnit = unit
+        }
+
+        if let temp = existingEvent.temperatureValue {
+            self.temperatureValue = formattedNumber(temp)
+        }
+        if let unit = existingEvent.temperatureUnit {
+            self.temperatureUnit = unit
+        }
+
+        if let h = existingEvent.heightValue {
+            self.heightValue = formattedNumber(h)
+        }
+        if let unit = existingEvent.heightUnit {
+            self.heightUnit = unit
+        }
+        if let w = existingEvent.weightValue {
+            self.weightValue = formattedNumber(w)
+        }
+        if let unit = existingEvent.weightUnit {
+            self.weightUnit = unit
+        }
+    }
+
     // MARK: - Actions
 
-    /// Saves the health event.
+    /// Saves the health event — inserts when creating, updates when editing.
     func save() async {
         guard isFormValid else { return }
 
@@ -127,6 +175,7 @@ final class LogHealthViewModel {
         errorMessage = nil
 
         let event = HealthEvent(
+            id: existingEventId ?? UUID().uuidString,
             childId: childId,
             type: healthType,
             timestamp: timestamp,
@@ -143,10 +192,31 @@ final class LogHealthViewModel {
         )
 
         do {
-            try await healthRepository.insert(event: event)
+            if isEditing {
+                try await healthRepository.update(event: event)
+            } else {
+                try await healthRepository.insert(event: event)
+            }
             didSave = true
         } catch {
             errorMessage = "Failed to save health event. Please try again."
+        }
+
+        isLoading = false
+    }
+
+    /// Soft-deletes the event currently being edited.
+    func delete() async {
+        guard let id = existingEventId else { return }
+
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            try await healthRepository.softDelete(eventId: id)
+            didDelete = true
+        } catch {
+            errorMessage = "Failed to delete health event. Please try again."
         }
 
         isLoading = false
@@ -171,4 +241,15 @@ final class LogHealthViewModel {
             errorMessage = "Failed to add medicine type."
         }
     }
+}
+
+// MARK: - Helpers
+
+/// Strips trailing `.0` so `4.0` displays as `4` in the form, while
+/// preserving real decimals like `4.5`.
+private func formattedNumber(_ value: Double) -> String {
+    if value == value.rounded() {
+        return String(Int(value))
+    }
+    return String(value)
 }

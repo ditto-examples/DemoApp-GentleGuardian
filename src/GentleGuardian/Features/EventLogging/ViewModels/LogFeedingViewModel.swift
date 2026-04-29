@@ -3,23 +3,25 @@ import Observation
 
 // MARK: - Repository Protocols
 
-/// Protocol defining the write interface for feeding events needed by LogFeedingViewModel.
+/// Protocol defining the read/write interface for feeding events needed by
+/// `LogFeedingViewModel`. Used in both create and edit flows; mocked in tests.
 @MainActor
 protocol LogFeedingDataSource: AnyObject {
     func insert(event: FeedingEvent) async throws
-}
-
-/// Protocol defining the write interface for custom items needed by LogFeedingViewModel.
-@MainActor
-protocol LogFeedingCustomItemDataSource: AnyObject {
-    func insert(item: CustomItem) async throws
+    func update(event: FeedingEvent) async throws
+    func softDelete(eventId: String) async throws
 }
 
 extension FeedingRepository: LogFeedingDataSource {}
-extension CustomItemRepository: LogFeedingCustomItemDataSource {}
 
 /// ViewModel managing the feeding event logging form for all three subtypes:
 /// bottle, breastfeeding, and solid food.
+///
+/// Supports both **create** and **edit** flows. In edit mode the view model
+/// is constructed via `init(existingEvent:repository:)` which pre-fills every
+/// field from the source event. `save()` then routes to either insert or
+/// update depending on whether `existingEventId` is set, and `delete()`
+/// soft-deletes the underlying event.
 @Observable
 @MainActor
 final class LogFeedingViewModel {
@@ -46,11 +48,8 @@ final class LogFeedingViewModel {
     /// Selected formula type name.
     var formulaType: String = ""
 
-    /// Whether the "Add New Formula" alert is showing.
-    var showAddFormulaAlert: Bool = false
-
-    /// New formula name being entered.
-    var newFormulaName: String = ""
+    /// Optional attachment token for the selected formula's photo (display only — not persisted on the event).
+    var formulaAttachmentToken: String?
 
     // MARK: - Breast State
 
@@ -65,17 +64,17 @@ final class LogFeedingViewModel {
     /// Name/type of solid food.
     var solidType: String = ""
 
+    /// Optional attachment token for the selected food's photo (display only — not persisted on the event).
+    var solidAttachmentToken: String?
+
     /// Quantity of solid food.
     var solidQuantity: String = ""
 
     /// Unit for solid food quantity.
     var solidUnit: QuantityUnit = .tbsp
 
-    /// Whether the "Add New Food" alert is showing.
-    var showAddFoodAlert: Bool = false
-
-    /// New food name being entered.
-    var newFoodName: String = ""
+    /// Caregiver-recorded reaction. `nil` means "not rated".
+    var solidReaction: SolidReaction?
 
     // MARK: - UI State
 
@@ -88,11 +87,21 @@ final class LogFeedingViewModel {
     /// Whether the event was saved successfully.
     var didSave: Bool = false
 
+    /// Whether a delete just succeeded — Edit sheet listens to this and dismisses.
+    var didDelete: Bool = false
+
+    // MARK: - Edit Mode
+
+    /// Set when this view model edits an existing event. `nil` for create flow.
+    private(set) var existingEventId: String?
+
+    /// `true` when this view model is editing an existing event.
+    var isEditing: Bool { existingEventId != nil }
+
     // MARK: - Dependencies
 
     private let childId: String
     private let feedingRepository: any LogFeedingDataSource
-    private let customItemRepository: any LogFeedingCustomItemDataSource
 
     // MARK: - Validation
 
@@ -125,16 +134,50 @@ final class LogFeedingViewModel {
 
     // MARK: - Initialization
 
-    init(childId: String, feedingRepository: any LogFeedingDataSource, customItemRepository: any LogFeedingCustomItemDataSource, initialType: FeedingType = .bottle) {
+    /// Create flow.
+    init(childId: String, feedingRepository: any LogFeedingDataSource, initialType: FeedingType = .bottle) {
         self.childId = childId
         self.feedingRepository = feedingRepository
-        self.customItemRepository = customItemRepository
         self.feedingType = initialType
+    }
+
+    /// Edit flow — pre-fills every field from the source event.
+    init(existingEvent: FeedingEvent, feedingRepository: any LogFeedingDataSource) {
+        self.childId = existingEvent.childId
+        self.feedingRepository = feedingRepository
+        self.existingEventId = existingEvent.id
+        self.feedingType = existingEvent.type
+        self.timestamp = existingEvent.timestamp
+        self.notes = existingEvent.notes
+
+        if let qty = existingEvent.bottleQuantity {
+            self.bottleQuantity = formattedNumber(qty)
+        }
+        if let unit = existingEvent.bottleQuantityUnit {
+            self.bottleUnit = unit
+        }
+        self.formulaType = existingEvent.formulaType ?? ""
+
+        if let dur = existingEvent.breastDurationMinutes {
+            self.breastDuration = String(dur)
+        }
+        if let side = existingEvent.breastSide {
+            self.breastSide = side
+        }
+
+        self.solidType = existingEvent.solidType ?? ""
+        if let qty = existingEvent.solidQuantity {
+            self.solidQuantity = formattedNumber(qty)
+        }
+        if let unit = existingEvent.solidQuantityUnit {
+            self.solidUnit = unit
+        }
+        self.solidReaction = existingEvent.solidReaction
     }
 
     // MARK: - Actions
 
-    /// Saves the feeding event.
+    /// Saves the feeding event — inserts when creating, updates when editing.
     func save() async {
         guard isFormValid else { return }
 
@@ -142,6 +185,7 @@ final class LogFeedingViewModel {
         errorMessage = nil
 
         let event = FeedingEvent(
+            id: existingEventId ?? UUID().uuidString,
             childId: childId,
             type: feedingType,
             timestamp: timestamp,
@@ -153,11 +197,16 @@ final class LogFeedingViewModel {
             solidType: feedingType == .solid ? solidType.trimmingCharacters(in: .whitespacesAndNewlines) : nil,
             solidQuantity: feedingType == .solid ? solidQuantityValue : nil,
             solidQuantityUnit: feedingType == .solid && solidQuantityValue != nil ? solidUnit : nil,
+            solidReaction: feedingType == .solid ? solidReaction : nil,
             notes: notes.trimmingCharacters(in: .whitespacesAndNewlines)
         )
 
         do {
-            try await feedingRepository.insert(event: event)
+            if isEditing {
+                try await feedingRepository.update(event: event)
+            } else {
+                try await feedingRepository.insert(event: event)
+            }
             didSave = true
         } catch {
             errorMessage = "Failed to save feeding event. Please try again."
@@ -166,43 +215,31 @@ final class LogFeedingViewModel {
         isLoading = false
     }
 
-    /// Adds a new custom formula item.
-    func addNewFormula() async {
-        let name = newFormulaName.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !name.isEmpty else { return }
+    /// Soft-deletes the event currently being edited. No-op for create flow.
+    func delete() async {
+        guard let id = existingEventId else { return }
 
-        let item = CustomItem(
-            childId: childId,
-            category: .formula,
-            name: name
-        )
+        isLoading = true
+        errorMessage = nil
 
         do {
-            try await customItemRepository.insert(item: item)
-            formulaType = name
-            newFormulaName = ""
+            try await feedingRepository.softDelete(eventId: id)
+            didDelete = true
         } catch {
-            errorMessage = "Failed to add formula type."
+            errorMessage = "Failed to delete feeding event. Please try again."
         }
+
+        isLoading = false
     }
+}
 
-    /// Adds a new custom solid food item.
-    func addNewFood() async {
-        let name = newFoodName.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !name.isEmpty else { return }
+// MARK: - Helpers
 
-        let item = CustomItem(
-            childId: childId,
-            category: .solidFood,
-            name: name
-        )
-
-        do {
-            try await customItemRepository.insert(item: item)
-            solidType = name
-            newFoodName = ""
-        } catch {
-            errorMessage = "Failed to add food type."
-        }
+/// Strips trailing `.0` so `4.0` displays as `4` in the form, while
+/// preserving real decimals like `4.5`.
+private func formattedNumber(_ value: Double) -> String {
+    if value == value.rounded() {
+        return String(Int(value))
     }
+    return String(value)
 }

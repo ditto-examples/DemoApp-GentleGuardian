@@ -28,6 +28,15 @@ final class LogSleepViewModel {
     /// Whether the event was saved successfully.
     var didSave: Bool = false
 
+    /// Whether a delete just succeeded.
+    var didDelete: Bool = false
+
+    // MARK: - Edit Mode
+
+    private(set) var existingEventId: String?
+
+    var isEditing: Bool { existingEventId != nil }
+
     // MARK: - Validation
 
     /// The form is valid when the end time is after the start time.
@@ -72,9 +81,19 @@ final class LogSleepViewModel {
         self.sleepRepository = sleepRepository
     }
 
+    /// Edit flow — pre-fills every field from the source event.
+    init(existingEvent: SleepEvent, sleepRepository: SleepRepository) {
+        self.childId = existingEvent.childId
+        self.sleepRepository = sleepRepository
+        self.existingEventId = existingEvent.id
+        self.startTime = existingEvent.startTime
+        self.endTime = existingEvent.endTime
+        self.notes = existingEvent.notes
+    }
+
     // MARK: - Actions
 
-    /// Saves the sleep event.
+    /// Saves the sleep event — inserts when creating, updates when editing.
     func save() async {
         guard isFormValid else { return }
 
@@ -82,6 +101,7 @@ final class LogSleepViewModel {
         errorMessage = nil
 
         let event = SleepEvent(
+            id: existingEventId ?? UUID().uuidString,
             childId: childId,
             startTime: startTime,
             endTime: endTime,
@@ -89,10 +109,31 @@ final class LogSleepViewModel {
         )
 
         do {
-            try await sleepRepository.insert(event: event)
+            if isEditing {
+                try await sleepRepository.update(event: event)
+            } else {
+                try await sleepRepository.insert(event: event)
+            }
             didSave = true
         } catch {
             errorMessage = "Failed to save sleep event. Please try again."
+        }
+
+        isLoading = false
+    }
+
+    /// Soft-deletes the event currently being edited.
+    func delete() async {
+        guard let id = existingEventId else { return }
+
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            try await sleepRepository.softDelete(eventId: id)
+            didDelete = true
+        } catch {
+            errorMessage = "Failed to delete sleep event. Please try again."
         }
 
         isLoading = false

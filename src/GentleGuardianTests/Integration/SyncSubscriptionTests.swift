@@ -58,14 +58,12 @@ struct SyncSubscriptionTests {
         #expect(childIds.first == "child-1")
     }
 
-    @Test("subscribeToChildData creates subscriptions for all 6 collections conceptually")
+    @Test("subscribeToChildData creates subscriptions for all collections conceptually")
     func subscribeCreatesMultipleSubscriptions() async throws {
         // This test verifies the DittoManager contract: subscribing to a child
-        // should create subscriptions for children, feeding, diaper, health,
-        // activity, and customItems collections.
+        // should create subscriptions for every collection in AppConstants.
         //
         // With MockDittoManager, we verify the child ID is recorded.
-        // The real DittoManager creates 6 subscriptions internally.
         let mock = MockDittoManager()
         try await mock.initialize()
 
@@ -75,13 +73,16 @@ struct SyncSubscriptionTests {
         #expect(childIds.contains("child-multi"))
 
         // Verify the expected collection count through AppConstants
-        #expect(AppConstants.Collections.all.count == 8)
+        #expect(AppConstants.Collections.all.count == 9)
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.children))
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.feeding))
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.diaper))
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.health))
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.activity))
+        #expect(AppConstants.Collections.all.contains(AppConstants.Collections.sleep))
         #expect(AppConstants.Collections.all.contains(AppConstants.Collections.customItems))
+        #expect(AppConstants.Collections.all.contains(AppConstants.Collections.otherEvents))
+        #expect(AppConstants.Collections.all.contains(AppConstants.Collections.vaccinationRecords))
     }
 
     // MARK: - Unsubscribe

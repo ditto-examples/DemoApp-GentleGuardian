@@ -12,6 +12,9 @@ struct LogEventSheet: View {
     /// The child ID to associate events with.
     let childId: String
 
+    /// Shared loader for custom-item attachment thumbnails.
+    let customItemAttachmentLoader: CustomItemAttachmentLoader
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
 
@@ -96,7 +99,7 @@ struct LogEventSheet: View {
     private func destinationView(for category: EventCategory) -> some View {
         switch category {
         case .feeding:
-            LogBottleView(childId: childId)
+            LogBottleView(childId: childId, attachmentLoader: customItemAttachmentLoader)
         case .diaper:
             LogDiaperView(childId: childId)
         case .health:
@@ -131,5 +134,9 @@ struct LogEventSheet: View {
 // MARK: - Previews
 
 #Preview("Log Event Sheet") {
-    LogEventSheet(category: nil, childId: "test-child")
+    LogEventSheet(
+        category: nil,
+        childId: "test-child",
+        customItemAttachmentLoader: CustomItemAttachmentLoader(dittoManager: DittoManager.shared)
+    )
 }

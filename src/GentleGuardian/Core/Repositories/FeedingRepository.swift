@@ -146,6 +146,31 @@ final class FeedingRepository {
 
     // MARK: - One-Time Queries
 
+    /// Fetches every non-archived solid-food feeding for a child across all
+    /// dates. Used by `FoodReactionAggregator` to compute per-food rating
+    /// rollups for the picker badges and the `FoodReactionsView` review screen.
+    ///
+    /// - Parameter childId: The child's unique identifier.
+    /// - Returns: All solid feedings for the child.
+    func fetchAllSolidFeedings(childId: String) async throws -> [FeedingEvent] {
+        let query = """
+            SELECT * FROM \(AppConstants.Collections.feeding)
+            WHERE childId = :childId
+            AND type = 'solid'
+            AND \(QueryHelpers.notArchived)
+            """
+        let result = try await dittoManager.execute(
+            query: query,
+            arguments: QueryHelpers.childArgs(childId)
+        )
+        return result.items.map { item -> FeedingEvent in
+            let doc = item.value
+            let event = FeedingEvent(from: doc)
+            item.dematerialize()
+            return event
+        }
+    }
+
     /// Returns the count of feeding events for a child on a given day.
     ///
     /// - Parameters:

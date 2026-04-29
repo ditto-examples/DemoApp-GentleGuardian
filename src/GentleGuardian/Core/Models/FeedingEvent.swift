@@ -50,6 +50,10 @@ struct FeedingEvent: Identifiable, Codable, Sendable, Equatable {
     /// Unit of measurement for solid food quantity.
     var solidQuantityUnit: QuantityUnit?
 
+    /// Caregiver-recorded reaction (solid feedings only). Optional so legacy
+    /// rows decode as `nil`.
+    var solidReaction: SolidReaction?
+
     // MARK: - Common Fields
 
     /// Optional notes about this feeding.
@@ -80,6 +84,7 @@ struct FeedingEvent: Identifiable, Codable, Sendable, Equatable {
         solidType: String? = nil,
         solidQuantity: Double? = nil,
         solidQuantityUnit: QuantityUnit? = nil,
+        solidReaction: SolidReaction? = nil,
         notes: String = "",
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
@@ -98,6 +103,7 @@ struct FeedingEvent: Identifiable, Codable, Sendable, Equatable {
         self.solidType = solidType
         self.solidQuantity = solidQuantity
         self.solidQuantityUnit = solidQuantityUnit
+        self.solidReaction = solidReaction
         self.notes = notes
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -131,6 +137,11 @@ struct FeedingEvent: Identifiable, Codable, Sendable, Equatable {
         } else {
             self.solidQuantityUnit = nil
         }
+        if let reactionStr = document["solidReaction"] as? String {
+            self.solidReaction = SolidReaction(rawValue: reactionStr)
+        } else {
+            self.solidReaction = nil
+        }
         self.notes = document["notes"] as? String ?? ""
         self.createdAt = DateService.date(fromISO8601: document["createdAt"] as? String) ?? Date()
         self.updatedAt = DateService.date(fromISO8601: document["updatedAt"] as? String) ?? Date()
@@ -155,6 +166,7 @@ struct FeedingEvent: Identifiable, Codable, Sendable, Equatable {
             "solidType": solidType,
             "solidQuantity": solidQuantity,
             "solidQuantityUnit": solidQuantityUnit?.rawValue,
+            "solidReaction": solidReaction?.rawValue,
             "notes": notes,
             "createdAt": DateService.iso8601String(from: createdAt),
             "updatedAt": DateService.iso8601String(from: updatedAt),
@@ -180,13 +192,20 @@ struct FeedingEvent: Identifiable, Codable, Sendable, Equatable {
             }
             return "Breast \(sideInfo)".trimmingCharacters(in: .whitespaces)
         case .solid:
+            let base: String
             if let food = solidType {
                 if let qty = solidQuantity, let unit = solidQuantityUnit {
-                    return "\(food) - \(qty) \(unit.displayName)"
+                    base = "\(food) - \(qty) \(unit.displayName)"
+                } else {
+                    base = food
                 }
-                return food
+            } else {
+                base = "Solid food"
             }
-            return "Solid food"
+            if let reaction = solidReaction {
+                return "\(base) \(reaction.emoji)"
+            }
+            return base
         }
     }
 }

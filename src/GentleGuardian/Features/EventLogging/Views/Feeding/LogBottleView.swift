@@ -7,6 +7,7 @@ struct LogBottleView: View {
     // MARK: - Properties
 
     let childId: String
+    let attachmentLoader: CustomItemAttachmentLoader
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
@@ -33,8 +34,7 @@ struct LogBottleView: View {
             if viewModel == nil {
                 viewModel = LogFeedingViewModel(
                     childId: childId,
-                    feedingRepository: FeedingRepository(dittoManager: DittoManager.shared),
-                    customItemRepository: CustomItemRepository(dittoManager: DittoManager.shared)
+                    feedingRepository: FeedingRepository(dittoManager: DittoManager.shared)
                 )
             }
         }
@@ -148,14 +148,7 @@ struct LogBottleView: View {
                         .font(.ggLabelMedium)
                         .foregroundStyle(colors.onSurface.opacity(0.6))
 
-                    GGTextField(
-                        "e.g., Similac Pro-Advance",
-                        text: Binding(
-                            get: { viewModel.formulaType },
-                            set: { viewModel.formulaType = $0 }
-                        ),
-                        icon: "drop"
-                    )
+                    formulaPickerRow(viewModel: viewModel)
                 }
             }
         }
@@ -219,14 +212,7 @@ struct LogBottleView: View {
                         .font(.ggLabelMedium)
                         .foregroundStyle(colors.onSurface.opacity(0.6))
 
-                    GGTextField(
-                        "e.g., Sweet potato puree",
-                        text: Binding(
-                            get: { viewModel.solidType },
-                            set: { viewModel.solidType = $0 }
-                        ),
-                        icon: "fork.knife"
-                    )
+                    solidPickerRow(viewModel: viewModel)
                 }
 
                 HStack(spacing: GGSpacing.sm) {
@@ -251,6 +237,97 @@ struct LogBottleView: View {
                     .frame(width: 100)
                 }
             }
+        }
+    }
+
+    // MARK: - Picker Rows
+
+    private func formulaPickerRow(viewModel: LogFeedingViewModel) -> some View {
+        NavigationLink {
+            CustomItemPickerView(
+                childId: childId,
+                category: .formula,
+                attachmentLoader: attachmentLoader
+            ) { name, token in
+                viewModel.formulaType = name
+                viewModel.formulaAttachmentToken = token
+            }
+        } label: {
+            pickerRowLabel(
+                placeholder: "Choose a formula",
+                selectedName: viewModel.formulaType,
+                token: viewModel.formulaAttachmentToken,
+                fallbackIcon: "drop"
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func solidPickerRow(viewModel: LogFeedingViewModel) -> some View {
+        NavigationLink {
+            CustomItemPickerView(
+                childId: childId,
+                category: .solidFood,
+                attachmentLoader: attachmentLoader
+            ) { name, token in
+                viewModel.solidType = name
+                viewModel.solidAttachmentToken = token
+            }
+        } label: {
+            pickerRowLabel(
+                placeholder: "Choose a food",
+                selectedName: viewModel.solidType,
+                token: viewModel.solidAttachmentToken,
+                fallbackIcon: "fork.knife"
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func pickerRowLabel(
+        placeholder: String,
+        selectedName: String,
+        token: String?,
+        fallbackIcon: String
+    ) -> some View {
+        HStack(spacing: GGSpacing.md) {
+            pickerThumbnail(token: token, fallbackIcon: fallbackIcon)
+
+            if selectedName.isEmpty {
+                Text(placeholder)
+                    .font(.ggBodyLarge)
+                    .foregroundStyle(colors.onSurface.opacity(0.5))
+            } else {
+                Text(selectedName)
+                    .font(.ggBodyLarge)
+                    .foregroundStyle(colors.onSurface)
+            }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .font(.ggBodyMedium)
+                .foregroundStyle(colors.onSurface.opacity(0.3))
+        }
+        .padding(.horizontal, GGSpacing.md)
+        .frame(minHeight: GGSpacing.minimumTouchTarget)
+        .background(colors.surfaceContainerHigh)
+        .clipShape(RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.5, style: .continuous))
+    }
+
+    @ViewBuilder
+    private func pickerThumbnail(token: String?, fallbackIcon: String) -> some View {
+        if let token, !token.isEmpty, let image = attachmentLoader.image(for: token) {
+            Image(platformImage: image)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 32, height: 32)
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+        } else {
+            Image(systemName: fallbackIcon)
+                .font(.ggBodyLarge)
+                .foregroundStyle(colors.onSurface.opacity(0.5))
+                .frame(width: 32, height: 32)
         }
     }
 
@@ -324,6 +401,9 @@ struct LogBottleView: View {
 
 #Preview("Log Bottle") {
     NavigationStack {
-        LogBottleView(childId: "test-child")
+        LogBottleView(
+            childId: "test-child",
+            attachmentLoader: CustomItemAttachmentLoader(dittoManager: DittoManager.shared)
+        )
     }
 }

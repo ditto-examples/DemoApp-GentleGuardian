@@ -268,6 +268,78 @@ actor DittoManager: DittoManaging {
         }
     }
 
+    // MARK: - Attachments
+
+    /// Stores a binary blob in Ditto's attachment store and returns a JSON-encoded
+    /// token that can be persisted on a document and synced to other peers.
+    func newAttachment(data: Data, metadata: [String: String]) async throws -> String {
+        guard let ditto else {
+            throw DittoManagerError.notInitialized
+        }
+        do {
+            let attachment = try await ditto.store.newAttachment(data: data, metadata: metadata)
+            // Encode the attachment's identifying fields as a JSON string so the token
+            // round-trips cleanly through our `Codable` models and DQL arguments.
+            var tokenDict: [String: Any] = ["id": attachment.id, "len": attachment.len]
+            if !attachment.metadata.isEmpty {
+                tokenDict["metadata"] = attachment.metadata
+            }
+            let json = try JSONSerialization.data(withJSONObject: tokenDict, options: [])
+            guard let tokenString = String(data: json, encoding: .utf8) else {
+                throw DittoManagerError.queryFailed("Failed to encode attachment token as UTF-8.")
+            }
+            logger.debug("Created attachment: id=\(attachment.id) bytes=\(attachment.len)")
+            return tokenString
+        } catch {
+            logger.error("newAttachment failed: \(error.localizedDescription)")
+            throw DittoManagerError.queryFailed(error.localizedDescription)
+        }
+    }
+
+    /// Fetches the binary contents of an attachment by JSON-encoded token.
+    /// Returns `nil` if the attachment cannot be retrieved (e.g. not yet replicated).
+    func fetchAttachment(token: String) async -> Data? {
+        guard let ditto else { return nil }
+        guard let jsonData = token.data(using: .utf8),
+              let tokenDict = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any]
+        else {
+            logger.warning("Invalid attachment token JSON.")
+            return nil
+        }
+        return await withCheckedContinuation { continuation in
+            var fetcher: DittoAttachmentFetcher?
+            do {
+                fetcher = try ditto.store.fetchAttachment(token: tokenDict, deliverOn: .global()) { [weak self] event in
+                    switch event {
+                    case .completed(let attachment):
+                        do {
+                            let data = try attachment.data()
+                            continuation.resume(returning: data)
+                        } catch {
+                            self?.logger.error("Attachment data() failed: \(error.localizedDescription)")
+                            continuation.resume(returning: nil)
+                        }
+                    @unknown default:
+                        break
+                    }
+                    _ = fetcher  // retain until completion
+                }
+            } catch {
+                logger.error("fetchAttachment failed: \(error.localizedDescription)")
+                continuation.resume(returning: nil)
+            }
+        }
+    }
+
+    /// Disposes of an attachment, releasing its storage on the local peer.
+    /// No-op for v5: Ditto manages attachment lifecycle internally; this hook is
+    /// kept so callers can express intent without leaking implementation details.
+    func disposeAttachment(token: String) async {
+        // Intentional no-op. Attachment lifetime is managed by Ditto when no documents
+        // reference the token. Soft-delete on the owning document is sufficient.
+        logger.debug("disposeAttachment called for token (lifecycle handled by Ditto).")
+    }
+
     // MARK: - Private Methods
 
     /// Re-subscribes for all children found in the local store.

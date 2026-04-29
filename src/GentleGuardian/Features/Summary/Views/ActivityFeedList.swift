@@ -2,11 +2,13 @@ import SwiftUI
 
 /// Chronological list of all events for a day, sorted by timestamp descending.
 ///
-/// Each row shows the time, an event type icon, a summary, and a category
-/// color indicator. Uses GGCard for each row with spacing (no dividers).
+/// Each row is a `Button` that calls `onSelect` with the tapped event so the
+/// caller can present a category-specific Edit sheet. Rows show the time,
+/// an event type icon, a summary, and a category color indicator.
 struct ActivityFeedList: View {
 
     let events: [TimelineEvent]
+    let onSelect: (TimelineEvent) -> Void
 
     @Environment(\.colorScheme) private var colorScheme
 
@@ -16,7 +18,13 @@ struct ActivityFeedList: View {
         } else {
             LazyVStack(spacing: GGSpacing.sm) {
                 ForEach(events) { event in
-                    eventRow(event)
+                    Button {
+                        onSelect(event)
+                    } label: {
+                        eventRow(event)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityHint("Double tap to edit")
                 }
             }
             .accessibilityIdentifier("activity-feed-list")
@@ -60,6 +68,10 @@ struct ActivityFeedList: View {
                 }
 
                 Spacer(minLength: 0)
+
+                Image(systemName: "chevron.right")
+                    .font(.ggBodyMedium)
+                    .foregroundStyle(colors.onSurface.opacity(0.3))
             }
         }
     }
@@ -112,33 +124,19 @@ struct ActivityFeedList: View {
 // MARK: - Previews
 
 #Preview("Activity Feed List") {
-    ScrollView {
-        ActivityFeedList(events: [
-            TimelineEvent(
-                id: "1",
-                timestamp: Date().addingTimeInterval(-3600),
-                category: .feeding,
-                iconName: "baby.bottle",
-                title: "Bottle",
-                detail: "4.0 oz (Formula)"
-            ),
-            TimelineEvent(
-                id: "2",
-                timestamp: Date().addingTimeInterval(-7200),
-                category: .diaper,
-                iconName: "drop.fill",
-                title: "Pee",
-                detail: "Pee - Medium"
-            ),
-            TimelineEvent(
-                id: "3",
-                timestamp: Date().addingTimeInterval(-10800),
-                category: .activity,
-                iconName: "figure.rolling",
-                title: "Tummy Time",
-                detail: "Tummy Time - 30 min"
-            ),
-        ])
+    let bottle = FeedingEvent(
+        childId: "preview",
+        type: .bottle,
+        timestamp: Date().addingTimeInterval(-3600),
+        bottleQuantity: 4,
+        bottleQuantityUnit: .oz,
+        formulaType: "Formula"
+    )
+    return ScrollView {
+        ActivityFeedList(
+            events: [TimelineEvent.from(bottle)],
+            onSelect: { _ in }
+        )
         .pageHorizontalPadding()
     }
     .background(GGColors.surface)

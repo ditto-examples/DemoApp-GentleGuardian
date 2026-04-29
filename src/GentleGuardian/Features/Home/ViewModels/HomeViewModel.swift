@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import SwiftUI
 
 // MARK: - Repository Protocols for Dependency Injection
 
@@ -190,6 +191,16 @@ final class HomeViewModel {
     var diaperRelativeTime: String {
         guard let diaper = lastDiaper else { return "" }
         return DateService.relativeTimeString(from: diaper.timestamp)
+    }
+
+    /// Color used to tint the diaper indicator on the home screen.
+    /// Reflects the most recent poop's color so caregivers can spot anomalies
+    /// at a glance. Returns `nil` when there's no recent diaper, the event was
+    /// a pee (no color), or the poop's color was not recorded — callers should
+    /// fall back to the default theme tint in that case.
+    var lastDiaperIconColor: Color? {
+        guard let diaper = lastDiaper, diaper.type == .poop else { return nil }
+        return diaper.color?.displayColor
     }
 
     /// Total feeding events for today.

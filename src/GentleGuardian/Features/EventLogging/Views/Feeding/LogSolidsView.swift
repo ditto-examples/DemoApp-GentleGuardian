@@ -9,6 +9,7 @@ struct LogSolidsView: View {
     // MARK: - Properties
 
     let childId: String
+    let attachmentLoader: CustomItemAttachmentLoader
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
@@ -36,7 +37,6 @@ struct LogSolidsView: View {
                 viewModel = LogFeedingViewModel(
                     childId: childId,
                     feedingRepository: FeedingRepository(dittoManager: DittoManager.shared),
-                    customItemRepository: CustomItemRepository(dittoManager: DittoManager.shared),
                     initialType: .solid
                 )
             }
@@ -59,33 +59,7 @@ struct LogSolidsView: View {
                             .font(.ggTitleMedium)
                             .foregroundStyle(colors.onSurface)
 
-                        GGTextField(
-                            "e.g., Sweet potato puree",
-                            text: Binding(
-                                get: { viewModel.solidType },
-                                set: { viewModel.solidType = $0 }
-                            ),
-                            icon: "fork.knife"
-                        )
-
-                        GGButton("Add New Food", variant: .tertiary, icon: "plus") {
-                            viewModel.showAddFoodAlert = true
-                        }
-                    }
-                }
-                .alert("Add New Food", isPresented: Binding(
-                    get: { viewModel.showAddFoodAlert },
-                    set: { viewModel.showAddFoodAlert = $0 }
-                )) {
-                    TextField("Food name", text: Binding(
-                        get: { viewModel.newFoodName },
-                        set: { viewModel.newFoodName = $0 }
-                    ))
-                    Button("Add") {
-                        Task { await viewModel.addNewFood() }
-                    }
-                    Button("Cancel", role: .cancel) {
-                        viewModel.newFoodName = ""
+                        solidPickerRow(viewModel: viewModel)
                     }
                 }
 
@@ -117,6 +91,21 @@ struct LogSolidsView: View {
                             .pickerStyle(.menu)
                             .frame(width: 100)
                         }
+                    }
+                }
+
+                // Reaction
+                GGCard(style: .standard) {
+                    VStack(alignment: .leading, spacing: GGSpacing.sm) {
+                        Text("Reaction (optional)")
+                            .font(.ggTitleMedium)
+                            .foregroundStyle(colors.onSurface)
+
+                        Text("Did your baby like it?")
+                            .font(.ggBodySmall)
+                            .foregroundStyle(colors.onSurface.opacity(0.6))
+
+                        reactionPicker(viewModel: viewModel)
                     }
                 }
 
@@ -186,6 +175,103 @@ struct LogSolidsView: View {
         }
     }
 
+    // MARK: - Reaction Picker
+
+    /// Three-segment selector for the caregiver to record how the baby
+    /// reacted to this food. Tapping the active option clears it so the
+    /// caregiver can leave it unrated.
+    private func reactionPicker(viewModel: LogFeedingViewModel) -> some View {
+        HStack(spacing: GGSpacing.sm) {
+            ForEach(SolidReaction.allCases, id: \.self) { reaction in
+                reactionButton(reaction: reaction, viewModel: viewModel)
+            }
+        }
+    }
+
+    private func reactionButton(reaction: SolidReaction, viewModel: LogFeedingViewModel) -> some View {
+        let isSelected = viewModel.solidReaction == reaction
+        return Button {
+            viewModel.solidReaction = isSelected ? nil : reaction
+        } label: {
+            VStack(spacing: GGSpacing.xs) {
+                Text(reaction.emoji)
+                    .font(.system(size: 32))
+                Text(reaction.displayName)
+                    .font(.ggLabelSmall)
+                    .foregroundStyle(colors.onSurface.opacity(isSelected ? 1.0 : 0.6))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, GGSpacing.sm)
+            .background(
+                RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.5, style: .continuous)
+                    .fill(isSelected ? reaction.tintColor.opacity(0.15) : colors.surfaceContainerHigh)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.5, style: .continuous)
+                    .stroke(isSelected ? reaction.tintColor : Color.clear, lineWidth: 2)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(reaction.displayName)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    // MARK: - Picker Row
+
+    private func solidPickerRow(viewModel: LogFeedingViewModel) -> some View {
+        NavigationLink {
+            CustomItemPickerView(
+                childId: childId,
+                category: .solidFood,
+                attachmentLoader: attachmentLoader
+            ) { name, token in
+                viewModel.solidType = name
+                viewModel.solidAttachmentToken = token
+            }
+        } label: {
+            HStack(spacing: GGSpacing.md) {
+                pickerThumbnail(token: viewModel.solidAttachmentToken)
+
+                if viewModel.solidType.isEmpty {
+                    Text("Choose a food")
+                        .font(.ggBodyLarge)
+                        .foregroundStyle(colors.onSurface.opacity(0.5))
+                } else {
+                    Text(viewModel.solidType)
+                        .font(.ggBodyLarge)
+                        .foregroundStyle(colors.onSurface)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.ggBodyMedium)
+                    .foregroundStyle(colors.onSurface.opacity(0.3))
+            }
+            .padding(.horizontal, GGSpacing.md)
+            .frame(minHeight: GGSpacing.minimumTouchTarget)
+            .background(colors.surfaceContainerHigh)
+            .clipShape(RoundedRectangle(cornerRadius: GGSpacing.cardCornerRadius * 0.5, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+
+    @ViewBuilder
+    private func pickerThumbnail(token: String?) -> some View {
+        if let token, !token.isEmpty, let image = attachmentLoader.image(for: token) {
+            Image(platformImage: image)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 32, height: 32)
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+        } else {
+            Image(systemName: "fork.knife")
+                .font(.ggBodyLarge)
+                .foregroundStyle(colors.onSurface.opacity(0.5))
+                .frame(width: 32, height: 32)
+        }
+    }
+
     // MARK: - Helpers
 
     private var colors: GGAdaptiveColors {
@@ -197,6 +283,9 @@ struct LogSolidsView: View {
 
 #Preview("Log Solids") {
     NavigationStack {
-        LogSolidsView(childId: "test-child")
+        LogSolidsView(
+            childId: "test-child",
+            attachmentLoader: CustomItemAttachmentLoader(dittoManager: DittoManager.shared)
+        )
     }
 }

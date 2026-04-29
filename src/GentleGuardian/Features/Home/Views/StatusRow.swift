@@ -10,6 +10,9 @@ struct StatusRow: View {
     let diaperLabel: String
     let diaperRelativeTime: String
     let feedingCount: Int
+    /// Optional tint for the diaper indicator. When non-nil (typically the
+    /// most recent poop's color) it overrides the default theme tertiary tint.
+    var diaperIconColor: Color? = nil
 
     @Environment(\.colorScheme) private var colorScheme
 
@@ -48,7 +51,7 @@ struct StatusRow: View {
             VStack(alignment: .leading, spacing: GGSpacing.xs) {
                 Image(systemName: "humidity.fill")
                     .font(.system(size: 18))
-                    .foregroundStyle(colors.tertiary)
+                    .foregroundStyle(diaperIconColor ?? colors.tertiary)
 
                 Text("DIAPER")
                     .font(.ggLabelSmall)

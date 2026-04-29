@@ -75,6 +75,21 @@ actor MockDittoManager: DittoManaging {
     /// Whether `observePresence(handler:)` was called.
     var observePresenceCalled = false
 
+    /// Records of every `newAttachment(data:metadata:)` call.
+    var createdAttachments: [(byteCount: Int, metadata: [String: String])] = []
+
+    /// Tokens passed to `fetchAttachment(token:)`.
+    var fetchedAttachmentTokens: [String] = []
+
+    /// Tokens passed to `disposeAttachment(token:)`.
+    var disposedAttachmentTokens: [String] = []
+
+    /// Token to return from `newAttachment` (auto-incrementing JSON id by default).
+    var nextAttachmentToken: String?
+
+    /// Bytes to return from `fetchAttachment` (nil = simulate not-yet-replicated).
+    var attachmentDataByToken: [String: Data] = [:]
+
     // MARK: - Configuration
 
     /// Set to `true` to make `initialize()` throw an error.
@@ -148,6 +163,23 @@ actor MockDittoManager: DittoManaging {
         observePresenceCalled = true
     }
 
+    func newAttachment(data: Data, metadata: [String: String]) async throws -> String {
+        createdAttachments.append((byteCount: data.count, metadata: metadata))
+        if let token = nextAttachmentToken {
+            return token
+        }
+        return "{\"id\":\"mock-\(createdAttachments.count)\",\"len\":\(data.count)}"
+    }
+
+    func fetchAttachment(token: String) async -> Data? {
+        fetchedAttachmentTokens.append(token)
+        return attachmentDataByToken[token]
+    }
+
+    func disposeAttachment(token: String) async {
+        disposedAttachmentTokens.append(token)
+    }
+
     // MARK: - Test Helpers
 
     /// Returns the last executed query, or nil if none.
@@ -176,5 +208,10 @@ actor MockDittoManager: DittoManaging {
         mockDittoQueryResults.removeAll()
         setPeerMetadataDisplayName = nil
         observePresenceCalled = false
+        createdAttachments.removeAll()
+        fetchedAttachmentTokens.removeAll()
+        disposedAttachmentTokens.removeAll()
+        nextAttachmentToken = nil
+        attachmentDataByToken.removeAll()
     }
 }

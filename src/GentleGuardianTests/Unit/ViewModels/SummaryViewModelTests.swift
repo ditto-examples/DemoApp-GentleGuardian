@@ -2,8 +2,9 @@ import Testing
 import Foundation
 @testable import GentleGuardian
 
-/// Tests for the SummaryViewModel, verifying event merging/sorting, stat calculations,
-/// date navigation, and observation lifecycle.
+/// Tests for the SummaryViewModel, verifying section selection, food ranking
+/// aggregation/filtering, growth fetch, event merging, date navigation, and
+/// observation lifecycle.
 @MainActor
 struct SummaryViewModelTests {
 
@@ -57,127 +58,208 @@ struct SummaryViewModelTests {
         return (vm, feedingRepo, diaperRepo, healthRepo, activityRepo, sleepRepo, otherRepo)
     }
 
-    // MARK: - Stat Calculation Tests
+    // MARK: - Section Selection
 
-    @Test("Total feedings matches feeding repository event count")
-    func totalFeedingsCount() {
-        let feedingRepo = MockFeedingRepository()
-        feedingRepo.events = [
-            FeedingEvent(id: "f1", childId: "child-1", type: .bottle),
-            FeedingEvent(id: "f2", childId: "child-1", type: .breast),
-            FeedingEvent(id: "f3", childId: "child-1", type: .solid),
-        ]
+    @Test("Selected section defaults to activity feed")
+    func defaultSection() {
         let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
 
-        #expect(vm.totalFeedings == 3)
+        #expect(vm.selectedSection == .activityFeed)
     }
 
-    @Test("Total diapers matches diaper repository event count")
-    func totalDiapersCount() {
-        let diaperRepo = MockDiaperRepository()
-        diaperRepo.events = [
-            DiaperEvent(id: "d1", childId: "child-1", type: .pee),
-            DiaperEvent(id: "d2", childId: "child-1", type: .poop),
-        ]
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(diaperRepo: diaperRepo, child: child)
-
-        #expect(vm.totalDiapers == 2)
+    @Test("SummarySection display names are user-friendly")
+    func sectionDisplayNames() {
+        #expect(SummarySection.activityFeed.displayName == "Activity Feed")
+        #expect(SummarySection.growth.displayName == "Growth")
+        #expect(SummarySection.foodRanking.displayName == "Food Ranking")
     }
 
-    @Test("Total activities matches activity repository event count")
-    func totalActivitiesCount() {
-        let activityRepo = MockActivityRepository()
-        activityRepo.events = [
-            ActivityEvent(id: "a1", childId: "child-1", activityType: .bath),
-            ActivityEvent(id: "a2", childId: "child-1", activityType: .tummyTime, durationMinutes: 30),
-        ]
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(activityRepo: activityRepo, child: child)
-
-        #expect(vm.totalActivities == 2)
+    @Test("FoodRankingFilter display names are user-friendly")
+    func filterDisplayNames() {
+        #expect(FoodRankingFilter.all.displayName == "All")
+        #expect(FoodRankingFilter.liked.displayName == "Liked")
+        #expect(FoodRankingFilter.hated.displayName == "Hated")
     }
 
-    @Test("Total health events matches health repository event count")
-    func totalHealthEventsCount() {
+    // MARK: - Growth Loading
+
+    @Test("loadGrowthEvents populates growthEvents from data source")
+    func loadGrowthEventsPopulates() async {
         let healthRepo = MockHealthRepository()
-        healthRepo.events = [
-            HealthEvent(id: "h1", childId: "child-1", type: .temperature, temperatureValue: 98.6, temperatureUnit: .fahrenheit),
+        let now = Date()
+        healthRepo.mockAllGrowth = [
+            HealthEvent(id: "h2", childId: "child-1", type: .growth, timestamp: now,
+                        heightValue: 70, heightUnit: .cm),
+            HealthEvent(id: "h1", childId: "child-1", type: .growth,
+                        timestamp: now.addingTimeInterval(-86400),
+                        heightValue: 68, heightUnit: .cm),
         ]
         let child = makeSampleChild()
         let (vm, _, _, _, _, _, _) = makeViewModel(healthRepo: healthRepo, child: child)
 
-        #expect(vm.totalHealthEvents == 1)
+        vm.onAppear()
+        await vm.loadGrowthEvents()
+
+        #expect(vm.growthEvents.count == 2)
+        #expect(healthRepo.fetchAllGrowthCalledForChildId == "child-1")
+        #expect(vm.growthEvents.first?.id == "h2")
     }
 
-    @Test("Total sleep matches sleep repository event count")
-    func totalSleepCount() {
-        let sleepRepo = MockSleepRepository()
-        let now = Date()
-        sleepRepo.events = [
-            SleepEvent(id: "s1", childId: "child-1", startTime: now.addingTimeInterval(-3600), endTime: now),
-        ]
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(sleepRepo: sleepRepo, child: child)
-
-        #expect(vm.totalSleep == 1)
-    }
-
-    @Test("Total event count sums all categories")
-    func totalEventCount() {
-        let feedingRepo = MockFeedingRepository()
-        feedingRepo.events = [
-            FeedingEvent(id: "f1", childId: "child-1", type: .bottle),
-            FeedingEvent(id: "f2", childId: "child-1", type: .bottle),
-        ]
-        let diaperRepo = MockDiaperRepository()
-        diaperRepo.events = [
-            DiaperEvent(id: "d1", childId: "child-1", type: .pee),
-        ]
-        let activityRepo = MockActivityRepository()
-        activityRepo.events = [
-            ActivityEvent(id: "a1", childId: "child-1", activityType: .bath),
-        ]
+    @Test("loadGrowthEvents resets to empty when data source throws")
+    func loadGrowthEventsHandlesError() async {
         let healthRepo = MockHealthRepository()
-        healthRepo.events = [
-            HealthEvent(id: "h1", childId: "child-1", type: .medicine, medicineName: "Tylenol"),
-        ]
-        let sleepRepo = MockSleepRepository()
-        let now = Date()
-        sleepRepo.events = [
-            SleepEvent(id: "s1", childId: "child-1", startTime: now.addingTimeInterval(-3600), endTime: now),
-        ]
-        let otherRepo = MockOtherEventRepository()
-        otherRepo.events = [
-            OtherEvent(id: "o1", childId: "child-1", name: "Massage"),
-        ]
+        healthRepo.shouldThrow = true
         let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(
-            feedingRepo: feedingRepo,
-            diaperRepo: diaperRepo,
-            healthRepo: healthRepo,
-            activityRepo: activityRepo,
-            sleepRepo: sleepRepo,
-            otherRepo: otherRepo,
-            child: child
-        )
+        let (vm, _, _, _, _, _, _) = makeViewModel(healthRepo: healthRepo, child: child)
 
-        #expect(vm.totalEventCount == 7)
+        vm.onAppear()
+        await vm.loadGrowthEvents()
+
+        #expect(vm.growthEvents.isEmpty)
     }
 
-    @Test("All counts are zero when no events")
-    func allCountsZero() {
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
+    @Test("loadGrowthEvents is a no-op without an active child")
+    func loadGrowthEventsNoChild() async {
+        let healthRepo = MockHealthRepository()
+        healthRepo.mockAllGrowth = [
+            HealthEvent(id: "h1", childId: "x", type: .growth),
+        ]
+        let (vm, _, _, _, _, _, _) = makeViewModel(healthRepo: healthRepo)
 
-        #expect(vm.totalFeedings == 0)
-        #expect(vm.totalDiapers == 0)
-        #expect(vm.totalActivities == 0)
-        #expect(vm.totalHealthEvents == 0)
-        #expect(vm.totalSleep == 0)
-        #expect(vm.totalOther == 0)
-        #expect(vm.totalEventCount == 0)
+        await vm.loadGrowthEvents()
+
+        #expect(vm.growthEvents.isEmpty)
+        #expect(healthRepo.fetchAllGrowthCalledForChildId == nil)
+    }
+
+    // MARK: - Food Ranking
+
+    @Test("loadSolidFeedings populates solidFeedings from data source")
+    func loadSolidFeedingsPopulates() async {
+        let feedingRepo = MockFeedingRepository()
+        feedingRepo.mockSolidFeedings = [
+            FeedingEvent(id: "f1", childId: "child-1", type: .solid,
+                         solidType: "Avocado", solidReaction: .happy),
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+
+        vm.onAppear()
+        await vm.loadSolidFeedings()
+
+        #expect(vm.solidFeedings.count == 1)
+        #expect(feedingRepo.fetchAllSolidFeedingsCalledForChildId == "child-1")
+    }
+
+    @Test("foodSummaries excludes foods with no rating")
+    func foodSummariesExcludesUnrated() async {
+        let feedingRepo = MockFeedingRepository()
+        feedingRepo.mockSolidFeedings = [
+            FeedingEvent(id: "f1", childId: "child-1", type: .solid,
+                         solidType: "Avocado", solidReaction: .happy),
+            FeedingEvent(id: "f2", childId: "child-1", type: .solid,
+                         solidType: "Banana", solidReaction: nil),
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+
+        vm.onAppear()
+        await vm.loadSolidFeedings()
+
+        let summaries = vm.foodSummaries
+        #expect(summaries.count == 1)
+        #expect(summaries.first?.foodName == "Avocado")
+    }
+
+    @Test("filteredFoodSummaries .liked surfaces foods with more happy than frown, sorted by score desc")
+    func filteredFoodSummariesLiked() async {
+        let feedingRepo = MockFeedingRepository()
+        feedingRepo.mockSolidFeedings = [
+            // Avocado: 2 happy, 0 frown, score = +1.0
+            FeedingEvent(id: "a1", childId: "child-1", type: .solid,
+                         solidType: "Avocado", solidReaction: .happy),
+            FeedingEvent(id: "a2", childId: "child-1", type: .solid,
+                         solidType: "Avocado", solidReaction: .happy),
+            // Banana: 2 happy, 1 frown, score = +1/3
+            FeedingEvent(id: "b1", childId: "child-1", type: .solid,
+                         solidType: "Banana", solidReaction: .happy),
+            FeedingEvent(id: "b2", childId: "child-1", type: .solid,
+                         solidType: "Banana", solidReaction: .happy),
+            FeedingEvent(id: "b3", childId: "child-1", type: .solid,
+                         solidType: "Banana", solidReaction: .frown),
+            // Broccoli: 0 happy, 1 frown — should not appear in .liked
+            FeedingEvent(id: "br1", childId: "child-1", type: .solid,
+                         solidType: "Broccoli", solidReaction: .frown),
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+
+        vm.onAppear()
+        await vm.loadSolidFeedings()
+        vm.foodRankingFilter = .liked
+
+        let liked = vm.filteredFoodSummaries
+        #expect(liked.count == 2)
+        #expect(liked[0].foodName == "Avocado")
+        #expect(liked[1].foodName == "Banana")
+    }
+
+    @Test("filteredFoodSummaries .hated surfaces foods with more frown than happy, most-disliked first")
+    func filteredFoodSummariesHated() async {
+        let feedingRepo = MockFeedingRepository()
+        feedingRepo.mockSolidFeedings = [
+            // Broccoli: 0 happy, 2 frown, score = -1.0
+            FeedingEvent(id: "br1", childId: "child-1", type: .solid,
+                         solidType: "Broccoli", solidReaction: .frown),
+            FeedingEvent(id: "br2", childId: "child-1", type: .solid,
+                         solidType: "Broccoli", solidReaction: .frown),
+            // Spinach: 1 happy, 2 frown, score = -1/3
+            FeedingEvent(id: "s1", childId: "child-1", type: .solid,
+                         solidType: "Spinach", solidReaction: .happy),
+            FeedingEvent(id: "s2", childId: "child-1", type: .solid,
+                         solidType: "Spinach", solidReaction: .frown),
+            FeedingEvent(id: "s3", childId: "child-1", type: .solid,
+                         solidType: "Spinach", solidReaction: .frown),
+            // Avocado: only happy — should not appear in .hated
+            FeedingEvent(id: "a1", childId: "child-1", type: .solid,
+                         solidType: "Avocado", solidReaction: .happy),
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+
+        vm.onAppear()
+        await vm.loadSolidFeedings()
+        vm.foodRankingFilter = .hated
+
+        let hated = vm.filteredFoodSummaries
+        #expect(hated.count == 2)
+        #expect(hated[0].foodName == "Broccoli")  // worst score first
+        #expect(hated[1].foodName == "Spinach")
+    }
+
+    @Test("filteredFoodSummaries .all sorts by score descending")
+    func filteredFoodSummariesAll() async {
+        let feedingRepo = MockFeedingRepository()
+        feedingRepo.mockSolidFeedings = [
+            FeedingEvent(id: "a1", childId: "child-1", type: .solid,
+                         solidType: "Avocado", solidReaction: .happy),
+            FeedingEvent(id: "br1", childId: "child-1", type: .solid,
+                         solidType: "Broccoli", solidReaction: .frown),
+            FeedingEvent(id: "n1", childId: "child-1", type: .solid,
+                         solidType: "Carrot", solidReaction: .neutral),
+        ]
+        let child = makeSampleChild()
+        let (vm, _, _, _, _, _, _) = makeViewModel(feedingRepo: feedingRepo, child: child)
+
+        vm.onAppear()
+        await vm.loadSolidFeedings()
+
+        let all = vm.filteredFoodSummaries
+        #expect(all.count == 3)
+        #expect(all[0].foodName == "Avocado")     // score +1
+        #expect(all[1].foodName == "Carrot")      // score 0
+        #expect(all[2].foodName == "Broccoli")    // score -1
     }
 
     // MARK: - All Events Merging and Sorting Tests
@@ -289,66 +371,6 @@ struct SummaryViewModelTests {
         #expect(events.count == 1)
         #expect(events[0].category == .health)
         #expect(events[0].title == "Medicine")
-    }
-
-    // MARK: - Hero Stat Tests
-
-    @Test("Hero stat shows '0' when no events")
-    func heroStatEmpty() {
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(child: child)
-
-        #expect(vm.heroStatLabel == "0")
-        #expect(vm.heroStatSubtitle == "Total Events")
-    }
-
-    @Test("Hero stat shows total tracked time when activities have durations")
-    func heroStatWithDurations() {
-        let activityRepo = MockActivityRepository()
-        activityRepo.events = [
-            ActivityEvent(id: "a1", childId: "child-1", activityType: .tummyTime, durationMinutes: 90),
-            ActivityEvent(id: "a2", childId: "child-1", activityType: .storyTime, durationMinutes: 30),
-        ]
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(activityRepo: activityRepo, child: child)
-
-        #expect(vm.heroStatLabel == "2h 0m")
-        #expect(vm.heroStatSubtitle == "Total Tracked Time")
-    }
-
-    @Test("Hero stat shows minutes-only when less than an hour")
-    func heroStatMinutesOnly() {
-        let activityRepo = MockActivityRepository()
-        activityRepo.events = [
-            ActivityEvent(id: "a1", childId: "child-1", activityType: .tummyTime, durationMinutes: 45),
-        ]
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(activityRepo: activityRepo, child: child)
-
-        #expect(vm.heroStatLabel == "45m")
-        #expect(vm.heroStatSubtitle == "Total Tracked Time")
-    }
-
-    @Test("Hero stat shows event count when no activity durations")
-    func heroStatEventCount() {
-        let feedingRepo = MockFeedingRepository()
-        feedingRepo.events = [
-            FeedingEvent(id: "f1", childId: "child-1", type: .bottle),
-            FeedingEvent(id: "f2", childId: "child-1", type: .bottle),
-        ]
-        let diaperRepo = MockDiaperRepository()
-        diaperRepo.events = [
-            DiaperEvent(id: "d1", childId: "child-1", type: .pee),
-        ]
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(
-            feedingRepo: feedingRepo,
-            diaperRepo: diaperRepo,
-            child: child
-        )
-
-        #expect(vm.heroStatLabel == "3")
-        #expect(vm.heroStatSubtitle == "Total Events")
     }
 
     // MARK: - Date Navigation Tests
@@ -601,32 +623,13 @@ struct SummaryViewModelTests {
 
     @Test("TimelineEvent.timeString returns formatted time")
     func timelineEventTimeString() {
-        let event = TimelineEvent(
-            id: "test",
-            timestamp: Date(),
-            category: .feeding,
-            iconName: "baby.bottle",
-            title: "Bottle",
-            detail: "Test"
-        )
+        let feeding = FeedingEvent(id: "test", childId: "child-1", type: .bottle)
+        let event = TimelineEvent.from(feeding)
 
         #expect(!event.timeString.isEmpty)
     }
 
     // MARK: - Other Event Tests
-
-    @Test("Total other matches other repository event count")
-    func totalOtherCount() {
-        let otherRepo = MockOtherEventRepository()
-        otherRepo.events = [
-            OtherEvent(id: "o1", childId: "child-1", name: "Massage"),
-            OtherEvent(id: "o2", childId: "child-1", name: "Music class"),
-        ]
-        let child = makeSampleChild()
-        let (vm, _, _, _, _, _, _) = makeViewModel(otherRepo: otherRepo, child: child)
-
-        #expect(vm.totalOther == 2)
-    }
 
     @Test("TimelineEvent.from(OtherEvent) creates correct event")
     func timelineEventFromOther() {

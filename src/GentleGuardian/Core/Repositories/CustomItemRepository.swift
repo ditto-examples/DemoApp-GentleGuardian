@@ -103,4 +103,67 @@ final class CustomItemRepository {
         )
         logger.debug("Soft-deleted custom item: \(itemId)")
     }
+
+    /// Soft-deletes a custom item and disposes its attachment, if any.
+    ///
+    /// - Parameter item: The item to delete.
+    func delete(item: CustomItem) async throws {
+        try await softDelete(itemId: item.id)
+        if let token = item.attachmentToken, !token.isEmpty {
+            await dittoManager.disposeAttachment(token: token)
+        }
+    }
+
+    /// Counts non-archived items for a child in a category. Used to gate idempotent seeding.
+    ///
+    /// - Parameters:
+    ///   - childId: Child to scope the query.
+    ///   - category: Category to filter by.
+    /// - Returns: The count of matching items.
+    func count(childId: String, category: CustomItemCategory) async throws -> Int {
+        let query = """
+        SELECT * FROM \(AppConstants.Collections.customItems)
+        WHERE childId = :childId AND category = :category AND \(QueryHelpers.notArchived)
+        LIMIT 1
+        """
+        let result = try await dittoManager.execute(
+            query: query,
+            arguments: ["childId": childId, "category": category.rawValue]
+        )
+        return result.items.count
+    }
+
+    /// Inserts a list of items only if no non-archived items already exist for that
+    /// child + category. Idempotent: safe to call repeatedly.
+    ///
+    /// - Parameters:
+    ///   - names: Display names for the new items.
+    ///   - childId: Owning child.
+    ///   - category: Category to insert under.
+    ///   - isSeeded: Whether to mark these items as seeded.
+    func bulkInsertIfEmpty(
+        names: [String],
+        childId: String,
+        category: CustomItemCategory,
+        isSeeded: Bool = true
+    ) async throws {
+        let existing = try await count(childId: childId, category: category)
+        guard existing == 0 else {
+            logger.debug("Skipping seed for \(childId)/\(category.rawValue) — \(existing) item(s) already exist.")
+            return
+        }
+        for name in names {
+            let item = CustomItem(
+                childId: childId,
+                category: category,
+                name: name,
+                isSeeded: isSeeded
+            )
+            try await dittoManager.execute(
+                query: QueryHelpers.upsert(into: AppConstants.Collections.customItems),
+                arguments: ["document": item.toDittoDocument()]
+            )
+        }
+        logger.info("Seeded \(names.count) item(s) for \(childId)/\(category.rawValue).")
+    }
 }
