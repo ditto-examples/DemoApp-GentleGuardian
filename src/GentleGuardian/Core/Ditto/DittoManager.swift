@@ -307,26 +307,49 @@ actor DittoManager: DittoManaging {
             return nil
         }
         return await withCheckedContinuation { continuation in
-            var fetcher: DittoAttachmentFetcher?
+            // Reference-type box keeps the fetcher alive until a terminal event
+            // arrives, without tripping Swift 6 "captured var mutated after capture"
+            // warnings. The box is captured by the closure; we mutate its property
+            // after the SDK returns.
+            final class FetcherBox: @unchecked Sendable {
+                var fetcher: DittoAttachmentFetcher?
+                var didResume = false
+            }
+            let box = FetcherBox()
+
+            // Resume exactly once across all event paths (completed / deleted / error).
+            // Without this, a `.deleted` or unexpected event would strand the
+            // continuation forever and hang the calling `await`.
+            @Sendable func finish(_ data: Data?) {
+                guard !box.didResume else { return }
+                box.didResume = true
+                continuation.resume(returning: data)
+            }
+
             do {
-                fetcher = try ditto.store.fetchAttachment(token: tokenDict, deliverOn: .global()) { [weak self] event in
+                box.fetcher = try ditto.store.fetchAttachment(token: tokenDict, deliverOn: .global()) { [weak self] event in
                     switch event {
                     case .completed(let attachment):
                         do {
                             let data = try attachment.data()
-                            continuation.resume(returning: data)
+                            finish(data)
                         } catch {
                             self?.logger.error("Attachment data() failed: \(error.localizedDescription)")
-                            continuation.resume(returning: nil)
+                            finish(nil)
                         }
+                    case .progress:
+                        // Intentionally ignored — we only care about terminal events.
+                        return
+                    case .deleted:
+                        self?.logger.warning("Attachment deleted before fetch completed.")
+                        finish(nil)
                     @unknown default:
-                        break
+                        finish(nil)
                     }
-                    _ = fetcher  // retain until completion
                 }
             } catch {
                 logger.error("fetchAttachment failed: \(error.localizedDescription)")
-                continuation.resume(returning: nil)
+                finish(nil)
             }
         }
     }

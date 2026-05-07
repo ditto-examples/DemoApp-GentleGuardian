@@ -46,6 +46,13 @@ struct GentleGuardianApp: App {
         _otherEventRepository = State(initialValue: OtherEventRepository(dittoManager: manager))
         _vaccinationRepository = State(initialValue: VaccinationRepository(dittoManager: manager))
         _customItemAttachmentLoader = State(initialValue: CustomItemAttachmentLoader(dittoManager: manager))
+
+        // Warm up the vaccination schedule cache off the main thread so the
+        // ~204 KB JSON parse doesn't stall a body refresh later. Detached so
+        // it doesn't inherit MainActor isolation from `App.init`.
+        Task.detached(priority: .utility) {
+            _ = VaccinationScheduleService.shared
+        }
     }
 
     // MARK: - Body
@@ -79,7 +86,11 @@ struct GentleGuardianApp: App {
             .colorSchemeAware()
             .environment(activeChildState)
             .environment(userSettings)
-            .task {
+            // App launch is not user-initiated work — we already show a spinner.
+            // Running at `.utility` avoids a priority inversion where a
+            // user-initiated caller waits on Ditto's Default-QoS BLE transport
+            // thread inside `sync.start()` (Xcode "Hang Risk" warning).
+            .task(priority: .utility) {
                 await initializeDitto()
             }
         }

@@ -10,7 +10,7 @@ final class VaccinationViewModel {
     // MARK: - Dependencies
 
     private let vaccinationRepository: VaccinationRepository
-    private let scheduleService = VaccinationScheduleService()
+    private let scheduleService = VaccinationScheduleService.shared
 
     // MARK: - State
 

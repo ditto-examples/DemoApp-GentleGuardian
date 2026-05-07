@@ -2,6 +2,14 @@ import Foundation
 import os.log
 
 final class VaccinationScheduleService: Sendable {
+
+    /// Shared singleton. The bundled `vaccination-schedules.json` is ~204 KB, and
+    /// decoding it is too slow to repeat on a SwiftUI body refresh. Read this
+    /// from `.shared` so the JSON is parsed at most once per process.
+    /// Warm it up off-main during app launch (see `GentleGuardianApp`) to avoid
+    /// blocking the main thread on first access.
+    static let shared = VaccinationScheduleService()
+
     private let schedules: [String: CountrySchedule]
     private let logger = Logger(subsystem: "com.gentleguardian.app", category: "VaccinationScheduleService")
 

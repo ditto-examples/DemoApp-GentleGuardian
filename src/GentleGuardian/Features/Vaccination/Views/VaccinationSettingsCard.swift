@@ -73,8 +73,7 @@ struct VaccinationSettingsCard: View {
 
     private var scheduleSourceName: String? {
         let code = selectedRegion == .usa ? "US" : selectedCountryCode
-        let service = VaccinationScheduleService()
-        return service.schedule(for: code)?.source
+        return VaccinationScheduleService.shared.schedule(for: code)?.source
     }
 
     private var colors: GGAdaptiveColors {

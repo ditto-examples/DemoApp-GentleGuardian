@@ -52,10 +52,6 @@
 		30B4FC888DD9B21A52DB31DC /* OtherEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16748059E633C16A54E3ACB1 /* OtherEventTests.swift */; };
 		36273E3A524982E1431DC5F9 /* GGTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B39D97E6CE9BC166FD258A /* GGTextField.swift */; };
 		366B1283BF89D914EA6F5FCF /* ActivityFeedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1208B8A23A088D9A9FFC6A4 /* ActivityFeedList.swift */; };
-		AA01F00E000000000000002A /* GrowthList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000001A /* GrowthList.swift */; };
-		AA01F00E000000000000002B /* FoodRankingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000001B /* FoodRankingList.swift */; };
-		AA01F00E000000000000002C /* FoodReactionAggregatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000001C /* FoodReactionAggregatorTests.swift */; };
-		AA01F00E000000000000003A /* SummaryViewLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000003A /* SummaryViewLayoutTests.swift */; };
 		36BF22B8AED8E0103549F97B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F960690639A1DB0F26F42F0 /* HomeView.swift */; };
 		3729348B6CF39BA0C384CBB5 /* BreastSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98DC013E9BBB18587CF964 /* BreastSide.swift */; };
 		3972378F77272B8205465034 /* LogMedicineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B593E19B9163006391E3D27 /* LogMedicineView.swift */; };
@@ -134,6 +130,10 @@
 		AA00000000000000000C0005 /* ManageCustomItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000C0005 /* ManageCustomItemsView.swift */; };
 		AA00000000000000000C0006 /* EditCustomItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000C0006 /* EditCustomItemView.swift */; };
 		AA00000000000000000C0007 /* GGCountryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000000000000000C0007 /* GGCountryPicker.swift */; };
+		AA01F00E000000000000002A /* GrowthList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000001A /* GrowthList.swift */; };
+		AA01F00E000000000000002B /* FoodRankingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000001B /* FoodRankingList.swift */; };
+		AA01F00E000000000000002C /* FoodReactionAggregatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000001C /* FoodReactionAggregatorTests.swift */; };
+		AA01F00E000000000000003A /* SummaryViewLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F00D000000000000003A /* SummaryViewLayoutTests.swift */; };
 		AD24B0E0C36FB03D125DBAB8 /* RegisterChildViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A4A1E049D618F2ED2FAE9 /* RegisterChildViewModelTests.swift */; };
 		ADD79A53D10063653A2FCB7B /* OtherEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */; };
 		B3060173CAA01BD499EEE14C /* DittoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 73A7E89A43B84AC9A16A8F1E /* DittoSwift */; };
@@ -324,6 +324,10 @@
 		A8810FD26EC886B8EAFC85BC /* GhostBorderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostBorderModifier.swift; sourceTree = "<group>"; };
 		A88E7FCF29BAE4581D3F3F30 /* OtherEventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEventRepository.swift; sourceTree = "<group>"; };
 		A94AE6E2281D35D794060507 /* CustomItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomItemRepository.swift; sourceTree = "<group>"; };
+		AA01F00D000000000000001A /* GrowthList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowthList.swift; sourceTree = "<group>"; };
+		AA01F00D000000000000001B /* FoodRankingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRankingList.swift; sourceTree = "<group>"; };
+		AA01F00D000000000000001C /* FoodReactionAggregatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodReactionAggregatorTests.swift; sourceTree = "<group>"; };
+		AA01F00D000000000000003A /* SummaryViewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewLayoutTests.swift; sourceTree = "<group>"; };
 		AC072A25D1C16DFA642AFE75 /* LogActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogActivityViewModel.swift; sourceTree = "<group>"; };
 		ADC0858305CAC49EE4DA7090 /* LogFeedingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFeedingViewModelTests.swift; sourceTree = "<group>"; };
 		AF6506275A111EB328EFF54F /* LogActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogActivityView.swift; sourceTree = "<group>"; };
@@ -359,10 +363,6 @@
 		CC8F58D16D5EB39356894140 /* WeightUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightUnit.swift; sourceTree = "<group>"; };
 		CCEC608CCA4A422B17E2EC37 /* DiaperRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaperRepository.swift; sourceTree = "<group>"; };
 		D1208B8A23A088D9A9FFC6A4 /* ActivityFeedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFeedList.swift; sourceTree = "<group>"; };
-		AA01F00D000000000000001A /* GrowthList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowthList.swift; sourceTree = "<group>"; };
-		AA01F00D000000000000001B /* FoodRankingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRankingList.swift; sourceTree = "<group>"; };
-		AA01F00D000000000000001C /* FoodReactionAggregatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodReactionAggregatorTests.swift; sourceTree = "<group>"; };
-		AA01F00D000000000000003A /* SummaryViewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewLayoutTests.swift; sourceTree = "<group>"; };
 		D20C54E29A7DB9C032B94DA2 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		D3DD42C2F54DD685F712A7DC /* SyncCodeGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeGeneratorTests.swift; sourceTree = "<group>"; };
 		D4A55378B980A7AA8A03F10C /* LogBottleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBottleView.swift; sourceTree = "<group>"; };
@@ -435,20 +435,6 @@
 				2C53D45EB9C7373137224986 /* ViewModels */,
 			);
 			path = Unit;
-			sourceTree = "<group>";
-		};
-		0DADC2DB2FA17A4600F32F2B /* Helpers 2 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Helpers 2";
-			sourceTree = "<group>";
-		};
-		0DADC2DC2FA17A7200F32F2B /* Helpers 2 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Helpers 2";
 			sourceTree = "<group>";
 		};
 		0F8021B2DDCDFD067EDB20CC /* Extensions */ = {
@@ -752,8 +738,6 @@
 			children = (
 				519DC21567B4E2FA56AEEDE1 /* ViewModels */,
 				3C9ECA290730F270B22CC718 /* Views */,
-				0DADC2DB2FA17A4600F32F2B /* Helpers 2 */,
-				0DADC2DC2FA17A7200F32F2B /* Helpers 2 */,
 			);
 			path = EventLogging;
 			sourceTree = "<group>";
