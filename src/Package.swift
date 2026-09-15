@@ -12,7 +12,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/getditto/DittoSwiftPackage",
-            from: "5.0.0-rc.2"
+            from: "5.1.0"
         )
     ],
     targets: [
